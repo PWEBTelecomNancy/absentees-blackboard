@@ -1,3 +1,5 @@
-import webapp2
+from HomeHandler import *
 
-app = webapp2.WSGIApplication([], debug=True)
+app = webapp2.WSGIApplication([
+                                  ('/', HomeHandler)
+                              ], debug=True)
