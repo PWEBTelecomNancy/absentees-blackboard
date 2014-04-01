@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block below_menubar %}
+        {# Main jumbotron (big-ass banner with text in it) #}
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome!</h1>
+                <p>This website is dedicated to enhance the students & teachers school life in TELECOM Nancy, handling administrative stuff online.</p>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>As a student, you can:</p>
+                        <ul>
+                            <li>View your attendance statistics</li>
+                            <li>View in details the date you missed a lesson</li>
+                            <li>Submit the reason of your absence during a lesson </li>
+                            <li>Watch your school's calendar</li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6">
+                        <p>And as a teacher, you can:</p>
+                        <ul>
+                            <li>View your attendance statistics of each subject, each class</li>
+                            <li>View in details the lesson you missed</li>
+                            <li>View in details the students that have the highest attendance grade</li>
+                            <li>Validate/refuse a reason of a student</li>
+                        </ul>
+                    </div>
+                </div>
+                <p>Please login with your account.</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><a class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><a class="btn btn-primary btn-lg" role="button">New account &raquo;</a></p>
+                    </div>
+                    <div class=".col-md-6">
+                        {# I use this div to pull the other's on the left. #}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block body %}
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>School statistics <small>General attendance</small></h2>
+                    <ul>
+                        <li>
+                            Every day:
+                        </li>
+                        <li>
+                            Every month:
+                        </li>
+                        <li>
+                            Every year
+                        </li>
+                    </ul>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Is there a backdoor?</h2>
+                    <p>This is secret information!</p>
+                </div>
+                <div class="col-md-4">
+                    <h2>TELECOM Nancy</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+            </div>
+{% endblock %}
