@@ -1,1 +1,21 @@
 {% extends 'base.html' %}
+
+{% block below_menubar %}
+            <div class="container">
+                <h1 class="col-md-12">Find a group</h1>
+            </div>
+{% endblock %}
+
+{% block body %}
+        <div class="container">
+            <form method="post" action="/students_list">
+                <p>
+                    <label for="group_name" class="col-md-2">Group name:</label>
+                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-md-5">
+                </p>
+                <p>
+                    <input class="btn btn-primary" type="Submit" text="Search" class="col-md-1" />
+                </p>
+            </form>
+        </div>
+{% endblock %}
