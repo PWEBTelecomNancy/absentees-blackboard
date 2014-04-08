@@ -1,8 +1,9 @@
+
 from xml.dom import minidom
 import logging
 
 
-class XMLParser():
+class XMLAnalyser():
     url = "https://adeweb.univ-lorraine.fr/jsp/webapi?"
     request = ""
     session_id = ""
@@ -22,10 +23,11 @@ class XMLParser():
         for i in parameters:
             request = request + "&" + i + "=" + parameters[i]
 
+        return request
+
     def query(self, ):
         if self.session_id is "":
-            self.session_id = XMLParser.get_session_id()
+            self.session_id = XMLAnalyser.get_session_id()
 
         if self.projectId is "":
-            self.projectId = XMLParser.get_project_id()
-
+            self.projectId = XMLAnalyser.get_project_id()
