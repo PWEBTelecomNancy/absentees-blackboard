@@ -12,7 +12,11 @@ class XMLAnalyser():
 
     def get_session_id(self):
         temp = self.craft_url({"function": "connect", "login": "ade_projet_etu", "password": ";projet_2014"})
-        logging.error(temp)
+        xml_data = self.get_xml(temp)
+        # 
+        session_id = xml_data.childNodes[0].getAttribute("id")
+
+        return session_id
 
     def get_project_id(self):
         pass
