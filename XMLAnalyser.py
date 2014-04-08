@@ -13,13 +13,13 @@ class XMLAnalyser():
     def get_session_id(self):
         temp = self.craft_url({"function": "connect", "login": "ade_projet_etu", "password": ";projet_2014"})
         xml_data = self.get_xml(temp)
-        # 
+
         session_id = xml_data.childNodes[0].getAttribute("id")
 
         return session_id
 
     def get_project_id(self):
-        queryUrl = self.craft_url({"function": "getProjects", "sessionId": session_id})
+        queryUrl = self.craft_url({"function": "getProjects", "sessionId": self.session_id, "detail": 2})
         xmlString = self.get_xml(queryUrl)
         pass
 
