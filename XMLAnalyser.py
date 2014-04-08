@@ -8,16 +8,22 @@ class XMLAnalyser():
     url = "https://adeweb.univ-lorraine.fr/jsp/webapi?"
     request = ""
     session_id = ""
-    projectId = ""
+    projectId = "9"
+    projectSet = False
 
     def get_session_id(self):
         temp = self.craft_url({"function": "connect", "login": "ade_projet_etu", "password": ";projet_2014"})
         logging.error(temp)
 
     def get_project_id(self):
-        queryUrl = self.craft_url({"function": "getProjects", "sessionId": session_id})
+        queryUrl = self.craft_url({"function": "getProjects", "sessionId": self.session_id, "detail": 2})
         xmlString = self.get_xml(queryUrl)
         pass
+
+    def set_project_id(self):
+        queryUrl = self.craft_url({"function": "setProject", "sessionId": self.session_id, "projectId": self.projectId})
+        self.get_xml(queryUrl)
+        self.projectSet = True
 
     def craft_url(self, parameters):
         request = self.url
@@ -37,3 +43,6 @@ class XMLAnalyser():
 
         if self.projectId is "":
             self.projectId = XMLAnalyser.get_project_id()
+
+        if not self.projectSet:
+            self.set_project_id()
