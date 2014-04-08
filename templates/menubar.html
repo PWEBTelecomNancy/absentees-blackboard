@@ -8,14 +8,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Absentees Blackboard</a>
+                    <a class="navbar-brand" href="/">Absentees Blackboard</a>
                 </div>
 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
+                        {% if pageName == "home" %}
+                        <li class="active"><a href="/">Home</a></li>
+                        {% else  %}
+                        <li><a href="/">Home</a></li>
+                        {% endif %}
+
+                        {% if pageName == "students_list" %}
+                        <li class="active"><a href="/students_list">Students list</a></li>
+                        {% else  %}
+                        <li><a href="/students_list">Students list</a></li>
+                        {% endif %}
                     </ul>
 
                     {# Login form down here #}

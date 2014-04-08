@@ -2,12 +2,11 @@ __author__ = 'Pierre Monnin & Thibaut Smith'
 
 from BaseHandler import *
 
-
-class HomeHandler(BaseHandler):
+class StudentsListHandler(BaseHandler):
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
-        self.pageName = "home"
+        self.pageName = "students_list"
         pass
 
     def get(self):
-        self.render('home.html')
+        self.render("groupchoice.html")
