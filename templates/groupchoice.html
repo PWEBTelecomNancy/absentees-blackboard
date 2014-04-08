@@ -8,14 +8,14 @@
 
 {% block body %}
         <div class="container">
-            <form method="post" action="/students_list">
-                <p>
-                    <label for="group_name" class="col-md-2">Group name:</label>
-                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-md-5">
-                </p>
-                <p>
-                    <input class="btn btn-primary" type="Submit" text="Search" class="col-md-1" />
-                </p>
+            <form method="post" action="/students_list" class="col-lg-offset-2 col-lg-8">
+                <div class="row">
+                    <label for="group_name" class="col-lg-2">Group name</label>
+                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-lg-6">
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary col-lg-offset-4 col-lg-1">Search</button>
+                </div>
             </form>
         </div>
 {% endblock %}

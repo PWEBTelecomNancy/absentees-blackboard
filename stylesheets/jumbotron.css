@@ -3,3 +3,18 @@ body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
+
+form
+{
+    margin-top: 25px;
+}
+
+input[type="text"]
+{
+    height: 30px;
+}
+
+button
+{
+    margin-top: 10px;
+}
