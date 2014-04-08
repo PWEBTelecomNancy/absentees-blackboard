@@ -1,5 +1,6 @@
 
 from xml.dom import minidom
+import urllib2
 import logging
 
 
@@ -8,7 +9,6 @@ class XMLAnalyser():
     request = ""
     session_id = ""
     projectId = ""
-
 
     def get_session_id(self):
         temp = self.craft_url({"function": "connect", "login": "ade_projet_etu", "password": ";projet_2014"})
@@ -19,6 +19,8 @@ class XMLAnalyser():
         return session_id
 
     def get_project_id(self):
+        queryUrl = self.craft_url({"function": "getProjects", "sessionId": session_id})
+        xmlString = self.get_xml(queryUrl)
         pass
 
     def craft_url(self, parameters):
@@ -28,6 +30,10 @@ class XMLAnalyser():
             request = request + "&" + i + "=" + parameters[i]
 
         return request
+
+    def get_xml(self, url):
+        page = urllib2.urlopen(url)
+        return minidom.parseString(page.read())
 
     def query(self, ):
         if self.session_id is "":
