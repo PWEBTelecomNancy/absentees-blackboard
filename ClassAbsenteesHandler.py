@@ -8,6 +8,6 @@ class CourHandler(BaseHandler):
         self.pageName = "class_absentees"
 
     def get(self):
-        classParameters= {'class_name': 'PWEB', 'time': ' 10:10 - 12:00', 'teacher': 'Mr Charoy', 'type': 'CM',
+        class_parameters = {'class_name': 'PWEB', 'time': ' 10:10 - 12:00', 'teacher': 'Mr Charoy', 'type': 'CM',
                           'room': '2.42', 'nb_students': '18'}
-        self.render('class_absentees.html', **classParameters)
+        self.render('class_absentees.html', **class_parameters)
