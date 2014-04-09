@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block below_menubar %}
+        {# Main jumbotron (big-ass banner with text in it) #}
+        <div id="fond" class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Current session :</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Students :</h2>
+                    </div>
+               </div>
+               <br>
+               <div class="row">
+                    <div class="col-xs-6">
+                            {% block cour_icon %}
+                            <a id="currentSession" class="anim btn btn-warning btn-lg" role="button">
+                                <h2 class="text-left"> {{cour.matiere}}</h2>
+                                <h3 class="text-right">{{cour.heure}}</h3>
+                                <hr>
+                                <h3 class="text-left">{{cour.prof}}</h3>
+                                <h3 class="text-left">{{cour.typecour}}</h3>
+                                <h3 class="text-left">{{cour.salle}}</h3>
+                                <hr>
+                                <h3 class="text-left">{{cour.nb_eleve}} students should be present.</h3>
+                            </a>
+                            {% endblock %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% block liste_eleve %}
+                                <ul id="sidebar">
+                                    {% for i in range(20) %}
+                                    <a id="student{{i}}" class="anim eleve btn btn-success btn-lg" role="button"
+                                            onclick="change({{i}});">
+                                        Student student nb {{i}}
+                                    </a>
+                                    <br>
+                                    {% endfor %}
+                                    <br>
+
+                                     <SCRIPT language="Javascript">
+                                         <!--
+                                        function change(id) {
+                                           var link=document.getElementById("student"+id);
+                                           var hisclass= link.className;
+                                           if (hisclass =="eleve btn btn btn-danger btn-lg"){
+                                                link.className='anim eleve btn btn btn-success btn-lg';
+                                                }
+                                           else{
+                                                link.className='anim eleve btn btn btn-danger btn-lg';
+                                            }
+                                         }
+                                           //-->
+                                         </SCRIPT>
+                              {% endblock %}
+                         </div>
+
+                        </div>
+                        <br>
+                         <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <a id="IL" class="anim groupe btn btn-info btn-lg" role="button">IL</a>
+                                <a id="LE" class="anim groupe btn btn-info btn-lg" role="button" disabled>LE</a>
+                                <a id="TRS" class="anim groupe btn btn-info btn-lg" role="button" disabled>TRS</a>
+                                <a id="IAMD" class="anim groupe btn btn-info btn-lg" role="button" disabled>IAMD</a>
+                                <a id="SIE" class="anim groupe btn btn-info btn-lg" role="button" disabled>SIE</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+{% endblock %}
+
+{% block body %}
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <a id="prev_cour" class="anim btn btn-warning" role="button"><h2>MOCI</h2></a><br><br>
+                    <a id="goto_prev_cour" class="anim btn btn-default" role="button"><h3>Previous Session</h3></a>
+                </div>
+                <div class="col-md-4">
+                    <a id="next_cour" class="anim btn btn-success" role="button"><h2>PWEB</h2></a><br><br>
+                    <a id="goto_next_cour" class="anim btn btn-default" role="button"><h3>Next Session</h3></a>
+                </div>
+                <div class="col-md-4">
+                    <br>
+                    <br>
+                    <a id="bouton_call_register" class="anim btn btn-primary" role="button"><h2>I've finished calling <br>the register.</h2></a>
+                    <br>
+                    <br>
+                </div>
+            </div>
+{% endblock %}
