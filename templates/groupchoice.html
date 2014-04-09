@@ -8,14 +8,37 @@
 
 {% block body %}
         <div class="container">
-            <form method="post" action="/students_list" class="col-lg-offset-2 col-lg-8">
+            <form method="post" action="/students_list" class="row col-sm-offset-2 col-sm-8">
                 <div class="row">
-                    <label for="group_name" class="col-lg-2">Group name</label>
-                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-lg-6">
+                    <label for="group_name" class="col-sm-2">Group name</label>
+                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-sm-10">
                 </div>
                 <div class="row">
-                    <button class="btn btn-primary col-lg-offset-4 col-lg-1">Search</button>
+                    <button class="btn btn-primary col-sm-2 pull-right">Search</button>
                 </div>
             </form>
         </div>
+
+    <script type="text/javascript">
+        function check_size() {
+            if($(window).width() < 780)
+            {
+                $("label, button[class*='btn-primary'], input").addClass("form-control");
+            }
+
+            else
+            {
+                $("label, button[class*='btn-primary'], input").removeClass("form-control");
+            }
+        }
+
+        window.onresize = function(event) {
+            check_size();
+        }
+
+        document.onready = function() {
+            check_size();
+        };
+
+    </script>
 {% endblock %}
