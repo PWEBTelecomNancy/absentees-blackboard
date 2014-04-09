@@ -15,8 +15,6 @@ class StudentsListHandler(BaseHandler):
 
     def post(self):
         group_to_find = self.request.get("group_name")
-
-
         groups = memcache.get("group_list")
 
         if groups is None:
@@ -32,6 +30,6 @@ class StudentsListHandler(BaseHandler):
 
 
         if len(to_display) > 0:
-            self.render("groupdisplay.html", group_name = group_to_find, groups = to_display)
+            self.render("groupdisplay.html", group_name=group_to_find, groups=to_display)
         else:
-            self.render("message.html", title = "No such group", subtitle = "", argument = group_to_find)
+            self.render("message.html", title="No such group", subtitle="", argument=group_to_find)
