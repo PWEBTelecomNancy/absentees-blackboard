@@ -1,4 +1,4 @@
-__author__ = 'Pierre Monnin & Thibaut Smith'
+__author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 import os
 import webapp2
