@@ -7,10 +7,11 @@
 {% endblock %}
 
 {% block body %}
-        {% for groups_subset in groups | batch(2, '&nbsp;') %}
+        {% for groups_subset in groups | batch(2, '') %}
         <div class="row">
             {% for a_group in groups_subset %}
-            <div class="col-xs-6">
+            {% if a_group %}
+            <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{ a_group }}</h3>
@@ -26,6 +27,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         {% endfor %}
