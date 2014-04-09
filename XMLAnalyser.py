@@ -1,4 +1,3 @@
-# -*- coding: latin-1 -*-
 from xml.dom import minidom
 import urllib2
 import logging
