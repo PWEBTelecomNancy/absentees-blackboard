@@ -1,9 +1,9 @@
 from HomeHandler import *
 from StudentsListHandler import *
-from CourHandler import *
+from ClassAbsenteesHandler import *
 
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
                                   ('/students_list', StudentsListHandler),
-                                  ('/cour',CourHandler)
+                                  ('/class_absentees', CourHandler)
                               ], debug=True)
