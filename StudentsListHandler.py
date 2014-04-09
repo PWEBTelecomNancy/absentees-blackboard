@@ -31,7 +31,6 @@ class StudentsListHandler(BaseHandler):
             if group_to_find in key:
                 to_display[key] = groups[key]
 
-        logging.error(to_display)
 
         if len(to_display) > 0:
             self.render("groupdisplay.html", group_name = group_to_find, groups = to_display)
