@@ -24,6 +24,12 @@
                         {% else  %}
                         <li><a href="/students_list">Students list</a></li>
                         {% endif %}
+
+                         {% if pageName == "cour" %}
+                        <li class="active"><a href="/cour">Current Session</a></li>
+                        {% else  %}
+                        <li><a href="/cour">Current Session</a></li>
+                        {% endif %}
                     </ul>
 
                     {# Login form down here #}
