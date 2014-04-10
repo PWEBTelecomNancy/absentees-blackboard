@@ -3,6 +3,17 @@
 {% block below_menubar %}
         {# Main jumbotron (big-ass banner with text in it) #}
         <div id="background" class="jumbotron">
+            <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-4">
+                        <iframe id="ClassAbsenteesClock" src="http://free.timeanddate.com/clock/i43qh83k/n319/tlfr2/fn4/fs45/tct/pct" frameborder="0" width="304" height="56" allowTransparency="true"></iframe>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -32,25 +43,31 @@
                     <div class="col-md-6">
                         {% block students_list %}
                                 <ul id="sidebar">
-                                    {% for i in range(20) %}
-                                    <a id="student{{i}}" class="anim eleve btn btn-success btn-lg" role="button"
-                                            onclick="change({{i}});">
-                                        Student student nb {{i}}
-                                    </a>
-                                    <br>
+                                     {% for groups_subset in groups | batch(2, '') %}
+                                        {% for a_group in groups_subset |sort %}
+                                        {% if a_group %}
+                                            {% for member in groups[a_group] | sort %}
+                                                <a id="{{member}}" class="anim student btn btn-success btn-lg" role="button"
+                                                     onclick="change('{{member}}');">
+                                                    {{member}} <small style="text-align:right">{{a_group}} </small>
+                                                </a>
+                                                <br>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
                                     <br>
 
                                      <script language="Javascript">
                                          <!--
-                                        function change(id) {
-                                           var link=document.getElementById("student"+id);
+                                        function change(str) {
+                                           var link=document.getElementById(str);
                                            var hisclass= link.className;
-                                           if (hisclass =="anim eleve btn btn-danger btn-lg"){
-                                                link.className='anim eleve btn btn-success btn-lg';
+                                           if (hisclass =="anim student btn btn-danger btn-lg"){
+                                                link.className='anim student btn btn-success btn-lg';
                                                 }
                                            else{
-                                                link.className='anim eleve btn btn-danger btn-lg';
+                                                link.className='anim student btn btn-danger btn-lg';
                                             }
                                          }
                                            //-->
@@ -60,20 +77,23 @@
                          </div>
 
                         </div>
-                        <br>
+                        <form method="post" action="/class_absentees">
                          <div class="row">
+
                             <div class="col-md-6">
 
                             </div>
                             <div class="col-md-6">
-                                <a id="IL" class="anim group btn btn-info btn-lg" role="button">IL</a>
-                                <a id="LE" class="anim group btn btn-info btn-lg" role="button" disabled>LE</a>
-                                <a id="TRS" class="anim group btn btn-info btn-lg" role="button" disabled>TRS</a>
-                                <a id="IAMD" class="anim group btn btn-info btn-lg" role="button" disabled>IAMD</a>
-                                <a id="SIE" class="anim group btn btn-info btn-lg" role="button" disabled>SIE</a>
+                                {% for tag in tags |sort %}
+                                    {%if tag in main_tag %}
+                                      <button class="anim group_tag btn btn-info btn-lg" role="button" name="tag" value="{{tag}}">{{tag}}</button>
+                                    {%else%}
+                                      <button class="anim group_tag btn btn-primary btn-lg" role="button" name="tag" value="{{tag}}">{{tag}}</button>
+                                    {%endif%}
+                                {% endfor %}
+                              </div>
                             </div>
-                        </div>
-
+                    </form>
 
                     </div>
                 </div>
@@ -83,19 +103,15 @@
 {% block body %}
             <div class="row">
                 <div class="col-md-4">
-                    <a id="prev_class" class="anim btn btn-warning" role="button"><h2>MOCI</h2></a><br><br>
-                    <a id="goto_prev_cour" class="anim btn btn-default" role="button"><h3>Previous Session</h3></a>
+                    <a id="goto_prev_cour" class="anim btn btn-default" role="button"><h2>&lt;&lt;Prev</h2></a>
+                    <a id="prev_class" class="anim btn btn-warning" role="button"><h2>C</h2></a>
                 </div>
                 <div class="col-md-4">
-                    <a id="next_class" class="anim btn btn-success" role="button"><h2>PWEB</h2></a><br><br>
-                    <a id="goto_next_class" class="anim btn btn-default" role="button"><h3>Next Session</h3></a>
+                    <a id="next_class" class="anim btn btn-success" role="button"><h2>RSA</h2></a>
+                    <a id="goto_next_class" class="anim btn btn-default" role="button"><h2>Next&gt;&gt;</h2></a>
                 </div>
                 <div class="col-md-4">
-                    <br>
-                    <br>
                     <a id="button_call_register" class="anim btn btn-primary" role="button"><h2>I've finished calling <br />the register.</h2></a>
-                    <br>
-                    <br>
                 </div>
             </div>
 {% endblock %}
