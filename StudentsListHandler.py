@@ -21,7 +21,7 @@ class StudentsListHandler(BaseHandler):
             logging.error("CACHE MISS StudentsListHandler l. 24")
             parser = XMLAnalyser()
             groups = parser.get_members()
-            memcache.set("group_list", groups, time=7200);
+            memcache.set("group_list", groups, time=604800);
 
         to_display = dict()
         for key in groups:
