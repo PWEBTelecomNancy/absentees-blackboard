@@ -21,13 +21,12 @@ class StudentsListHandler(BaseHandler):
             logging.error("CACHE MISS StudentsListHandler l. 24")
             parser = XMLAnalyser()
             groups = parser.get_members()
-            memcache.set("group_list", groups)
+            memcache.set("group_list", groups, time=7200);
 
         to_display = dict()
         for key in groups:
             if group_to_find in key:
                 to_display[key] = groups[key]
-
 
         if len(to_display) > 0:
             self.render("groupdisplay.html", group_name=group_to_find, groups=to_display)
