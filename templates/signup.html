@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block below_menubar %}
+    <div class="container">
+        <h1>Join us!</h1>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" action="/signup">
+        <label for="login">Login:</label>
+        <input type="text" placeholder="Your login, it can be anything you want!" id="login" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
+        <label for="email">College email address:</label>
+        <input type="email" placeholder="hello.world1@univ-lorraine.fr" />
+        <button class="btn btn-primary">Sign in!</button>
+    </form>
+{% endblock %}
