@@ -4,7 +4,7 @@ from XMLAnalyser import XMLAnalyser
 from google.appengine.api import memcache
 
 class ClassAbsenteesHandler(BaseHandler):
-    temp_prof_name = "CHAROY FRANCOIS"
+
 
     def __init__(self, request=None, response=None):
         self.initialize(request, response)

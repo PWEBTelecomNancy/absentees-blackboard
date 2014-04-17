@@ -39,6 +39,7 @@ input[type="text"]
 
 #currentSession
 {
+    width:100%;
     cursor: auto;
 }
 #prev_class
@@ -111,5 +112,17 @@ input[type="text"]
 #sidebar
 {
     max-height:300px;
+    min-width:300px;
+    width:100%;
     overflow-y:scroll;
+}
+
+
+
+/***** CSS properties for class today page *****/
+
+
+.class_today_boxes
+{
+    width:100%;
 }
