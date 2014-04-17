@@ -6,63 +6,37 @@ body {
 }
 
 /***** CSS properties for form layout *****/
-.form_body form
+.form-body form
 {
     margin-top: 25px;
 }
 
-input[type="text"], input[type="password"]
+.form-body input[type="text"], .form-body input[type="password"]
 {
     height: 30px;
 }
 
-.top-marge-button
+.form-body .top-marge-button
 {
     margin-top: 10px;
 }
 
 
 /***** CSS properties for class absentees page *****/
-.anim
-{
-    -moz-text-shadow: 0 0 1px #000000 inset;
-    -webkit-text-shadow: 0 0 1px #000000 inset;
-    text-shadow: 1px 1px 0px #000000;
-
-    box-shadow: 10px 10px 5px #808080;
-
-	-webkit-transition: text-shadow 1s;
-    -moz-transition: text-shadow 1s;
-    -o-transition: text-shadow 1s;
-    transition: text-shadow 1s;
-}
-
-.anim:active
-{
-    -moz-text-shadow: 0 0 1px #000000 inset;
-    -webkit-text-shadow: 0 0 1px #000000 inset;
-    text-shadow: 1px 1px 0px #000000;
-
-    box-shadow: 7px 7px 5px #808080;
-
-	-webkit-transition: text-shadow 1s;
-    -moz-transition: text-shadow 1s;
-    -o-transition: text-shadow 1s;
-    transition: text-shadow 1s;
-}
-
-.anim:hover
-{
-	text-shadow: 1px 1px 0px #808080;
-}
-
 .student
 {
-    height: 50px;
     width: 100%;
-    text-align: left;
-    font-size: 22px;
-    margin: 5px;
+}
+
+.student p
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.student:hover
+{
+    text-shadow: 1px 1px 0px #808080;
 }
 
 .student_name
@@ -74,24 +48,23 @@ input[type="text"], input[type="password"]
 
 .student_group
 {
-<<<<<<< HEAD
     display: inline-block;
     text-align: right;
     width: 50%;
-=======
-    max-height:300px;
-    min-width:300px;
-    width:100%;
-    overflow-y:scroll;
 }
 
-
-
-/***** CSS properties for class today page *****/
-
-
-.class_today_boxes
+#students_list
 {
-    width:100%;
->>>>>>> aa5066b1cd97d80d992c406bcb5a5a3c1d155c24
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#students_list div
+{
+    height: 10px;
+}
+
+#students_list input[type="checkbox"]
+{
+    display: none;
 }

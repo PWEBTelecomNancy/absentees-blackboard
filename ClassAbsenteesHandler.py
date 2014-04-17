@@ -5,12 +5,8 @@ import re
 
 
 class ClassAbsenteesHandler(BaseHandler):
-<<<<<<< HEAD
     temp_prof_name = "CHAROY FRANCOIS"
     ade_communicator = None
-=======
-
->>>>>>> aa5066b1cd97d80d992c406bcb5a5a3c1d155c24
 
     def __init__(self, request=None, response=None):
         self.initialize(request, response)

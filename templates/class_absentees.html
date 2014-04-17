@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Current session :</h1>
+                <h1>Current class:</h1>
             </div>
         </div>
 
@@ -15,6 +15,11 @@
                 <p class="text-left">{{start_time}} - {{end_time}}<br />
                 {{teacher_name}}<br />
                 {{room}}</p>
+                <p>
+                {% for group in groups %}
+                    {{group}}<br />
+                {% endfor %}
+                </p>
             </div>
         </div>
     </div>
@@ -22,34 +27,42 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="col-xs-12">
-    <ul>
-        {% for student in students %}
-        <div class="row">
-        <li id="{{student.name}}" class="anim student btn btn-success btn-lg" role="button"
-            onclick="change('{{student.name}}');">
-            <p class="student_name">{{student.name}}</p>
-            <p class="student_group">{{student.group}}</p>
-        </li>
+<div class="col-md-12">
+    <form method="post" action="/class_absentees">
+        <div class="form-group">
+            <ul id="students_list">
+                {% for student in students %}
+                    <li id="{{student.name}}button" class="anim student btn" role="button"
+                        onclick="change('{{student.name}}');">
+                        <input type="checkbox" id="{{student.name}}box" />
+                        <p class="student_name">{{student.name}}</p>
+                        <p class="student_group">{{student.group}}</p>
+                    </li>
+                {% endfor %}
+
+                <script language="javascript">
+                    function change(str) {
+                        var link=document.getElementById(str + "button");
+                        var checkbox = document.getElementById(str + "box")
+                        var hisclass= link.className;
+
+                        if (hisclass =="anim student btn btn-danger") {
+                            link.className='anim student btn';
+                            checkbox.checked = false;
+                        }
+
+                        else {
+                            link.className='anim student btn btn-danger';
+                            checkbox.checked = true;
+                        }
+                    }
+                </script>
+            </ul>
         </div>
-        {% endfor %}
 
-        <script language="javascript">
-            function change(str) {
-                var link=document.getElementById(str);
-                var hisclass= link.className;
-
-                if (hisclass =="anim student btn btn-danger btn-lg") {
-                    link.className='anim student btn btn-success btn-lg';
-                }
-
-                else {
-                    link.className='anim student btn btn-danger btn-lg';
-                }
-            }
-        </script>
-    </ul>
-    </div>
+        <div class="form-group">
+            <button class="form-control">OK</button>
+        </div>
+    </form>
 </div>
 {% endblock %}

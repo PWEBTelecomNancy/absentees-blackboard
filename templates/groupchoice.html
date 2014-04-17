@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block below_menubar %}
-            <div class="container">
-                <h1 class="col-md-12">Find a group</h1>
-            </div>
+    <div class="container">
+        <h1 class="col-md-12">Find a group</h1>
+    </div>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="row">
         <form method="post" action="/students_list" class="row col-sm-offset-2 col-sm-8 form-body">
             <div class="row">
                 <label for="group_name" class="col-sm-2">Group name</label>
@@ -17,28 +17,28 @@
                 <button class="btn btn-primary col-sm-2 pull-right top-marge-button">Search</button>
             </div>
 
-        <script type="text/javascript">
-        function check_size() {
-            if($(window).width() < 780)
-            {
-                $("label, button[class*='btn-primary'], input").addClass("form-control");
+            <script type="text/javascript">
+            function check_size() {
+                if($(window).width() < 780)
+                {
+                    $("label, button[class*='btn-primary'], input").addClass("form-control");
+                }
+
+                else
+                {
+                    $("label, button[class*='btn-primary'], input").removeClass("form-control");
+                }
             }
 
-            else
-            {
-                $("label, button[class*='btn-primary'], input").removeClass("form-control");
+            window.onresize = function(event) {
+                check_size();
             }
-        }
 
-        window.onresize = function(event) {
-            check_size();
-        }
+            document.onready = function() {
+                check_size();
+            };
 
-        document.onready = function() {
-            check_size();
-        };
-
-    </script>
+            </script>
         </form>
     </div>
 {% endblock %}

@@ -5,6 +5,7 @@ from google.appengine.ext import db
 
 class Absentees(db.Model):
     student_name = db.StringProperty(required=True)
+    student_email = db.StringProperty(required=True)
     student_group = db.StringProperty(required=True)
     class_title = db.StringProperty(required=True)
     start_hour = db.TimeProperty(required=True)
