@@ -6,7 +6,7 @@ from BaseHandler import *
 class HomeHandler(BaseHandler):
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
-        self.pageName = "home"
+        self.page_name = "home"
 
     def get(self):
         self.render('home.html')
