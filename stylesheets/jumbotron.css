@@ -6,12 +6,12 @@ body {
 }
 
 /***** CSS properties for form layout *****/
-form
+.form_body form
 {
     margin-top: 25px;
 }
 
-input[type="text"]
+input[type="text"], input[type="password"]
 {
     height: 30px;
 }
@@ -23,93 +23,58 @@ input[type="text"]
 
 
 /***** CSS properties for class absentees page *****/
-
-#background{
-    background: rgba(230,230,230,1);
-    background: -moz-linear-gradient(top, rgba(230,230,230,1) 0%, rgba(158,158,158,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(230,230,230,1)), color-stop(100%, rgba(158,158,158,1)));
-    background: -webkit-linear-gradient(top, rgba(230,230,230,1) 0%, rgba(158,158,158,1) 100%);
-    background: -o-linear-gradient(top, rgba(230,230,230,1) 0%, rgba(158,158,158,1) 100%);
-    background: -ms-linear-gradient(top, rgba(230,230,230,1) 0%, rgba(158,158,158,1) 100%);
-    background: linear-gradient(to bottom, rgba(230,230,230,1) 0%, rgba(158,158,158,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e6e6', endColorstr='#9e9e9e', GradientType=0 );
-    width: 100%;
-    height: 100%;
-}
-
-#currentSession
-{
-    cursor: auto;
-}
-#prev_class
-{
-    cursor: auto;
-}
-
-#next_class
-{
-    cursor: auto;
-}
-
-#ClassAbsenteesClock{
-  pointer-events: none;
-  cursor: auto;
-}
-
 .anim
 {
-    -moz-text-shadow:0 0 1px #000000 inset;
-    -webkit-text-shadow:0 0 1px #000000 inset;
-    text-shadow:1px 1px 0px #000000;
+    -moz-text-shadow: 0 0 1px #000000 inset;
+    -webkit-text-shadow: 0 0 1px #000000 inset;
+    text-shadow: 1px 1px 0px #000000;
 
-    box-shadow:10px 10px 5px #808080;
+    box-shadow: 10px 10px 5px #808080;
 
-	-webkit-transition:text-shadow 1s;
-    -moz-transition:text-shadow 1s;
-    -o-transition:text-shadow 1s;
-    transition:text-shadow 1s;
+	-webkit-transition: text-shadow 1s;
+    -moz-transition: text-shadow 1s;
+    -o-transition: text-shadow 1s;
+    transition: text-shadow 1s;
 }
 
 .anim:active
 {
-    -moz-text-shadow:0 0 1px #000000 inset;
-    -webkit-text-shadow:0 0 1px #000000 inset;
-    text-shadow:1px 1px 0px #000000;
+    -moz-text-shadow: 0 0 1px #000000 inset;
+    -webkit-text-shadow: 0 0 1px #000000 inset;
+    text-shadow: 1px 1px 0px #000000;
 
-    box-shadow:7px 7px 5px #808080;
+    box-shadow: 7px 7px 5px #808080;
 
-	-webkit-transition:text-shadow 1s;
-    -moz-transition:text-shadow 1s;
-    -o-transition:text-shadow 1s;
-    transition:text-shadow 1s;
+	-webkit-transition: text-shadow 1s;
+    -moz-transition: text-shadow 1s;
+    -o-transition: text-shadow 1s;
+    transition: text-shadow 1s;
 }
 
 .anim:hover
 {
-	text-shadow:1px 1px 0px #808080;
+	text-shadow: 1px 1px 0px #808080;
 }
 
 .student
 {
-    height:50px;
-    width:100%;
-    text-align:left;
-    font-size:22px;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    font-size: 22px;
+    margin: 5px;
 }
 
-.group_tag +.group_tag
+.student_name
 {
-    margin-left:20px;
-
+    display: inline-block;
+    text-align: left;
+    width: 50%;
 }
 
-.group_tag
+.student_group
 {
-    font-size:25px;
-}
-
-#sidebar
-{
-    max-height:300px;
-    overflow-y:scroll;
+    display: inline-block;
+    text-align: right;
+    width: 50%;
 }

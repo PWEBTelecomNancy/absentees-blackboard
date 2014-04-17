@@ -3,6 +3,7 @@ __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 from XMLAnalyser import *
 from google.appengine.api import memcache
 
+
 class ADECommunicator():
     parser = None
 
@@ -21,5 +22,5 @@ class ADECommunicator():
 
     def get_teacher_class(self, teacher, time, date):
         #WARNING should be coded
-        return {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
-                "teacher_name": "CHAROY FRANCOIS"}
+        return {"class_name": "TP PGWEB 2A IL", "groups": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
+                "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}

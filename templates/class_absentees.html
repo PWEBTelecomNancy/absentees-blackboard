@@ -1,117 +1,55 @@
 {% extends 'base.html' %}
 
 {% block below_menubar %}
-        {# Main jumbotron (big-ass banner with text in it) #}
-        <div id="background" class="jumbotron">
-            <div class="row">
-                    <div class="col-md-4">
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Current session :</h1>
+            </div>
+        </div>
 
-                    </div>
-                    <div class="col-md-4">
-                        <iframe id="ClassAbsenteesClock" src="http://free.timeanddate.com/clock/i43qh83k/n319/tlfr2/fn4/fs45/tct/pct" frameborder="0" width="304" height="56" allowTransparency="true"></iframe>
-                    </div>
-                    <div class="col-md-4">
-
-                    </div>
-                </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Current session :</h2>
-                    </div>
-                    <div class="col-md-6">
-                        <h2>Students :</h2>
-                    </div>
-               </div>
-               <br>
-               <div class="row">
-                    <div class="col-xs-6">
-                            {% block class_icon %}
-                            <a id="currentSession" class="anim btn btn-warning btn-lg" role="button">
-                                <h2 class="text-left"> {{class_name}}</h2>
-                                <h3 class="text-right">{{time}}</h3>
-                                <hr>
-                                <h3 class="text-left">{{teacher}}</h3>
-                                <h3 class="text-left">{{type}}</h3>
-                                <h3 class="text-left">{{room}}</h3>
-                                <hr>
-                                <h3 class="text-left">{{nb_students}} students should be present.</h3>
-                            </a>
-                            {% endblock %}
-                    </div>
-
-                    <div class="col-md-6">
-                        {% block students_list %}
-                                <ul id="sidebar">
-                                     {% for groups_subset in groups | batch(2, '') %}
-                                        {% for a_group in groups_subset |sort %}
-                                        {% if a_group %}
-                                            {% for member in groups[a_group] | sort %}
-                                                <a id="{{member}}" class="anim student btn btn-success btn-lg" role="button"
-                                                     onclick="change('{{member}}');">
-                                                    {{member}} <small style="text-align:right">{{a_group}} </small>
-                                                </a>
-                                                <br>
-                                            {% endfor %}
-                                        {% endif %}
-                                        {% endfor %}
-                                    {% endfor %}
-                                    <br>
-
-                                     <script language="Javascript">
-                                         <!--
-                                        function change(str) {
-                                           var link=document.getElementById(str);
-                                           var hisclass= link.className;
-                                           if (hisclass =="anim student btn btn-danger btn-lg"){
-                                                link.className='anim student btn btn-success btn-lg';
-                                                }
-                                           else{
-                                                link.className='anim student btn btn-danger btn-lg';
-                                            }
-                                         }
-                                           //-->
-                                         </script>
-                                    {% endblock %}
-                                </ul>
-                         </div>
-
-                        </div>
-                        <form method="post" action="/class_absentees">
-                         <div class="row">
-
-                            <div class="col-md-6">
-
-                            </div>
-                            <div class="col-md-6">
-                                {% for tag in tags |sort %}
-                                    {%if tag in main_tag %}
-                                      <button class="anim group_tag btn btn-info btn-lg" role="button" name="tag" value="{{tag}}">{{tag}}</button>
-                                    {%else%}
-                                      <button class="anim group_tag btn btn-primary btn-lg" role="button" name="tag" value="{{tag}}">{{tag}}</button>
-                                    {%endif%}
-                                {% endfor %}
-                              </div>
-                            </div>
-                    </form>
-
-                    </div>
-                </div>
-
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-left">{{class_name}}</h2>
+                <p class="text-left">{{start_time}} - {{end_time}}<br />
+                {{teacher_name}}<br />
+                {{room}}</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block body %}
-            <div class="row">
-                <div class="col-md-4">
-                    <a id="goto_prev_cour" class="anim btn btn-default" role="button"><h2>&lt;&lt;Prev</h2></a>
-                    <a id="prev_class" class="anim btn btn-warning" role="button"><h2>C</h2></a>
-                </div>
-                <div class="col-md-4">
-                    <a id="next_class" class="anim btn btn-success" role="button"><h2>RSA</h2></a>
-                    <a id="goto_next_class" class="anim btn btn-default" role="button"><h2>Next&gt;&gt;</h2></a>
-                </div>
-                <div class="col-md-4">
-                    <a id="button_call_register" class="anim btn btn-primary" role="button"><h2>I've finished calling <br />the register.</h2></a>
-                </div>
-            </div>
+<div class="container">
+    <div class="col-xs-12">
+    <ul>
+        {% for student in students %}
+        <div class="row">
+        <li id="{{student.name}}" class="anim student btn btn-success btn-lg" role="button"
+            onclick="change('{{student.name}}');">
+            <p class="student_name">{{student.name}}</p>
+            <p class="student_group">{{student.group}}</p>
+        </li>
+        </div>
+        {% endfor %}
+
+        <script language="javascript">
+            function change(str) {
+                var link=document.getElementById(str);
+                var hisclass= link.className;
+
+                if (hisclass =="anim student btn btn-danger btn-lg") {
+                    link.className='anim student btn btn-success btn-lg';
+                }
+
+                else {
+                    link.className='anim student btn btn-danger btn-lg';
+                }
+            }
+        </script>
+    </ul>
+    </div>
+</div>
 {% endblock %}

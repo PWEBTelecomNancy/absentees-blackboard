@@ -7,19 +7,17 @@
 {% endblock %}
 
 {% block body %}
-        <div class="container">
-            <form method="post" action="/students_list" class="row col-sm-offset-2 col-sm-8">
-                <div class="row">
-                    <label for="group_name" class="col-sm-2">Group name</label>
-                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-sm-10">
-                </div>
-                <div class="row">
-                    <button class="btn btn-primary col-sm-2 pull-right top-marge-button">Search</button>
-                </div>
-            </form>
-        </div>
+    <div class="container">
+        <form method="post" action="/students_list" class="row col-sm-offset-2 col-sm-8 form-body">
+            <div class="row">
+                <label for="group_name" class="col-sm-2">Group name</label>
+                <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-sm-10">
+            </div>
+            <div class="row">
+                <button class="btn btn-primary col-sm-2 pull-right top-marge-button">Search</button>
+            </div>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
         function check_size() {
             if($(window).width() < 780)
             {
@@ -41,4 +39,6 @@
         };
 
     </script>
+        </form>
+    </div>
 {% endblock %}
