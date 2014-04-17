@@ -21,5 +21,5 @@ class ADECommunicator():
 
     def get_teacher_class(self, teacher, time, date):
         #WARNING should be coded
-        return {"class_name": "TP PGWEB 2A IL", "group": "2A IL", "start_time": "10h00", "end_time": "12h00",
+        return {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
                 "teacher_name": "CHAROY FRANCOIS"}
