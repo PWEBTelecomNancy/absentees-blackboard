@@ -10,7 +10,7 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), aut
 
 
 class BaseHandler(webapp2.RequestHandler):
-    pageName = "home"
+    page_name = "home"
 
     @staticmethod
     def render_str(template, **params):
@@ -18,7 +18,7 @@ class BaseHandler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **kw):
-        self.write(self.render_str(template, pageName = self.pageName, **kw))
+        self.write(self.render_str(template, pageName=self.page_name, **kw))
 
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)

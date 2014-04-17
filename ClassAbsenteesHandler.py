@@ -1,20 +1,20 @@
 from BaseHandler import *
 import logging
-import ConfigParser
 from XMLAnalyser import XMLAnalyser
 from google.appengine.api import memcache
 
-class CourHandler(BaseHandler):
+class ClassAbsenteesHandler(BaseHandler):
+    temp_prof_name = "CHAROY FRANCOIS"
 
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
-        self.pageName = "class_absentees"
+        self.page_name = "class_absentees"
 
     def get(self):
 
         group_to_display_example ="2A IL"
         tags_exemple = {'IL':'2A IL','LE':'2A LE','TRS':'2A TRS'}
-        CourHandler.renderTemp(self,group_to_display_example,tags_exemple)
+        ClassAbsenteesHandler.renderTemp(self,group_to_display_example,tags_exemple)
 
     def post(self):
         tag_clicked = self.request.get('tag')
@@ -22,7 +22,7 @@ class CourHandler(BaseHandler):
         if tag_clicked:
             tags_exemple = {'IL':'2A IL','LE':'2A LE','TRS':'2A TRS'}
             group_example = tags_exemple[tag_clicked]
-            CourHandler.renderTemp(self,group_example,tags_exemple)
+            ClassAbsenteesHandler.renderTemp(self,group_example,tags_exemple)
         else:
             self.redirect('/class_absentees')
 

@@ -5,5 +5,5 @@ from ClassAbsenteesHandler import *
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
                                   ('/students_list', StudentsListHandler),
-                                  ('/class_absentees', CourHandler)
+                                  ('/class_absentees', ClassAbsenteesHandler)
                               ], debug=True)

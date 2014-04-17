@@ -8,7 +8,7 @@ from google.appengine.api import memcache
 class StudentsListHandler(BaseHandler):
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
-        self.pageName = "students_list"
+        self.page_name = "students_list"
 
     def get(self):
         self.render("groupchoice.html")
