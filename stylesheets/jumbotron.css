@@ -74,7 +74,24 @@ input[type="text"], input[type="password"]
 
 .student_group
 {
+<<<<<<< HEAD
     display: inline-block;
     text-align: right;
     width: 50%;
+=======
+    max-height:300px;
+    min-width:300px;
+    width:100%;
+    overflow-y:scroll;
+}
+
+
+
+/***** CSS properties for class today page *****/
+
+
+.class_today_boxes
+{
+    width:100%;
+>>>>>>> aa5066b1cd97d80d992c406bcb5a5a3c1d155c24
 }
