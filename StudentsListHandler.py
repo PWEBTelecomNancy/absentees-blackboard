@@ -1,27 +1,22 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 from BaseHandler import *
-import logging
-from XMLAnalyser import XMLAnalyser
-from google.appengine.api import memcache
+from ADECommunicator import *
 
 class StudentsListHandler(BaseHandler):
+    ade_communicator = None
+
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
         self.page_name = "students_list"
+        self.ade_communicator = ADECommunicator()
 
     def get(self):
         self.render("groupchoice.html")
 
     def post(self):
         group_to_find = self.request.get("group_name")
-        groups = memcache.get("group_list")
-
-        if groups is None:
-            logging.error("CACHE MISS StudentsListHandler l. 24")
-            parser = XMLAnalyser()
-            groups = parser.get_members()
-            memcache.set("group_list", groups, time=604800);
+        groups = self.ade_communicator.get_students_groups()
 
         to_display = dict()
         for key in groups:
