@@ -18,7 +18,7 @@ class BaseHandler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **kw):
-        self.write(self.render_str(template, pageName = self.pageName, **kw))
+        self.write(self.render_str(template, pageName=self.pageName, **kw))
 
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
