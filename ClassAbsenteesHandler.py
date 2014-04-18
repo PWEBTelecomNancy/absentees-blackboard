@@ -47,23 +47,3 @@ class ClassAbsenteesHandler(BaseHandler):
             ClassAbsenteesHandler.render_temp(self,group_example,tags_exemple)
         else:
             self.redirect('/class_absentees')"""
-
-    def render_temp(self,group_to_display="",group_tags=""):
-        groups = self.ade_communicator.get_students_groups()
-
-        toDisplay = dict()
-        cpt=0;
-        for gkey in groups:
-            if group_to_display in gkey:
-                toDisplay[gkey] = groups[gkey]
-
-        for gkey in groups:
-            for v in group_tags.values():
-                if v in gkey:
-                    for skey in groups[gkey]:
-                        cpt+=1
-
-        class_parameters = {'class_name': 'RSA', 'time': ' 10:10 - 12:00', 'teacher': 'Ms Moufida', 'type': 'CM',
-                          'room': 'Amphi Nord', 'nb_students': cpt,'groups':toDisplay,'tags':group_tags,'main_tag':group_to_display}
-
-        self.render('class_absentees.html', **class_parameters)

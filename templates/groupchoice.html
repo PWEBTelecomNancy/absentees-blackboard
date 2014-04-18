@@ -7,38 +7,23 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <form method="post" action="/students_list" class="row col-sm-offset-2 col-sm-8 form-body">
-            <div class="row">
-                <label for="group_name" class="col-sm-2">Group name</label>
-                <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-sm-10">
-            </div>
-            <div class="row">
-                <button class="btn btn-primary col-sm-2 pull-right top-marge-button">Search</button>
-            </div>
+    <div class="container">
+        <div class="col-md-2"></div>
 
-            <script type="text/javascript">
-            function check_size() {
-                if($(window).width() < 780)
-                {
-                    $("label, button[class*='btn-primary'], input").addClass("form-control");
-                }
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <form method="post" action="/students_list" class="form-body">
+                <div class="row">
+                    <label for="group_name" class="col-md-3 col-sm-12 col-xs-12">Group name</label>
+                    <input type="text" placeholder="Type here the group name (2A IL for example)" name="group_name" id="group_name" class="col-sm-12 col-md-9 col-xs-12">
+                </div>
 
-                else
-                {
-                    $("label, button[class*='btn-primary'], input").removeClass("form-control");
-                }
-            }
+                <div class="row">
+                    <button class="btn btn-primary col-xs-12 col-sm-12 col-md-2 pull-right top-marge-button">Search</button>
+                </div>
+            </form>
+        </div>
 
-            window.onresize = function(event) {
-                check_size();
-            }
+        <div class="col-md-2"></div>
 
-            document.onready = function() {
-                check_size();
-            };
-
-            </script>
-        </form>
     </div>
 {% endblock %}

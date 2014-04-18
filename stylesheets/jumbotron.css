@@ -1,22 +1,28 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 
-body {
+body
+{
   padding-top: 50px;
   padding-bottom: 20px;
 }
 
 /***** CSS properties for form layout *****/
-.form-body form
+.form-body
 {
     margin-top: 25px;
 }
 
 .form-body input[type="text"], .form-body input[type="password"]
 {
-    height: 30px;
+    height: 34px;
 }
 
-.form-body .top-marge-button
+.form-body label
+{
+    margin-top: 7px;
+}
+
+.top-marge-button
 {
     margin-top: 10px;
 }

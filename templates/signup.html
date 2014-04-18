@@ -7,13 +7,23 @@
 {% endblock %}
 
 {% block body %}
-    <form method="post" action="/signup">
-        <label for="login">Login:</label>
-        <input type="text" placeholder="Your login, it can be anything you want!" id="login" />
-        <label for="password">Password:</label>
-        <input type="password" id="password" />
-        <label for="email">College email address:</label>
-        <input type="email" placeholder="hello.world1@univ-lorraine.fr" />
-        <button class="btn btn-primary">Sign in!</button>
-    </form>
+    <div class="container">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 col-xs-12 col-sm-1">
+            <form method="post" action="/signup.html" id="signup-form" class="form-body">
+                <label for="login">Login:</label>
+                <input type="text" placeholder="Your login, it can be anything you want!" id="login" class="form-control" required />
+                <label for="password">Password:</label>
+                <input type="password" id="password" class="form-control" required />
+                <label for="email">College email address:</label>
+                <input type="email" placeholder="hello.world1@univ-lorraine.fr" id="email" class="form-control" />
+                <button class="btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button">Sign in</button>
+            </form>
+         </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
 {% endblock %}
