@@ -94,3 +94,19 @@ body
 .class_boxes:hover{
     text-shadow: 1px 1px 0px #808080;
 }
+
+
+/***** CSS properties for class_week page *****/
+
+.day_button {
+    font-size:17px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.day_button:hover
+{
+
+    text-shadow: 1px 1px 0px #808080;
+}
