@@ -2,6 +2,7 @@ from BaseHandler import *
 import logging
 from XMLAnalyser import XMLAnalyser
 from google.appengine.api import memcache
+import time
 
 class ClassTodayHandler(BaseHandler):
 
@@ -45,6 +46,9 @@ class ClassTodayHandler(BaseHandler):
         classes[4]=class4_example
         classes[5]=class5_example
 
-        class_parameters = {'classes':classes}
+        hour = time.strftime("%H:%M")
+        day = time.strftime("%A %d %B %Y")
+
+        class_parameters = {'classes':classes,'day':day,'hour':hour}
 
         self.render('class_today.html', **class_parameters)

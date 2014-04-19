@@ -74,3 +74,23 @@ body
 {
     display: none;
 }
+
+/***** CSS properties for class_today page *****/
+
+.hours_boxes{
+    width: 100%;
+}
+
+.hours_boxes:hover, .hours_boxes:active, .hours_boxes:focus {
+  cursor:auto;
+  outline: 0;
+}
+
+.class_boxes{
+    margin-top:15px;
+    width:100%;
+}
+
+.class_boxes:hover{
+    text-shadow: 1px 1px 0px #808080;
+}

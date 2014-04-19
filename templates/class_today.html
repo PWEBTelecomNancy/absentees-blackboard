@@ -3,13 +3,32 @@
 {% block below_menubar %}
         {# Main jumbotron (big-ass banner with text in it) #}
         <div id="background" class="jumbotron">
-
-            {% for i in range(0,classes|length) %}
-               <div class="row">
-                    <div class="col-md-1 col-xs-offset-3">
-                        <p class="anim btn-info">{{classes[i].start_time}}<p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Today's classes :</h1>
                     </div>
-                     <div class="col-md-3">
+                    <div class="col-md-10 col-xs-offset-2">
+                        <h2>{{day}}</h2>
+                    </div>
+                    <div class="col-md-10 col-xs-offset-2">
+                        <h1>{{hour}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block body %}
+{% for i in range(0,classes|length ) %}
+               <div class="row">
+                    <div class="col-xs-6 col-xs-offset-2">
+                        <button class="btn btn-default hours_boxes">{{classes[i].start_time}}</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                     <div class="col-sm-4 col-xs-offset-2">
                         {% set box_size = ((classes[i].end_time.split('h',1)[0]|int) - (classes[i].start_time.split('h',1)[0]|int))*75 -((classes[i].start_time.split('h',1)[1]|int)*17)/10+ ((classes[i].end_time.split('h',1)[1]|int)*17)/10%}
                         {% if not(classes[i].class_name == "None")%}
                             {%set color_style ="btn-info"%}
@@ -17,13 +36,15 @@
                             {% if classes[i].class_name.split(' ',1)[0] == "CM"%}{%set color_style ="btn-warning"%}{%endif%}
                             {% if classes[i].class_name.split(' ',1)[0] == "TD"%}{%set color_style ="btn-success"%}{%endif%}
                             {% if classes[i].class_name.split(' ',1)[0] == "Exam"%}{%set color_style ="btn-danger"%}{%endif%}
-                                <a class="anim class_today_boxes btn {{color_style}}" style="height:{{box_size}}px;" role="button">
+                                <a class="class_boxes btn {{color_style}}" style="height:{{box_size}}px;" role="button">
                                     <h4 class="text-left"> {{classes[i].class_name}}</h4>
-                                    <h5 class="text-left">
+
                                     {% for g in classes[i].group %}
+                                    <h5 class="text-left">
                                         {{g}}
-                                    {% endfor %}
                                     </h5>
+                                    {% endfor %}
+
                                 </a>
                         {%else%}
                             {% for j in range(0,(box_size/20)|int) %}
@@ -33,17 +54,12 @@
                             <br>
                          <br>
                     </div>
-                    </div>
+                </div>
             {% endfor %}
             <div class="row">
-                    <div class="col-md-1 col-xs-offset-3">
-                        <p class="anim btn-info class_today_boxes">{{classes[5].end_time}}<p>
+                    <div class="col-xs-6 col-xs-offset-2">
+                        <button class="btn btn-default hours_boxes">{{classes[5].end_time}}</button>
                     </div>
                  </div>
-            </div>
-{% endblock %}
-
-{% block body %}
-
 
 {% endblock %}
