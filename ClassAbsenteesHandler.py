@@ -36,14 +36,5 @@ class ClassAbsenteesHandler(BaseHandler):
         #Render the page
         self.render("class_absentees.html", students=students_list, **class_to_display)
 
-
     def post(self):
         pass
-        """tag_clicked = self.request.get('tag')
-
-        if tag_clicked:
-            tags_exemple = {'IL':'2A IL','LE':'2A LE','TRS':'2A TRS'}
-            group_example = tags_exemple[tag_clicked]
-            ClassAbsenteesHandler.render_temp(self,group_example,tags_exemple)
-        else:
-            self.redirect('/class_absentees')"""
