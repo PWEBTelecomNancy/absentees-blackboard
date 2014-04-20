@@ -4,7 +4,7 @@ import re
 
 from BaseHandler import *
 from Accounts import *
-from google.appengine.ext import db
+
 
 
 class SignupHandler(BaseHandler):
@@ -17,6 +17,9 @@ class SignupHandler(BaseHandler):
         self.page_name = "signup"
 
     def get(self):
+        if self.is_connected():
+            self.redirect('/')
+
         self.render('signup.html')
 
     def post(self):

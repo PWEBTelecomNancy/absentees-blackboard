@@ -9,6 +9,9 @@ class LoginHandler(BaseHandler):
         self.page_name = "login"
 
     def get(self):
+        if self.is_connected():
+            self.redirect('/')
+
         self.render('login.html')
 
     def post(self):
