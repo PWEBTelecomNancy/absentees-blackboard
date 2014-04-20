@@ -1,10 +1,8 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 import re
-
 from BaseHandler import *
 from Accounts import *
-
 
 
 class SignupHandler(BaseHandler):
