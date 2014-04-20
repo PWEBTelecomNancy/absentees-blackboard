@@ -58,6 +58,33 @@ def get_is_admin_from_id(user_id):
         return None
 
 
+def used_username(username):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username)
+    print result.count()
+    return result.count() != 0
+
+
+#Returns the user is if connexion is correct, None else
+def user_connexion(username, password):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username)
+
+    if result.count() == 1:
+        data = result.fetch(1)[0]
+        db_password = data.password.split('|')[0]
+        db_salt = data.password.split('|')[1]
+
+        print db_password
+        print db_salt
+
+        if str(hashlib.sha256(password + db_salt).hexdigest()) == db_password:
+            return data.key().id()
+        else:
+            return None
+
+    else:
+        return None
+
+
 def password_hash(password):
     salt = salt_generation()
     return str(hashlib.sha256(password + salt).hexdigest()) + '|' + salt

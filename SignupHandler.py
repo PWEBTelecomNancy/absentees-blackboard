@@ -28,7 +28,7 @@ class SignupHandler(BaseHandler):
         if not self.valid_username(username):
             error_messages.append("Please enter a username (more than 3 characters).")
 
-        if self.used_username(username):
+        if used_username(username):
             error_messages.append("This username is already used")
 
         if not self.valid_password(password):
@@ -53,12 +53,6 @@ class SignupHandler(BaseHandler):
 
     def valid_username(self, username):
         return self.user_regexp.match(username)
-
-    @staticmethod
-    def used_username(username):
-        result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username)
-        print result.count()
-        return result.count() != 0
 
     def valid_password(self, password):
         return self.password_regexp.match(password)
