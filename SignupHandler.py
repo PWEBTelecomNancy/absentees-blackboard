@@ -41,9 +41,14 @@ class SignupHandler(BaseHandler):
             self.render('signup.html', error_messages=error_messages, username=username, email=email)
 
         else:
+            #Put the account in datastore
             passhash = password_hash(password)
             account = Accounts(login=username, password=passhash, email_address=email, is_admin=False, is_teacher=False)
             account.put()
+
+            #Set a cookie for the login and redirect to home
+            self.response.headers.add_header('Set-Cookie', "user_id=" + id_cookie_generation(account.key().id())
+                                             + "; Path='/'")
             self.redirect('/')
 
     def valid_username(self, username):

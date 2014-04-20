@@ -5,6 +5,7 @@ import hashlib
 import random
 import string
 
+
 class Accounts(db.Model):
     login = db.StringProperty(required=True)
     password = db.StringProperty(required=True)
@@ -15,6 +16,11 @@ class Accounts(db.Model):
 
 def salt_generation():
     return ''.join(random.choice(string.letters) for i in range(5))
+
+
+def id_cookie_generation(id):
+    cookie_secret = "FrogidelPWEBMASTEROFTHEADEWORLD"
+    return str(id) + "|" + str(hashlib.sha256(str(id) + cookie_secret).hexdigest())
 
 
 def password_hash(password):
