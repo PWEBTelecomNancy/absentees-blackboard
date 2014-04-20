@@ -27,6 +27,7 @@ class StudentsListHandler(BaseHandler):
             if group_to_find in key:
                 to_display[key] = groups[key]
 
+        # Flatten lists
         members = [item for middle_list in to_display for item in to_display[middle_list]]
         members = sorted(members)
 
