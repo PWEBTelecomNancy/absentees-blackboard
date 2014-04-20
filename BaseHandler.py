@@ -36,9 +36,10 @@ class BaseHandler(webapp2.RequestHandler):
             user_id = self.request.cookies.get('user_id').split('|')[0]
             username = get_username_from_id(user_id)
             is_teacher = get_is_teacher_from_id(user_id)
+            is_admin = get_is_admin_from_id(user_id)
 
             self.write(self.render_str(template, connected=True, username=username, is_teacher=is_teacher,
-                                       pageName=self.page_name, **kw))
+                                       is_admin=is_admin, pageName=self.page_name, **kw))
         else:
             self.write(self.render_str(template, connected=False, pageName=self.page_name, **kw))
 

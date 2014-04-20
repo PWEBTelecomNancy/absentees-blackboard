@@ -32,6 +32,10 @@
                             <li><a href="/class_absentees">Current Session</a></li>
                             {% endif %}
                         {% endif %}
+
+                         {% if is_admin %}
+                             <li><a href="/admin">Administration</a></li>
+                         {% endif %}
                     </ul>
 
                     {# Login form down here #}
