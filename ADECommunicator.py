@@ -5,6 +5,10 @@ from google.appengine.api import memcache
 
 
 class ADECommunicator():
+    """
+    This class's task is to use/maintain/check/refresh the cache.
+    Create new methods to manage ADE data in the cache.
+    """
     parser = None
 
     def __init__(self):
@@ -14,7 +18,7 @@ class ADECommunicator():
         groups = memcache.get("group_list")
 
         if groups is None:
-            logging.error("CACHE MISS StudentsListHandler l. 24")
+            logging.error("CACHE MISS ADECommunicator get_students_groups()")
             groups = self.parser.get_members()
             memcache.set("group_list", groups, time=604800)
 
