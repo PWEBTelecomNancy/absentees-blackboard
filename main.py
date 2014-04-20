@@ -4,12 +4,14 @@ from ClassAbsenteesHandler import *
 from ClassTodayHandler import *
 from LoginHandler import *
 from SignupHandler import *
+from LogoutHandler import *
 from ClassWeekHandler import *
 
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
                                   ('/login', LoginHandler),
                                   ('/signup', SignupHandler),
+                                  ('/logout', LogoutHandler),
                                   ('/students_list', StudentsListHandler),
                                   ('/class_absentees', ClassAbsenteesHandler),
                                   ('/class_today', ClassTodayHandler),

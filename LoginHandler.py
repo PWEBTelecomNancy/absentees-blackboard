@@ -14,17 +14,27 @@ class LoginHandler(BaseHandler):
     def post(self):
         username_present = False
         password_present = False
+        username = ""
+        password = ""
 
-        if self.request.post('login'):
+        if self.request.get('login'):
             username_present = True
+            username = self.request.get('login')
 
-        if self.request.post('password'):
+        if self.request.get('password'):
             password_present = True
+            password = self.request.get('password')
 
         if not username_present or not password_present:
-            pass
-            # We display again the same form with error message
+            self.render('login.html', error_message="Incorrect login")
 
         else:
-            pass
-            # It's okay we can add it to the base and connect the user
+            user_id = user_connexion(username, password)
+            if user_id:
+                #Set connexion cookie
+                self.response.headers.add_header('Set-Cookie', "user_id=" + id_cookie_generation(user_id)
+                                                 + "; Path = '/'")
+                self.redirect('/')
+
+            else:
+                self.render('login.html', error_message="Incorrect login")
