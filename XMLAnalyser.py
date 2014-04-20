@@ -86,3 +86,78 @@ class XMLAnalyser():
                         clubs_list[group.getAttribute("name")].append(item.getAttribute("name"))
 
         return clubs_list
+
+    def get_lessons(self):
+        """
+        You can see an example of the output here:
+        https://github.com/PWEBTelecomNancy/abstentees-blackboard/wiki/XMLAnalyser.py#get_lessons
+        """
+        x = self.query({"function": "getActivities", "detail": "17", "tree": "true"})
+
+        folders = x.getElementsByTagName("folder")
+
+        #print "folders a une taille de %d." % folders.length
+
+        fetchedLessons = dict()
+
+        for folder in folders:
+            # In one folder, there are things such as
+            # Examen Anglais 1A
+            # Colorations 3A
+            # Gestion de masses de donnees 2A IAMD-SIE
+            for activity in folder.getElementsByTagName("activity"):
+                name = activity.getAttribute("name")
+                # Possible names are: (without the group details)
+                # TD TEC 1A apprentissage
+                # TD TEC 2A
+                #print name
+
+                events = activity.getElementsByTagName("event")
+
+                # Careful: some lessons have zero events.. For now I disregard
+                # 		   them, but would be nice to know more about those.
+                if len(events) > 0:
+                    lesson_name = events[0].getAttribute("name")
+                    # print "---> %s" % lesson_name
+
+
+                    fetchedLessons[lesson_name] = list();
+
+                    for x in range(0, events.length):
+
+                        data = dict()
+                        data["startHour"] = events[x].getAttribute("startHour")
+                        data["endHour"] = events[x].getAttribute("endHour")
+                        data["date"] = events[x].getAttribute("date")
+                        data['subject'] = lesson_name
+                        data['trainee'] = list()
+
+
+                        # Parse event details, such as teacher, students, room
+                        event_details = events[x].getElementsByTagName("eventParticipant")
+                        for event_detail in event_details:
+                            ev_category = event_detail.getAttribute("category")
+                            ev_name = event_detail.getAttribute("name")
+                            #print "ev_cat: %s; ev_name: %s" % (ev_category, ev_name)
+
+                            if "trainee" in ev_category:
+                                #print "type equals trainee"
+                                data['trainee'].append(ev_name)
+                            elif "classroom" in ev_category:
+                                #print "type equals classroom"
+                                data['classroom'] = ev_name
+                            elif "instructor" in ev_category:
+                                #print "type equals instructor"
+                                data['instructor'] = ev_name
+
+                        #fetchedLessons['lesson_name'] = data;
+                        #print lesson_name
+                        #print data
+
+                        # Save data into a list into a dict that has a key like
+                        # "lesson_name". Though, be careful not to overwrite!
+                        fetchedLessons[lesson_name].append(data)
+
+        # You may see an example of what it looks like here:
+        # https://github.com/PWEBTelecomNancy/abstentees-blackboard/wiki/XMLAnalyser.py#get_lessons
+        return fetchedLessons
