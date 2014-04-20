@@ -17,7 +17,6 @@ class BaseHandler(webapp2.RequestHandler):
             user_id = str(self.request.cookies.get('user_id'))
 
             if user_id and user_id != "":
-                print user_id
                 return check_cookie(user_id)
             else:
                 return False
