@@ -54,7 +54,8 @@ class SignupHandler(BaseHandler):
     def valid_username(self, username):
         return self.user_regexp.match(username)
 
-    def used_username(self, username):
+    @staticmethod
+    def used_username(username):
         result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username)
         print result.count()
         return result.count() != 0

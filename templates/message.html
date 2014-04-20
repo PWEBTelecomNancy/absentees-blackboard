@@ -3,6 +3,9 @@
 {% block below_menubar %}
     <div class="container">
         <h1 class="col-md-12">{{title}}</h1>
+        {% if text %}
+        <p>{{text}}</p>
+        {% endif %}
     </div>
 {% endblock %}
 
