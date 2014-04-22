@@ -83,7 +83,14 @@ class XMLAnalyser():
                         if group.getAttribute("name") not in clubs_list :
                             clubs_list[group.getAttribute("name")] = list()
 
-                        clubs_list[group.getAttribute("name")].append(item.getAttribute("name"))
+                        # Build user info
+                        data = dict()
+                        data['name'] = item.getAttribute("name")
+                        data['mail'] = item.getAttribute("email")
+                        data['id'] = item.getAttribute("id")
+
+                        logging.error(data)
+                        clubs_list[group.getAttribute("name")].append(data)
 
         return clubs_list
 
