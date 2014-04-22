@@ -15,7 +15,7 @@ class ClassAbsenteesHandler(BaseHandler):
 
     def get(self):
         #Test user connexion and privileges
-        if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id')):
+        if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             #First, get the class the teacher should have right now
             class_to_display = self.ade_communicator.get_teacher_class(self.temp_prof_name,
                                                                        time.strftime("%H:%M"),
