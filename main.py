@@ -6,6 +6,7 @@ from LoginHandler import *
 from SignupHandler import *
 from LogoutHandler import *
 from ClassWeekHandler import *
+from AdministrationHandler import *
 
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
@@ -15,5 +16,6 @@ app = webapp2.WSGIApplication([
                                   ('/students_list', StudentsListHandler),
                                   ('/class_absentees', ClassAbsenteesHandler),
                                   ('/class_today', ClassTodayHandler),
-                                  ('/class_week', ClassWeekHandler)
+                                  ('/class_week', ClassWeekHandler),
+                                  ('/admin', AdministrationHandler)
                               ], debug=True)
