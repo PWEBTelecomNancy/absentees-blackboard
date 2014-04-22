@@ -89,7 +89,6 @@ class XMLAnalyser():
                         data['mail'] = item.getAttribute("email")
                         data['id'] = item.getAttribute("id")
 
-                        logging.error(data)
                         clubs_list[group.getAttribute("name")].append(data)
 
         return clubs_list
