@@ -3,7 +3,7 @@ __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 from BaseHandler import *
 
 
-class MembersAdminHandler(BaseHandler):
+class AbsenteesAdminHandler(BaseHandler):
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
         self.page_name = "administration"
