@@ -27,6 +27,15 @@ body
     margin-top: 10px;
 }
 
+button
+{
+    margin: 10px;
+}
+
+button a
+{
+    color: inherit;
+}
 
 /***** CSS properties for class absentees page *****/
 .student
