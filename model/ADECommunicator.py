@@ -1,7 +1,8 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
-from XMLAnalyser import *
 from google.appengine.api import memcache
+
+from model.XMLAnalyser import *
 
 
 class ADECommunicator():
