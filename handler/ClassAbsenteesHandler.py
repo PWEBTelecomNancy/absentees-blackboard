@@ -1,7 +1,8 @@
-from BaseHandler import *
-from ADECommunicator import *
 import time
 import re
+
+from handler.BaseHandler import *
+from model.ADECommunicator import *
 
 
 class ClassAbsenteesHandler(BaseHandler):

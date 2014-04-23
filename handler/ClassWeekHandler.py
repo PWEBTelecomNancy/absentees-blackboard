@@ -1,8 +1,7 @@
-from BaseHandler import *
-import logging
-from XMLAnalyser import XMLAnalyser
-from google.appengine.api import memcache
 from time import strftime,strptime
+
+from handler.BaseHandler import *
+
 
 class ClassWeekHandler(BaseHandler):
 

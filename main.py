@@ -1,14 +1,14 @@
-from HomeHandler import *
-from StudentsListHandler import *
-from ClassAbsenteesHandler import *
-from ClassTodayHandler import *
-from LoginHandler import *
-from SignupHandler import *
-from LogoutHandler import *
-from ClassWeekHandler import *
-from AdministrationHandler import *
-from MembersAdminHandler import *
-from AbsenteesAdminHandler import *
+from handler.HomeHandler import *
+from handler.StudentsListHandler import *
+from handler.ClassAbsenteesHandler import *
+from handler.ClassTodayHandler import *
+from handler.LoginHandler import *
+from handler.SignupHandler import *
+from handler.LogoutHandler import *
+from handler.ClassWeekHandler import *
+from handler.AdministrationHandler import *
+from handler.MembersAdminHandler import *
+from handler.AbsenteesAdminHandler import *
 
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
