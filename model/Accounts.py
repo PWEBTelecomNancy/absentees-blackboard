@@ -34,6 +34,18 @@ def check_cookie(cookie_id):
         return False
 
 
+def get_connected_user(cookie_id):
+    if cookie_id:
+        if check_cookie(cookie_id):
+            username = get_username_from_id(cookie_id.split('|')[0])
+            result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username).fetch(1)
+            return result[0]
+        else:
+            return None
+    else:
+        return None
+
+
 def get_username_from_id(user_id):
     result = Accounts.get_by_id(int(user_id))
     if result:
