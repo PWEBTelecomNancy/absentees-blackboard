@@ -15,6 +15,7 @@ class Accounts(db.Model):
     is_admin = db.BooleanProperty(required=True)
     is_teacher = db.BooleanProperty(required=True)
     email_address = db.StringProperty(required=True)
+    name = db.StringProperty(required=True)
 
 
 def salt_generation():

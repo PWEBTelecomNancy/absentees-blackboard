@@ -25,6 +25,7 @@ class SignupHandler(BaseHandler):
         username = self.request.get('login')
         password = self.request.get('password')
         email = self.request.get('email')
+        name = self.request.get('name').upper()
         error_messages = []
 
         if not self.valid_username(username):
@@ -39,13 +40,20 @@ class SignupHandler(BaseHandler):
         if not self.valid_email(email):
             error_messages.append("Please enter a valid email address")
 
+        if not self.valid_name(name):
+            error_messages.append("Please enter your name in the following format: Lastname and Firstname")
+
         if len(error_messages) > 0:
-            self.render('signup.html', error_messages=error_messages, username=username, email=email)
+            self.render('signup.html',
+                        error_messages=error_messages, username=username,
+                        email=email, name=name)
 
         else:
             #Put the account in datastore
             passhash = password_hash(password)
-            account = Accounts(login=username, password=passhash, email_address=email, is_admin=False, is_teacher=False)
+            account = Accounts(login=username, password=passhash,
+                               email_address=email, is_admin=False,
+                               is_teacher=False, name=name)
             account.put()
 
             #Set a cookie for the login and redirect to home
@@ -61,3 +69,13 @@ class SignupHandler(BaseHandler):
 
     def valid_email(self, email):
         return self.email_regexp.match(email)
+
+    def valid_name(self, name):
+        check = True
+        if check is None:
+            check = False
+
+        if len(name.split(' ')) != 2:
+            check = False
+
+        return check
