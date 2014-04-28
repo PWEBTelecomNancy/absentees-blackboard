@@ -32,9 +32,22 @@
         <div class="form-group">
             <ul id="students_list">
                 {% for student in students %}
-                    <li id="{{student.name.name|title}}button" class="anim student btn" role="button"
-                        onclick="change('{{student.name.name|title}}');">
-                        <input type="checkbox" id="{{student.name.name|title}}box" />
+                    {% if student.name.mail in absentees %}
+                    <li id="{{student.name.mail}}|{{student.name.name}}|button" class="anim student btn btn-danger"
+                        role="button" onclick="change('{{student.name.mail}}|{{student.name.name}}');">
+
+                        <input type="checkbox" id="{{student.name.mail}}|{{student.name.name}}|box"
+                                name="{{student.name.mail}}|{{student.name.name}}|box" checked />
+
+                    {% else %}
+                    <li id="{{student.name.mail}}|{{student.name.name}}|button" class="anim student btn" role="button"
+                        onclick="change('{{student.name.mail}}|{{student.name.name}}');">
+
+                        <input type="checkbox" id="{{student.name.mail}}|{{student.name.name}}|box"
+                                name="{{student.name.mail}}|{{student.name.name}}|box" />
+
+                    {% endif %}
+
                         <p class="student_name">{{student.name.name|title}}</p>
                         <p class="student_group">{{student.group}}</p>
                     </li>
@@ -42,17 +55,17 @@
 
                 <script language="javascript">
                     function change(str) {
-                        var link=document.getElementById(str + "button");
-                        var checkbox = document.getElementById(str + "box")
-                        var hisclass= link.className;
+                        var link = document.getElementById(str + "|button");
+                        var checkbox = document.getElementById(str + "|box")
+                        var hisclass = link.className;
 
-                        if (hisclass =="anim student btn btn-danger") {
-                            link.className='anim student btn';
+                        if (hisclass == "anim student btn btn-danger") {
+                            link.className = 'anim student btn';
                             checkbox.checked = false;
                         }
 
                         else {
-                            link.className='anim student btn btn-danger';
+                            link.className = 'anim student btn btn-danger';
                             checkbox.checked = true;
                         }
                     }
