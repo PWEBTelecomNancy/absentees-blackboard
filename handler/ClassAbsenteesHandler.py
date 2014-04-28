@@ -75,8 +75,8 @@ class ClassAbsenteesHandler(BaseHandler):
             elif lesson_start_time[0] < my_time[0] and my_time[0] < lesson_end_time[0]:
                 final_step = lesson
 
-        return {"class_name": "TP PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
-                "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
+        #return {"class_name": "TP PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
+        #        "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
 
         if final_step is None:
             return None
