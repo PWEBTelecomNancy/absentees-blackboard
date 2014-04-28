@@ -1,6 +1,6 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
-from BaseHandler import *
+from handler.BaseHandler import *
 
 
 class LoginHandler(BaseHandler):

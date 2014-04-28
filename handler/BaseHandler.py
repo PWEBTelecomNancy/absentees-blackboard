@@ -1,11 +1,14 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 import os
+
 import webapp2
 import jinja2
-from Accounts import *
 
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+from model.Accounts import *
+
+
+template_dir = os.path.join(os.path.dirname(__file__), '../templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=True)
 
 
