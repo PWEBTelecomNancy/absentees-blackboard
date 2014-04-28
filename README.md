@@ -1,7 +1,7 @@
 Absentees Blackboard
 =====================
 
-Website designed for TELECOM Nancy (http://www.telecomnancy.eu/) and its absentees (us student).
+Website designed for TELECOM Nancy (http://www.telecomnancy.eu/) and its absentees (us students! :C).
 
 Features
 ========
@@ -23,3 +23,5 @@ And as a teacher, you can:
  * View in details the students that have the highest attendance grade
  * Validate/refuse a reason of a student
 
+
+Please see the live website at http://frogidel.appspot.com/. (It may not be up to date.)
