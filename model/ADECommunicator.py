@@ -30,7 +30,7 @@ class ADECommunicator():
     def get_lessons(self):
         all_lessons = memcache.get("lessons_list")
         if all_lessons is None:
-            logging.error("CACHE MISS ADECommunicator get_teacher_class()")
+            logging.error("CACHE MISS ADECommunicator get_lessons()")
             all_lessons = self.parser.get_lessons()
 
             memcache.set("lessons_list", all_lessons, time=self.default_cache_short_prune)
