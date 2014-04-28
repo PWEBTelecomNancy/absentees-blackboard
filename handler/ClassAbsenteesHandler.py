@@ -6,6 +6,7 @@ from model.ADECommunicator import *
 from model.Absentees import *
 import time
 
+
 class ClassAbsenteesHandler(BaseHandler):
     temp_prof_name = "CHAROY FRANCOIS"
     ade_communicator = None
@@ -88,15 +89,15 @@ class ClassAbsenteesHandler(BaseHandler):
                     "room": final_step["classroom"]}"""
 
     def get(self):
-        #Test user connexion and privileges
+        # Test user connexion and privileges
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
-            #First, get the class the teacher should have right now
+            # First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
             class_to_display = self.filter_teacher_class(self.temp_prof_name, time.strftime("%H:%M"), class_date)
 
-            #If there's a class
+            # If there's a class
             if class_to_display is not None:
-                #Then, we get the students for this class
+                # Then, we get the students for this class
                 students_list = []
                 groups = self.ade_communicator.get_students_groups()
 
@@ -111,7 +112,7 @@ class ClassAbsenteesHandler(BaseHandler):
 
                 students_list.sort(key=lambda x: x['name'])
 
-                #Check for already done absentees
+                # Check for already done absentees
                 present_absentees = get_absentees_for_class(class_to_display['class_name'],
                                                             class_to_display['teacher_name'], class_date,
                                                             class_to_display['start_time'],
@@ -122,11 +123,11 @@ class ClassAbsenteesHandler(BaseHandler):
                     for student_abs in present_absentees:
                         mail_absentees.append(student_abs.student_email)
 
-                #Render the page
+                # Render the page
                 self.render("class_absentees.html", students=students_list, absentees=mail_absentees,
                             **class_to_display)
 
-            #Else, congrats, the teacher doesn't have to do anything
+            # Else, congrats, the teacher doesn't have to do anything
             else:
                 self.render("message.html", title="No lessons found!", subtitle="Looks like you don't have to work!")
         else:
@@ -134,15 +135,15 @@ class ClassAbsenteesHandler(BaseHandler):
                         text="It seems you're not a teacher nor a connected user")
 
     def post(self):
-        #Test user connexion and privileges
+        # Test user connexion and privileges
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             #First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
             class_to_display = self.filter_teacher_class(self.temp_prof_name, time.strftime("%H:%M"), class_date)
 
-            #If there's a class
+            # If there's a class
             if class_to_display is not None:
-                #Then, we get the students for this class
+                # Then, we get the students for this class
                 students_list = []
                 groups = self.ade_communicator.get_students_groups()
 
@@ -157,7 +158,7 @@ class ClassAbsenteesHandler(BaseHandler):
 
                 students_list.sort(key=lambda x: x['name'])
 
-                #Purge current absentees
+                # Purge current absentees
                 present_absentees = get_absentees_for_class(class_to_display['class_name'],
                                                             class_to_display['teacher_name'], class_date,
                                                             class_to_display['start_time'],
@@ -179,9 +180,10 @@ class ClassAbsenteesHandler(BaseHandler):
                                              class_date=class_date, justification_bool=False)
                         absentee.put()
 
+                # Useful to avoid bug while writing and querying
                 time.sleep(1)
                 self.redirect('/class_absentees')
-            #Else, congrats, the teacher doesn't have to do anything
+            # Else, congrats, the teacher doesn't have to do anything
             else:
                 self.redirect('/class_absentees')
 
