@@ -32,10 +32,10 @@
         <div class="form-group">
             <ul id="students_list">
                 {% for student in students %}
-                    <li id="{{student.name}}button" class="anim student btn" role="button"
-                        onclick="change('{{student.name}}');">
-                        <input type="checkbox" id="{{student.name}}box" />
-                        <p class="student_name">{{student.name}}</p>
+                    <li id="{{student.name.name|title}}button" class="anim student btn" role="button"
+                        onclick="change('{{student.name.name|title}}');">
+                        <input type="checkbox" id="{{student.name.name|title}}box" />
+                        <p class="student_name">{{student.name.name|title}}</p>
                         <p class="student_group">{{student.group}}</p>
                     </li>
                 {% endfor %}
