@@ -17,7 +17,7 @@ class ClassAbsenteesHandler(BaseHandler):
         self.ade_communicator = ADECommunicator()
 
     def filter_teacher_class(self, teacher, time, date):
-        """all_lessons = self.ade_communicator.get_lessons()
+        all_lessons = self.ade_communicator.get_lessons()
 
         teacher_classes = list()
 
@@ -73,12 +73,12 @@ class ClassAbsenteesHandler(BaseHandler):
                     final_step = lesson
             # else if hours are not the same, compare hours
             elif lesson_start_time[0] < my_time[0] and my_time[0] < lesson_end_time[0]:
-                final_step = lesson"""
+                final_step = lesson
 
         return {"class_name": "TP PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
                 "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
 
-        """if final_step is None:
+        if final_step is None:
             return None
         else:
             return {"class_name": final_step["subject"],
@@ -86,7 +86,7 @@ class ClassAbsenteesHandler(BaseHandler):
                     "start_time": final_step["startHour"],
                     "end_time": final_step["endHour"],
                     "teacher_name": final_step["instructor"],
-                    "room": final_step["classroom"]}"""
+                    "room": final_step["classroom"]}
 
     def get(self):
         # Test user connexion and privileges
