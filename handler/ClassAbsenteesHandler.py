@@ -4,7 +4,9 @@ import re
 from handler.BaseHandler import *
 from model.ADECommunicator import *
 from model.Absentees import *
+from model.Logs import *
 import time
+import datetime
 
 
 class ClassAbsenteesHandler(BaseHandler):
@@ -92,7 +94,7 @@ class ClassAbsenteesHandler(BaseHandler):
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             # First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
-            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0])
+            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0]).name
             class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
 
             # If there's a class
@@ -139,7 +141,7 @@ class ClassAbsenteesHandler(BaseHandler):
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             #First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
-            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0])
+            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0]).name
             class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
 
             # If there's a class
@@ -164,6 +166,13 @@ class ClassAbsenteesHandler(BaseHandler):
                                                             class_to_display['teacher_name'], class_date,
                                                             class_to_display['start_time'],
                                                             class_to_display['end_time'])
+
+                if len(present_absentees) != 0:
+                    Logs(date_time=datetime.datetime.now(), category="absentees mark", author=teacher_name,
+                         description=teacher_name + " deleted all absentees for class "
+                         + class_to_display['class_name'] + " (" + class_date + " from "
+                         + class_to_display['start_time'] + " to " + class_to_display['end_time'] + ")").put()
+
                 db.delete(present_absentees)
 
                 #Check who is present now from post argument
@@ -180,6 +189,12 @@ class ClassAbsenteesHandler(BaseHandler):
                                              end_hour=class_to_display['end_time'],
                                              class_date=class_date, justification_bool=False)
                         absentee.put()
+
+                        Logs(date_time=datetime.datetime.now(), category="absentees mark", author=teacher_name,
+                             description=teacher_name + " marked " + absentee.student_name + " ("
+                             + absentee.student_group + ") as absent for " + absentee.class_title + " ("
+                             + absentee.class_date + " from " + absentee.start_hour + " to " + absentee.end_hour
+                             + ")").put()
 
                 # Useful to avoid bug while writing and querying
                 time.sleep(1)
