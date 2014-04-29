@@ -113,3 +113,11 @@ button
 {
     text-shadow: 1px 1px 0px #808080;
 }
+
+.class_boxes2 {
+	width : 100%;
+}
+
+.class_boxes2:hover{
+    text-shadow: 1px 1px 0px #808080;
+}
