@@ -14,76 +14,43 @@
                             <h2>From {{first_day}} to {{last_day}}</h2>
                         </div>
                     </div>
-                <div class="row">
-                    <form method="post" action="/class_week"
-                        {% set n ={'0':'Monday','1':'Tuesday','2':'Wednesday','3':'Thursday','4':'Friday','5':'Saturday','6':'Sunday'}%}
-                        {%for i in n | sort%}
-                            {%if i==selected_day%}
-                                <div class="row">
-                                <div class="col-md-6 col-xs-offset-2">
-                                    <button  name="day_button" value="{{i}}" class="btn btn-info day_button">
-                                        {{n[i]}}
-                                     </button>
-                                </div>
-                            </div>
-                            {%else%}
-                                 <div class="row">
-                                <div class="col-md-6 col-xs-offset-2">
-                                    <button name="day_button" value="{{i}}" class="btn btn-default day_button">
-                                         {{n[i]}}
-                                     </button>
-                                </div>
-                             </div>
-                            {%endif%}
-                        {%endfor%}
-                    </form>
-                </div>
             </div>
         </div>
 {% endblock %}
 
 {% block body %}
-{% set day_selected = days[selected_day|int]%}
-{% for i in range(0,day_selected|length ) %}
-               <div class="row">
-                    <div class="col-xs-6 col-xs-offset-2">
-                        <button class="btn btn-default hours_boxes">{{day_selected[i].start_time}}</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                     <div class="col-sm-4 col-xs-offset-2">
-                        {% set box_size = ((day_selected[i].end_time.split('h',1)[0]|int) - (day_selected[i].start_time.split('h',1)[0]|int))*75 -((day_selected[i].start_time.split('h',1)[1]|int)*12)/10+ ((day_selected[i].end_time.split('h',1)[1]|int)*12)/10%}
+{% set n ={'0':'Monday','1':'Tuesday','2':'Wednesday','3':'Thursday','4':'Friday','5':'Saturday','6':'Sunday'}%}
+{% for d in range(0,6) %}
+{% set day_selected = days[d]%}
+     <div class="col-md-2">
+		<h4 class="class_boxes2" > {{n[d|string]}} </h4>
+		{% for i in range(0,day_selected|length ) %}
+                        {% set box_size = ( ( (day_selected[i].end_time.split('h',1)[0]|int) - (day_selected[i].start_time.split('h',1)[0]|int) )*60 + (day_selected[i].end_time.split('h',1)[1]|int)- (day_selected[i].start_time.split('h',1)[1]|int) )*1.5 %}
+                        {%if i>0 %}
+                        {% set where_to_place = (((day_selected[i].start_time.split('h',1)[0]|int)-(day_selected[i-1].end_time.split('h',1)[0]|int))*60 + (day_selected[i].start_time.split('h',1)[1]|int))*1.5 +5 %}
+                        {%else %} {% set where_to_place = (((day_selected[i].start_time.split('h',1)[0]|int)-8)*60 + (day_selected[i].start_time.split('h',1)[1]|int))*1.5 +5 %}
+                        {% endif %}
                         {% if not(day_selected[i].class_name == "None")%}
                             {%set color_style ="btn-info"%}
                             {% if day_selected[i].class_name.split(' ',1)[0] == "TP"%}{%set color_style ="btn-primary"%}{%endif%}
                             {% if day_selected[i].class_name.split(' ',1)[0] == "CM"%}{%set color_style ="btn-warning"%}{%endif%}
                             {% if day_selected[i].class_name.split(' ',1)[0] == "TD"%}{%set color_style ="btn-success"%}{%endif%}
                             {% if day_selected[i].class_name.split(' ',1)[0] == "Exam"%}{%set color_style ="btn-danger"%}{%endif%}
-                                <a class="class_boxes btn {{color_style}}" style="height:{{box_size}}px;" role="button">
-                                    <h4 class="text-left"> {{day_selected[i].class_name}}</h4>
-
-                                    {% for g in day_selected[i].group %}
-                                    <h5 class="text-left">
-                                        {{g}}
-                                    </h5>
-                                    {% endfor %}
-
+                                <a class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
+                                    <h5 class="text-left">{{day_selected[i].start_time}} to {{day_selected[i].end_time}}</h5>
+                                    <hr style="margin:0px;padding:0px;">
+                                    <h5 class="text-left"> {{day_selected[i].class_name}}</h5>
+                                    {%if box_size >125 %}
+                                        {% for g in day_selected[i].group %}
+                                        <h6 class="text-left">
+                                            {{g}}
+                                        </h6>
+                                        {% endfor %}
+                                    {% endif %}
                                 </a>
-                        {%else%}
-                            {% for j in range(0,(box_size/20)|int) %}
-                                <br>
-                            {% endfor %}
-                         {% endif %}
-                            <br>
-                         <br>
-                    </div>
-                </div>
+                        {% endif %}
             {% endfor %}
-            <div class="row">
-                    <div class="col-xs-6 col-xs-offset-2">
-                        <button class="btn btn-default hours_boxes">{{day_selected[day_selected|length-1].end_time}}</button>
-                    </div>
-                 </div>
-
+    </div>
+{% endfor %}
+        <div class="row"></div>
 {% endblock %}
