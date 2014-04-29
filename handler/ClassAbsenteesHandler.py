@@ -1,12 +1,11 @@
 import time
 import re
+import datetime
 
 from handler.BaseHandler import *
 from model.ADECommunicator import *
 from model.Absentees import *
 from model.Logs import *
-import time
-import datetime
 
 
 class ClassAbsenteesHandler(BaseHandler):
