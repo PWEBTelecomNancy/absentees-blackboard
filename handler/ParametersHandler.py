@@ -9,4 +9,4 @@ class ParametersHandler(BaseHandler):
         self.page_name = "administration"
 
     def get(self):
-        self.response.out.write("Parameters handler to be coded")
+        self.render("administration_parameters.html")

@@ -9,4 +9,4 @@ class LogsHandler(BaseHandler):
         self.page_name = "administration"
 
     def get(self):
-        self.response.out.write("Logs handler to be coded")
+        self.render("administration_logs.html")
