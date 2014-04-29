@@ -4,5 +4,5 @@ from google.appengine.ext import db
 
 
 class Parameters(db.Model):
-    key = db.StringProperty(required=True)
+    name = db.StringProperty(required=True)
     value = db.StringProperty(required=True)
