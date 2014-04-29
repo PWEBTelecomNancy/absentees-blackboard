@@ -58,6 +58,14 @@ def get_username_from_id(user_id):
         return None
 
 
+def get_account_from_id(user_id):
+    result = Accounts.get_by_id(int(user_id))
+    if result:
+        return result
+    else:
+        return None
+
+
 def get_is_teacher_from_id(user_id):
     result = Accounts.get_by_id(int(user_id))
     if result:

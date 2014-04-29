@@ -8,7 +8,6 @@ import time
 
 
 class ClassAbsenteesHandler(BaseHandler):
-    temp_prof_name = "CHAROY FRANCOIS"
     ade_communicator = None
 
     def __init__(self, request=None, response=None):
@@ -93,7 +92,8 @@ class ClassAbsenteesHandler(BaseHandler):
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             # First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
-            class_to_display = self.filter_teacher_class(self.temp_prof_name, time.strftime("%H:%M"), class_date)
+            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0])
+            class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
 
             # If there's a class
             if class_to_display is not None:
@@ -139,7 +139,8 @@ class ClassAbsenteesHandler(BaseHandler):
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             #First, get the class the teacher should have right now
             class_date = time.strftime("%d/%m/%Y")
-            class_to_display = self.filter_teacher_class(self.temp_prof_name, time.strftime("%H:%M"), class_date)
+            teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0])
+            class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
 
             # If there's a class
             if class_to_display is not None:
