@@ -40,7 +40,10 @@ def get_connected_user(cookie_id):
         if check_cookie(cookie_id):
             username = get_username_from_id(cookie_id.split('|')[0])
             result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username).fetch(1)
-            return result[0]
+            if len(result) == 1:
+                return result[0]
+            else:
+                return None
         else:
             return None
     else:
@@ -73,7 +76,6 @@ def get_is_admin_from_id(user_id):
 
 def used_username(username):
     result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:username", username=username)
-    print result.count()
     return result.count() != 0
 
 
@@ -85,9 +87,6 @@ def user_connexion(username, password):
         data = result.fetch(1)[0]
         db_password = data.password.split('|')[0]
         db_salt = data.password.split('|')[1]
-
-        print db_password
-        print db_salt
 
         if str(hashlib.sha256(password + db_salt).hexdigest()) == db_password:
             return data.key().id()

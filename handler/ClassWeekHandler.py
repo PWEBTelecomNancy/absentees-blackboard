@@ -1,8 +1,10 @@
 from time import strftime,strptime
+from datetime import date, timedelta
 
 from handler.BaseHandler import *
 from model.ADECommunicator import *
 from model.Accounts import *
+from util import *
 
 
 class ClassWeekHandler(BaseHandler):
@@ -15,36 +17,47 @@ class ClassWeekHandler(BaseHandler):
 
     def filter_lessons_of_week(self):
         all_lessons = self.ade_communicator.get_lessons()
-        all_groups = self.ade_communicator.get_students_groups()
 
-        current_user = get_connected_user(self.request.cookies['user_id'])
+        if 'user_id' in self.request.cookies:
+            current_user = get_connected_user(self.request.cookies['user_id'])
 
-        users_groups = list()
+            if current_user is not None:
+                users_groups = get_groups_of_a_user(current_user.name)
+                users_lessons = get_lessons_of_groups(users_groups, all_lessons)
 
-        # Get the groups of one user
-        for group in all_groups:
-            members = all_groups[group]
+                # Let's filter the lessons that are this week
+                # 1) Get the date of the beginning of the week
+                start_week = date.today() - timedelta(days = date.today().weekday())
+                end_week   = date.today() + timedelta(days = (6 - date.today().weekday()))
 
-            for member in members:
-                if current_user.name in member['name']:
-                    users_groups.append(group)
+                start_week = start_week.strftime("%d/%m/%Y")
+                end_week   = end_week.strftime("%d/%m/%Y")
+                start_week_tuple = start_week.split('/')
+                end_week_tuple = end_week.split('/')
 
-        # users_groups contains strings like:
-        # [u'2A G42', u'2A IL 2']
+                start_week_tuple = (start_week_tuple[2], start_week_tuple[1], start_week_tuple[0])
+                end_week_tuple = (end_week_tuple[2], end_week_tuple[1], end_week_tuple[0])
 
-        users_lessons = dict()
-        # Filter all the lessons of one user
-        for lesson in all_lessons:
-            #logging.error(lesson)
-            #logging.error(all_lessons[lesson])
-            for one_class in all_lessons[lesson]:
-                for one_group in users_groups:
-                    if one_group in one_class['trainee']:
-                        if lesson not in users_lessons.keys():
-                            users_lessons[lesson] = list()
-                        users_lessons[lesson].append(one_class)
-        return users_lessons
+                # 2) Parse each lesson and see if it's in the range
+                filtered_lessons = list()
 
+                for lesson in users_lessons:
+                    for one_lesson in users_lessons[lesson]:
+                        date_lesson = one_lesson['date'].split('/')
+                        date_lesson = (date_lesson[2], date_lesson[1], date_lesson[0])
+                        if start_week_tuple <= date_lesson <= end_week_tuple:
+                            filtered_lessons.append(one_lesson)
+                            print "<Bonne date"
+                        else:
+                            logging.error(start_week_tuple)
+                            logging.error(date_lesson)
+                            logging.error(end_week_tuple)
+
+                return filtered_lessons
+            else:
+                return None
+        else:
+            return None
 
     def get(self):
         my_lessons = self.filter_lessons_of_week()
@@ -52,8 +65,11 @@ class ClassWeekHandler(BaseHandler):
         logging.error("Result:")
         logging.error(my_lessons)
 
-
-        ClassWeekHandler.renderTemp(self)
+        if my_lessons is None:
+            # User is not logged in
+            self.write("Please login!")
+        else:
+            ClassWeekHandler.renderTemp(self)
 
     def post(self):
         el=self.request.get('day_button')
