@@ -9,4 +9,4 @@ class AbsenteesAdminHandler(BaseHandler):
         self.page_name = "administration"
 
     def get(self):
-        self.response.out.write("To be coded")
+        self.render("administration_absentees.html")
