@@ -30,6 +30,7 @@ class ClassWeekHandler(BaseHandler):
                 # <<<<<< USE THIS TO SEE THE PREVIOUS WEEK'S LESSONS >>>>>> #
                 #start_week = date.today() - timedelta(days=date.today().weekday() + 7)
                 #end_week = date.today() + timedelta(days=(6 - date.today().weekday()) - 7)
+                # This is the correct version down there
                 start_week = date.today() - timedelta(days=date.today().weekday())
                 end_week = date.today() + timedelta(days=(6 - date.today().weekday()))
 
@@ -71,7 +72,6 @@ class ClassWeekHandler(BaseHandler):
 
         for weekday in sorted:
             sorted[weekday].sort(key=lambda x: int(x['startHour'].split(':')[0]))
-            logging.error(sorted[weekday])
 
         return sorted
 
@@ -99,7 +99,8 @@ class ClassWeekHandler(BaseHandler):
 
     def renderTemp(self, lessons, selected_day='0'):
 
-        #Here days is a dict with 7 entry : one per day from monday tu sunday
+        """
+        # Here days is a dict with 7 entry : one per day from monday tu sunday
         days_classes = dict()
 
         monday_ex = dict()
@@ -107,7 +108,6 @@ class ClassWeekHandler(BaseHandler):
         wednesday_ex = dict()
         # based on ADECommunicator example
         # The height of each class_box is computed with start_time and end_time
-
 
         monday_ex[0] = {"class_name": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "8:00",
                         "end_time": "10:00",
@@ -141,6 +141,7 @@ class ClassWeekHandler(BaseHandler):
         # I have an empty week, should try with someone who have something to do this week
         # list of all lessons = do we have to sort it day by day ??
         # days_classes = self.filter_lessons_of_week()
+        """
 
         week_nb = strftime("%W")
         year = strftime("%Y")
