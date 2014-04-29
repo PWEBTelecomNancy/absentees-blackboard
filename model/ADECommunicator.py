@@ -24,6 +24,8 @@ class ADECommunicator():
             logging.error("CACHE MISS ADECommunicator get_students_groups()")
             groups = self.parser.get_members()
             memcache.set("group_list", groups, time=self.default_cache_long_prune)
+        else:
+            logging.error("CACHE HIT ADECommunicator get_students_groups()")
 
         return groups
 
@@ -34,5 +36,7 @@ class ADECommunicator():
             all_lessons = self.parser.get_lessons()
 
             memcache.set("lessons_list", all_lessons, time=self.default_cache_short_prune)
+        else:
+            logging.error("CACHE HIT ADECommunicator get_lessons()")
 
         return all_lessons

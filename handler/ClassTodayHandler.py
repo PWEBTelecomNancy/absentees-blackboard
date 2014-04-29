@@ -25,9 +25,9 @@ class ClassTodayHandler(BaseHandler):
         # The height of each class_box is computed with start_time and end_time
         classes = dict()
 
-        class0_example = {"class_name": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "8h00", "end_time": "10h00",
+        class0_example = {"class_name": "CM TRAD 2 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "9h00", "end_time": "10h00",
                 "teacher_name": "CHAROY FRANCOIS"}
-        class1_example =  {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h45",
+        class1_example =  {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
                 "teacher_name": "CHAROY FRANCOIS"}
         class2_example = {"class_name": "None", "group": [], "start_time": "12h45", "end_time": "14h00",
                 "teacher_name": ""}
@@ -40,10 +40,10 @@ class ClassTodayHandler(BaseHandler):
 
         classes[0]=class0_example
         classes[1]=class1_example
-        classes[2]=class2_example
-        classes[3]=class3_example
-        classes[4]=class4_example
-        classes[5]=class5_example
+        #classes[2]=class2_example
+        classes[2]=class3_example
+        #classes[3]=class4_example
+        #classes[4]=class5_example
 
         hour = time.strftime("%H:%M")
         day = time.strftime("%A %d %B %Y")
