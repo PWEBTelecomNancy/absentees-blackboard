@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block below_menubar %}
+    <div class="container">
+        <h1 class="col-md-12">Members</h1>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <!-- Row for the search form -->
+            <div class="row" id="search_member">
+                <form method="post" actions="/admin_members" class="form-body">
+                    <div class="form-group">
+                        <label for="login" class="col-md-2 col-xs-12">Login</label>
+                        <input type="text" name="login" id="login" class="col-md-2 col-xs-12"/>
+                        <label for="email" class="col-md-2 col-xs-12">Email address</label>
+                        <input type="email" name="email" id="email" class="col-md-2 col-xs-12" />
+                        <label for="ade_name" class="col-md-2 col-xs-12">ADE Name</label>
+                        <input type="text" name="ade_name" id="ade_name" class="col-md-2 col-xs-12" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <!-- Row for the accounts table -->
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="members_table" class="table">
+                        <tr><th>Login</th><th>Email address</th><th>ADE name</th><th></th><th>Actions</th><th></th></tr>
+
+                        {% for account in accounts %}
+                        <tr class="{{loop.cycle('dark', 'light')}}">
+                            <td>{{account.login}}</td>
+                            <td>{{account.email_address}}</td>
+                            <td>{{account.name}}</td>
+
+                            <!-- Dropdown menu when screen is too small -->
+                            <td class="visible-xs visible-sm"></td>
+                            <td class="visible-xs visible-sm">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Actions <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Delete</a></li>
+
+                                        {% if account.is_admin %}
+                                        <li><a href="#">Del admin</a></li>
+                                        {% else %}
+                                        <li><a href="#">Add admin</a></li>
+                                        {% endif %}
+
+                                        {% if account.is_teacher %}
+                                        <li><a href="#">Del teacher</a></li>
+                                        {% else %}
+                                        <li><a href="#">Add teacher</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="visible-xs visible-sm"></td>
+
+                            <!-- Multiple buttons when screen is large enough -->
+                            <td class="visible-md visible-lg"><button type="button" class="btn btn-danger">Delete</button></td>
+                            {% if account.is_admin %}
+                            <td class="visible-md visible-lg"><button class="btn btn-warning">Del as admin</button></td>
+                            {% else %}
+                            <td class="visible-md visible-lg"><button class="btn btn-success">Add as admin</button></td>
+                            {% endif %}
+                            {% if account.is_teacher %}
+                            <td class="visible-md visible-lg"><button class="btn btn-warning">Del as teacher</button></td>
+                            {% else %}
+                            <td class="visible-md visible-lg"><button class="btn btn-success">Add as teacher</button></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}

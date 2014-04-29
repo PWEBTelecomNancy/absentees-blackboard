@@ -31,6 +31,16 @@ class StudentsListHandler(BaseHandler):
         members = [item for middle_list in to_display for item in to_display[middle_list]]
         members = sorted(members)
 
+        #Uniq list
+        temp = members
+        members = []
+        uniq_mail = []
+
+        for m in temp:
+            if m['mail'] not in uniq_mail:
+                members.append(m)
+                uniq_mail.append(m['mail'])
+
         if len(to_display) > 0:
             self.render("groupdisplay.html", group_name=group_to_find, groups=members)
         else:
