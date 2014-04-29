@@ -42,7 +42,11 @@
                         {% endif %}
 
                          {% if is_admin %}
-                             <li><a href="/admin">Administration</a></li>
+                             {% if pageName == "administration" %}
+                            <li class="active"><a href="/admin">Administration</a></li>
+                            {% else %}
+                            <li><a href="/admin">Administration</a></li>
+                            {% endif %}
                          {% endif %}
                     </ul>
 
