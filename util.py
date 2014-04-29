@@ -1,6 +1,7 @@
 __author__ = 'videl'
 
 from model.ADECommunicator import *
+import logging
 
 def get_lessons_of_groups(groups, all_lessons = ADECommunicator().get_lessons()):
     """
@@ -41,3 +42,20 @@ def get_groups_of_a_user(username, all_groups = ADECommunicator().get_students_g
                 users_groups.append(group)
 
     return users_groups
+
+def get_extended_groups_of_a_user(groups):
+    """
+    Gets the list of the groups the user is really into.
+    Someone in the "2A IL 2" group is also in the "2A IL" group.
+    """
+    user_groups = get_groups_of_a_user(groups)
+    real_groups = list()
+    for group in user_groups:
+        if len(group.split(' ')) == 3:
+            real_groups.append(group[:-2])
+        elif len(group.split(' ')) == 2:
+            real_groups.append(group[:-1])
+        else:
+            real_groups.append(group)
+
+    return real_groups

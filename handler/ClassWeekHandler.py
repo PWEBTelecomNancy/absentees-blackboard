@@ -22,36 +22,40 @@ class ClassWeekHandler(BaseHandler):
             current_user = get_connected_user(self.request.cookies['user_id'])
 
             if current_user is not None:
-                users_groups = get_groups_of_a_user(current_user.name)
+                users_groups = get_extended_groups_of_a_user(current_user.name)
                 users_lessons = get_lessons_of_groups(users_groups, all_lessons)
+                logging.error(users_groups)
 
                 # Let's filter the lessons that are this week
                 # 1) Get the date of the beginning of the week
-                start_week = date.today() - timedelta(days = date.today().weekday())
-                end_week   = date.today() + timedelta(days = (6 - date.today().weekday()))
+                start_week = date.today() - timedelta(days = date.today().weekday() + 7)
+                end_week   = date.today() + timedelta(days = (6 - date.today().weekday()) - 7)
 
                 start_week = start_week.strftime("%d/%m/%Y")
                 end_week   = end_week.strftime("%d/%m/%Y")
                 start_week_tuple = start_week.split('/')
                 end_week_tuple = end_week.split('/')
 
-                start_week_tuple = (start_week_tuple[2], start_week_tuple[1], start_week_tuple[0])
-                end_week_tuple = (end_week_tuple[2], end_week_tuple[1], end_week_tuple[0])
+                start_week_tuple = (int(start_week_tuple[2]), int(start_week_tuple[1]), int(start_week_tuple[0]))
+                end_week_tuple = (int(end_week_tuple[2]), int(end_week_tuple[1]), int(end_week_tuple[0]))
 
                 # 2) Parse each lesson and see if it's in the range
                 filtered_lessons = list()
 
                 for lesson in users_lessons:
+                    logging.error(lesson)
                     for one_lesson in users_lessons[lesson]:
                         date_lesson = one_lesson['date'].split('/')
-                        date_lesson = (date_lesson[2], date_lesson[1], date_lesson[0])
+                        date_lesson = (int(date_lesson[2]), int(date_lesson[1]), int(date_lesson[0]))
                         if start_week_tuple <= date_lesson <= end_week_tuple:
                             filtered_lessons.append(one_lesson)
                             print "<Bonne date"
                         else:
-                            logging.error(start_week_tuple)
-                            logging.error(date_lesson)
-                            logging.error(end_week_tuple)
+                            #logging.error(start_week_tuple)
+                            #logging.error(date_lesson)
+                            #logging.error(end_week_tuple)
+                            #print "Mauvaise date"
+                            pass
 
                 return filtered_lessons
             else:
