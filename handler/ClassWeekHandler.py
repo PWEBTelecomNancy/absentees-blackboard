@@ -1,8 +1,7 @@
-from time import strftime,strptime
-from datetime import date, timedelta
+from time import strftime, strptime
+from datetime import date, timedelta, datetime
 
 from handler.BaseHandler import *
-from model.ADECommunicator import *
 from model.Accounts import *
 from util import *
 
@@ -24,15 +23,18 @@ class ClassWeekHandler(BaseHandler):
             if current_user is not None:
                 users_groups = get_extended_groups_of_a_user(current_user.name)
                 users_lessons = get_lessons_of_groups(users_groups, all_lessons)
-                logging.error(users_groups)
 
                 # Let's filter the lessons that are this week
                 # 1) Get the date of the beginning of the week
-                start_week = date.today() - timedelta(days = date.today().weekday() + 7)
-                end_week   = date.today() + timedelta(days = (6 - date.today().weekday()) - 7)
+
+                # <<<<<< USE THIS TO SEE THE PREVIOUS WEEK'S LESSONS >>>>>> #
+                #start_week = date.today() - timedelta(days=date.today().weekday() + 7)
+                #end_week = date.today() + timedelta(days=(6 - date.today().weekday()) - 7)
+                start_week = date.today() - timedelta(days=date.today().weekday())
+                end_week = date.today() + timedelta(days=(6 - date.today().weekday()))
 
                 start_week = start_week.strftime("%d/%m/%Y")
-                end_week   = end_week.strftime("%d/%m/%Y")
+                end_week = end_week.strftime("%d/%m/%Y")
                 start_week_tuple = start_week.split('/')
                 end_week_tuple = end_week.split('/')
 
@@ -43,17 +45,13 @@ class ClassWeekHandler(BaseHandler):
                 filtered_lessons = list()
 
                 for lesson in users_lessons:
-                    logging.error(lesson)
                     for one_lesson in users_lessons[lesson]:
                         date_lesson = one_lesson['date'].split('/')
                         date_lesson = (int(date_lesson[2]), int(date_lesson[1]), int(date_lesson[0]))
                         if start_week_tuple <= date_lesson <= end_week_tuple:
                             filtered_lessons.append(one_lesson)
-                            print "<Bonne date"
+                            #print "<Bonne date"
                         else:
-                            #logging.error(start_week_tuple)
-                            #logging.error(date_lesson)
-                            #logging.error(end_week_tuple)
                             #print "Mauvaise date"
                             pass
 
@@ -62,75 +60,97 @@ class ClassWeekHandler(BaseHandler):
                 return None
         else:
             return None
+    def sort_lessons(self, lessons):
+        sorted = dict()
+        for x in range(0, 6):
+            sorted[x] = list()
+
+        for lesson in lessons:
+            lesson_date = datetime.strptime(lesson['date'], "%d/%m/%Y")
+            sorted[lesson_date.weekday()].append(lesson)
+
+        for weekday in sorted:
+            sorted[weekday].sort(key=lambda x: int(x['startHour'].split(':')[0]))
+            logging.error(sorted[weekday])
+
+        return sorted
+
 
     def get(self):
         my_lessons = self.filter_lessons_of_week()
-        logging.error(">>>>>>>>>>>>>>>>>>>>>END OF THE FILTER<<<<<<<<<<<<<<<<<<<<<")
-        logging.error("Result:")
-        logging.error(my_lessons)
+
+        sorted_lessons = self.sort_lessons(my_lessons)
 
         if my_lessons is None:
             # User is not logged in
             self.write("Please login!")
         else:
-            ClassWeekHandler.renderTemp(self)
+            ClassWeekHandler.renderTemp(self, sorted_lessons)
 
     def post(self):
-        el=self.request.get('day_button')
+        my_lessons = self.filter_lessons_of_week()
+        sorted_lessons = self.sort_lessons(my_lessons)
+
+        el = self.request.get('day_button')
         if el:
-            ClassWeekHandler.renderTemp(self, el)
+            ClassWeekHandler.renderTemp(self, sorted_lessons, el)
         else:
-            ClassWeekHandler.renderTemp(self, el)
+            ClassWeekHandler.renderTemp(self, sorted_lessons, el)
 
-    def renderTemp(self, selected_day='0'):
-
+    def renderTemp(self, lessons, selected_day='0'):
 
         #Here days is a dict with 7 entry : one per day from monday tu sunday
-		days_classes = dict()
+        days_classes = dict()
 
-		monday_ex = dict()
-		tuesday_ex = dict()
-		wednesday_ex = dict()
+        monday_ex = dict()
+        tuesday_ex = dict()
+        wednesday_ex = dict()
         # based on ADECommunicator example
         # The height of each class_box is computed with start_time and end_time
-        
-		monday_ex[0] = {"class_name": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "8h00", "end_time": "10h00",
-                "teacher_name": "CHAROY FRANCOIS"}
-		monday_ex[1] =  {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
-                "teacher_name": "CHAROY FRANCOIS"}
-		monday_ex[2] =  {"class_name": "TD MOCI 2A G1", "group": ["2A G1"], "start_time": "14h00", "end_time": "16h00",
-                "teacher_name": "CHAROY FRANCOIS"}
-                
-		tuesday_ex[0] = {"class_name": "Exam PWEB", "group": ["2A IL"], "start_time": "16h00", "end_time": "17h00",
-                "teacher_name": ""}
-		tuesday_ex[1] =  {"class_name": "Something ...", "group": ["2A"], "start_time": "17h00", "end_time": "18h00",
-                "teacher_name": "CHAROY FRANCOIS"}
-                
-		wednesday_ex[0] = {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10h00", "end_time": "12h00",
-                "teacher_name": "CHAROY FRANCOIS"}
-		wednesday_ex[1] = {"class_name": "projet 2A pidr", "group": ["2A"], "start_time": "14h00", "end_time": "17h00",
-                "teacher_name": "Prof you want ..."}
+
+
+        monday_ex[0] = {"class_name": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "8:00",
+                        "end_time": "10:00",
+                        "teacher_name": "CHAROY FRANCOIS"}
+        monday_ex[1] = {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10:00",
+                        "end_time": "12:00",
+                        "teacher_name": "CHAROY FRANCOIS"}
+        monday_ex[2] = {"class_name": "TD MOCI 2A G1", "group": ["2A G1"], "start_time": "14:00", "end_time": "16:00",
+                        "teacher_name": "CHAROY FRANCOIS"}
+
+        tuesday_ex[0] = {"class_name": "Exam PWEB", "group": ["2A IL"], "start_time": "16:00", "end_time": "17:00",
+                         "teacher_name": ""}
+        tuesday_ex[1] = {"class_name": "Something ...", "group": ["2A"], "start_time": "17:00", "end_time": "18:00",
+                         "teacher_name": "CHAROY FRANCOIS"}
+
+        wednesday_ex[0] = {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10:00",
+                           "end_time": "12:00",
+                           "teacher_name": "CHAROY FRANCOIS"}
+        wednesday_ex[1] = {"class_name": "projet 2A pidr", "group": ["2A"], "start_time": "14:00", "end_time": "17:00",
+                           "teacher_name": "Prof you want ..."}
 
         #for the exemple I'll add the same classes, we'll be adapted with loops later ....
         # lessons must be add in chronological order
-		days_classes[0]=monday_ex
-		days_classes[1]=tuesday_ex
-		days_classes[2]=wednesday_ex
-		days_classes[3]=monday_ex
-		days_classes[4]=monday_ex
-        
+        days_classes[0] = monday_ex
+        days_classes[1] = tuesday_ex
+        days_classes[2] = wednesday_ex
+        days_classes[3] = monday_ex
+        days_classes[4] = monday_ex
+        days_classes[5] = tuesday_ex
+
         # I have an empty week, should try with someone who have something to do this week
         # list of all lessons = do we have to sort it day by day ??
-		# days_classes = self.filter_lessons_of_week()
-		
-		week_nb = strftime("%W")
-		year = strftime("%Y")
-		buff = strptime('%s %s 1' %(year,week_nb), '%Y %W %w')
-		buff2 = strptime('%s %s 0' %(year,week_nb), '%Y %W %w')
+        # days_classes = self.filter_lessons_of_week()
 
-		first_day=strftime("%A %d %B",buff)
-		last_day=strftime("%A %d %B",buff2)
+        week_nb = strftime("%W")
+        year = strftime("%Y")
+        buff = strptime('%s %s 1' % (year, week_nb), '%Y %W %w')
+        buff2 = strptime('%s %s 0' % (year, week_nb), '%Y %W %w')
 
-		class_parameters = {'days':days_classes,'first_day':first_day,'last_day':last_day,'selected_day':selected_day}
+        first_day = strftime("%A %d %B", buff)
+        last_day = strftime("%A %d %B", buff2)
 
-		self.render('class_week.html', **class_parameters)
+        class_parameters = {'days': lessons, 'first_day': first_day, 'last_day': last_day,
+                            'selected_day': selected_day}
+
+        self.render('class_week.html', **class_parameters)

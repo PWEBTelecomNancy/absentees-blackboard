@@ -19,38 +19,53 @@
 {% endblock %}
 
 {% block body %}
-{% set n ={'0':'Monday','1':'Tuesday','2':'Wednesday','3':'Thursday','4':'Friday','5':'Saturday','6':'Sunday'}%}
-{% for d in range(0,6) %}
-{% set day_selected = days[d]%}
-     <div class="col-md-2">
-		<h4 class="class_boxes2" > {{n[d|string]}} </h4>
-		{% for i in range(0,day_selected|length ) %}
-                        {% set box_size = ( ( (day_selected[i].end_time.split('h',1)[0]|int) - (day_selected[i].start_time.split('h',1)[0]|int) )*60 + (day_selected[i].end_time.split('h',1)[1]|int)- (day_selected[i].start_time.split('h',1)[1]|int) )*1.5 %}
-                        {%if i>0 %}
-                        {% set where_to_place = (((day_selected[i].start_time.split('h',1)[0]|int)-(day_selected[i-1].end_time.split('h',1)[0]|int))*60 + (day_selected[i].start_time.split('h',1)[1]|int))*1.5 +5 %}
-                        {%else %} {% set where_to_place = (((day_selected[i].start_time.split('h',1)[0]|int)-8)*60 + (day_selected[i].start_time.split('h',1)[1]|int))*1.5 +5 %}
+    {% set n ={'0':'Monday','1':'Tuesday','2':'Wednesday','3':'Thursday','4':'Friday','5':'Saturday','6':'Sunday'}%}
+    {% for d in range(0,6) %}
+        {% set day_selected = days[d]%}
+        <div class="col-md-2">
+            <h4 class="class_boxes2" >
+                {{n[d|string]}}
+            </h4>
+            {% for i in range(0,day_selected|length ) %}
+                {% set box_size = ( ( (day_selected[i].endHour.split(':',1)[0]|int) - (day_selected[i].startHour.split(':',1)[0]|int) )*60 + (day_selected[i].endHour.split(':',1)[1]|int)- (day_selected[i].startHour.split(':',1)[1]|int) )*1.5 %}
+                {% if i>0 %}
+                    {% set where_to_place = (((day_selected[i].startHour.split(':',1)[0]|int)-(day_selected[i-1].endHour.split(':',1)[0]|int))*60 + (day_selected[i].startHour.split(':',1)[1]|int))*1.5 +5 %}
+                {% else %}
+                    {% set where_to_place = (((day_selected[i].startHour.split(':',1)[0]|int)-8)*60 + (day_selected[i].startHour.split(':',1)[1]|int))*1.5 +5 %}
+                {% endif %}
+                {% if not(day_selected[i].subject == "None") %}
+                    {% set color_style ="btn-info" %}
+                    {% if day_selected[i].subject.split(' ',1)[0] == "TP" %}
+                        {%set color_style ="btn-primary"%}
+                    {% endif %}
+                    {% if day_selected[i].subject.split(' ',1)[0] == "CM" %}
+                        {%set color_style ="btn-warning"%}
+                    {% endif %}
+                    {% if day_selected[i].subject.split(' ',1)[0] == "TD" %}
+                        {%set color_style ="btn-success"%}
+                    {% endif %}
+                    {% if day_selected[i].subject.split(' ',1)[0] == "Exam"%}
+                        {% set color_style ="btn-danger"%}
+                    {% endif %}
+                    <a class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
+                        <h5 class="text-left">
+                             {{day_selected[i].startHour}} to {{day_selected[i].endHour}}
+                        </h5>
+                        <hr style="margin:0px;padding:0px;">
+                        <h5 class="text-left">
+                            {{day_selected[i].subject}}
+                        </h5>
+                        {%if box_size >125 %}
+                            {% for g in day_selected[i].group %}
+                                <h6 class="text-left">
+                                    {{g}}
+                                </h6>
+                            {% endfor %}
                         {% endif %}
-                        {% if not(day_selected[i].class_name == "None")%}
-                            {%set color_style ="btn-info"%}
-                            {% if day_selected[i].class_name.split(' ',1)[0] == "TP"%}{%set color_style ="btn-primary"%}{%endif%}
-                            {% if day_selected[i].class_name.split(' ',1)[0] == "CM"%}{%set color_style ="btn-warning"%}{%endif%}
-                            {% if day_selected[i].class_name.split(' ',1)[0] == "TD"%}{%set color_style ="btn-success"%}{%endif%}
-                            {% if day_selected[i].class_name.split(' ',1)[0] == "Exam"%}{%set color_style ="btn-danger"%}{%endif%}
-                                <a class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
-                                    <h5 class="text-left">{{day_selected[i].start_time}} to {{day_selected[i].end_time}}</h5>
-                                    <hr style="margin:0px;padding:0px;">
-                                    <h5 class="text-left"> {{day_selected[i].class_name}}</h5>
-                                    {%if box_size >125 %}
-                                        {% for g in day_selected[i].group %}
-                                        <h6 class="text-left">
-                                            {{g}}
-                                        </h6>
-                                        {% endfor %}
-                                    {% endif %}
-                                </a>
-                        {% endif %}
+                    </a>
+                {% endif %}
             {% endfor %}
-    </div>
-{% endfor %}
-        <div class="row"></div>
+        </div>
+    {% endfor %}
+    <div class="row"></div>
 {% endblock %}
