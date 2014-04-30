@@ -77,10 +77,9 @@ class MembersAdminHandler(BaseHandler):
             email = self.request.get('email')
             ade_name = self.request.get('ade_name')
 
-            print login
-            print email
-            print ade_name
-            accounts = get_accounts_corresponding(login, email, ade_name)
+            accounts = get_accounts_corresponding_login(login)
+            accounts.extend(get_accounts_corresponding_email(email))
+            accounts.extend(get_accounts_corresponding_ade_name(ade_name))
 
             self.render("administration_members.html", accounts=accounts)
 

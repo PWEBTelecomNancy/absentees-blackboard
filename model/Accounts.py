@@ -187,8 +187,19 @@ def get_all_accounts():
     return accounts
 
 
-def get_accounts_corresponding(login, email, ade_name):
-    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=':login*' AND email_address=':email*' "
-                         "AND name=':ade_name*'", login=login, email=email, ade_name=ade_name)
-    accounts = result.fetch(limit=None)
+def get_accounts_corresponding_login(login):
+    query = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+    accounts = query.fetch(limit=None)
+    return accounts
+
+
+def get_accounts_corresponding_email(email):
+    query = db.GqlQuery("SELECT * FROM Accounts WHERE email_address=:email", email=email)
+    accounts = query.fetch(limit=None)
+    return accounts
+
+
+def get_accounts_corresponding_ade_name(ade_name):
+    query = db.GqlQuery("SELECT * FROM Accounts WHERE name=:ade_name", ade_name=ade_name)
+    accounts = query.fetch(limit=None)
     return accounts
