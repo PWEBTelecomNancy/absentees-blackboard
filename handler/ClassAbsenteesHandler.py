@@ -189,6 +189,34 @@ class ClassAbsenteesHandler(BaseHandler):
 
                 students_list.sort(key=lambda x: x['name'])
 
+                temp = students_list
+                students_list = []
+                email_uniq = []
+                current_month = int(time.strftime("%m"))
+                re_2a = re.compile(r"^2A .*")
+                re_2ag = re.compile(r"^2A G.*")
+
+                for student in temp:
+                    #Diff groups if class is for 2A
+                    if re_2a.match(student['group']):
+                        #If we're on semester 2 => majors groups
+                        if current_month >= 1 and current_month <= 8:
+                            if student['name']['mail'] not in email_uniq and not re_2ag.match(student['group']):
+                                students_list.append(student)
+                                email_uniq.append(student['name']['mail'])
+
+                        #Else normal groups
+                        else:
+                            if student['name']['mail'] not in email_uniq and re_2ag.match(student['group']):
+                                students_list.append(student)
+                                email_uniq.append(student['name']['mail'])
+
+                    #Else we treat them normally
+                    else:
+                        if student['name']['mail'] not in email_uniq:
+                            students_list.append(student)
+                            email_uniq.append(student['name']['mail'])
+
                 # Purge current absentees
                 present_absentees = get_absentees_for_class(class_to_display['class_name'],
                                                             class_to_display['teacher_name'], class_date,
