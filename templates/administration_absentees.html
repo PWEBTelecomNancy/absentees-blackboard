@@ -35,12 +35,12 @@
             <div class="row" id="search_member">
                 <form method="post" actions="/admin_absentees" class="form-body">
                     <div class="form-group">
-                        <label for="login" class="col-md-2 col-xs-12">Login</label>
-                        <input type="text" name="login" id="login" class="col-md-2 col-xs-12"/>
-                        <label for="email" class="col-md-2 col-xs-12">Email address</label>
-                        <input type="email" name="email" id="email" class="col-md-2 col-xs-12" />
-                        <label for="ade_name" class="col-md-2 col-xs-12">ADE Name</label>
-                        <input type="text" name="ade_name" id="ade_name" class="col-md-2 col-xs-12" />
+                        <label for="date" class="col-md-2 col-xs-12">Date</label>
+                        <input type="date" name="date" id="date" class="col-md-2 col-xs-12"/>
+                        <label for="class_title" class="col-md-2 col-xs-12">Class title</label>
+                        <input type="text" name="class_title" id="class_title" class="col-md-2 col-xs-12" />
+                        <label for="student_name" class="col-md-2 col-xs-12">Student name</label>
+                        <input type="text" name="student_name" id="student_name" class="col-md-2 col-xs-12" />
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Search</button>
@@ -77,6 +77,8 @@
                             <td>{{abs.teacher_name}}</td>
                             <td>{{abs.student_name}}</td>
                             <td>{{abs.student_group}}</td>
+                            <td>{{abs.justification_bool}}</td>
+                            <td><button type="button" class="btn btn-default">Consult</button></td>
                         </tr>
                         {% endfor %}
                     </table>
