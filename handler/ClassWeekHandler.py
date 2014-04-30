@@ -97,40 +97,41 @@ class ClassWeekHandler(BaseHandler):
         else:
             ClassWeekHandler.renderTemp(self, sorted_lessons, el)
 
-    def renderTemp(self, lessons, selected_day='0'):
+    def renderTemp(self, lessons):
 
-        """
-        # Here days is a dict with 7 entry : one per day from monday tu sunday
+        #############
+        # change "days_classes" by "lessons" and comment all between the two "########"
+        # to connect to real datas (no datas to display right now on holiday).
+        # here just for example.
+
+
         days_classes = dict()
 
         monday_ex = dict()
         tuesday_ex = dict()
         wednesday_ex = dict()
-        # based on ADECommunicator example
-        # The height of each class_box is computed with start_time and end_time
 
-        monday_ex[0] = {"class_name": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "8:00",
-                        "end_time": "10:00",
+        monday_ex[0] = {"subject": "CM PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "startHour": "8:00",
+                        "endHour": "10:00",
                         "teacher_name": "CHAROY FRANCOIS"}
-        monday_ex[1] = {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10:00",
-                        "end_time": "12:00",
+        monday_ex[1] = {"subject": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "startHour": "10:00",
+                        "endHour": "12:00",
                         "teacher_name": "CHAROY FRANCOIS"}
-        monday_ex[2] = {"class_name": "TD MOCI 2A G1", "group": ["2A G1"], "start_time": "14:00", "end_time": "16:00",
+        monday_ex[2] = {"subject": "TD MOCI 2A G1", "group": ["2A G1"], "startHour": "14:00", "endHour": "16:00",
                         "teacher_name": "CHAROY FRANCOIS"}
 
-        tuesday_ex[0] = {"class_name": "Exam PWEB", "group": ["2A IL"], "start_time": "16:00", "end_time": "17:00",
+        tuesday_ex[0] = {"subject": "Exam PWEB", "group": ["2A IL"], "startHour": "16:00", "endHour": "17:00",
                          "teacher_name": ""}
-        tuesday_ex[1] = {"class_name": "Something ...", "group": ["2A"], "start_time": "17:00", "end_time": "18:00",
+        tuesday_ex[1] = {"subject": "Something ...", "group": ["2A"], "startHour": "17:00", "endHour": "18:00",
                          "teacher_name": "CHAROY FRANCOIS"}
 
-        wednesday_ex[0] = {"class_name": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "start_time": "10:00",
-                           "end_time": "12:00",
+        wednesday_ex[0] = {"subject": "TP PGWEB 2A IL", "group": ["2A IL", "2A TRS"], "startHour": "10:00",
+                           "endHour": "12:00",
                            "teacher_name": "CHAROY FRANCOIS"}
-        wednesday_ex[1] = {"class_name": "projet 2A pidr", "group": ["2A"], "start_time": "14:00", "end_time": "17:00",
+        wednesday_ex[1] = {"subject": "projet 2A pidr", "group": ["2A"], "startHour": "14:00", "endHour": "17:00",
                            "teacher_name": "Prof you want ..."}
 
-        #for the exemple I'll add the same classes, we'll be adapted with loops later ....
-        # lessons must be add in chronological order
+
         days_classes[0] = monday_ex
         days_classes[1] = tuesday_ex
         days_classes[2] = wednesday_ex
@@ -138,10 +139,7 @@ class ClassWeekHandler(BaseHandler):
         days_classes[4] = monday_ex
         days_classes[5] = tuesday_ex
 
-        # I have an empty week, should try with someone who have something to do this week
-        # list of all lessons = do we have to sort it day by day ??
-        # days_classes = self.filter_lessons_of_week()
-        """
+        #############
 
         week_nb = strftime("%W")
         year = strftime("%Y")
@@ -151,7 +149,6 @@ class ClassWeekHandler(BaseHandler):
         first_day = strftime("%A %d %B", buff)
         last_day = strftime("%A %d %B", buff2)
 
-        class_parameters = {'days': lessons, 'first_day': first_day, 'last_day': last_day,
-                            'selected_day': selected_day}
+        class_parameters = {'days': days_classes, 'first_day': first_day, 'last_day': last_day}
 
         self.render('class_week.html', **class_parameters)

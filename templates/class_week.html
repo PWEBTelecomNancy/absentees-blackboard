@@ -47,7 +47,7 @@
                     {% if day_selected[i].subject.split(' ',1)[0] == "Exam"%}
                         {% set color_style ="btn-danger"%}
                     {% endif %}
-                    <a class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
+                    <a name="class_box" class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
                         <h5 class="text-left">
                              {{day_selected[i].startHour}} to {{day_selected[i].endHour}}
                         </h5>
@@ -68,4 +68,43 @@
         </div>
     {% endfor %}
     <div class="row"></div>
+         <script type="text/javascript">
+            <!--
+            var allMargin = new Array();
+
+            window.onload=function(){
+                var class_boxes = document.getElementsByName("class_box");
+                for(var i=0, len=class_boxes.length;i < len; i++){
+                    allMargin[i] = class_boxes[i].style.marginTop;
+                    }
+                if (document.body)
+                    { var win_width = (document.body.clientWidth);}
+                else
+                    { var win_width = (window.innerWidth); }
+                if(win_width<975){
+                    for(var i=0, len=class_boxes.length;i < len; i++){
+                        class_boxes[i].style.marginTop = 5 +'px';
+                        }
+                    }
+            };
+
+            window.onresize = function(event) {
+                if (document.body)
+                    { var win_width = (document.body.clientWidth); }
+                else
+                    {  var win_width = (window.innerWidth);  }
+                var class_boxes = document.getElementsByName("class_box");
+                if(win_width>975){
+                    for(var i=0, len=class_boxes.length;i < len; i++){
+                       class_boxes[i].style.marginTop = allMargin[i];
+                        }
+                    }
+                else{
+                    for(var i=0, len=class_boxes.length;i < len; i++){
+                        class_boxes[i].style.marginTop = 5 +'px';
+                        }
+                    }
+            };
+            -->
+        </script>
 {% endblock %}
