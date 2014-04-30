@@ -7,9 +7,81 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="col-md-12">
+    {% if error_messages %}
+    <div class="alert alert-danger">
+        <strong>Error</strong>
+        <ul>
+        {% for message in error_messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
+    {% if infos_messages %}
+    <div class="alert alert-success">
+        <strong>Information</strong>
+        <ul>
+        {% for message in infos_messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <!-- Row for the search form -->
+            <div class="row" id="search_member">
+                <form method="post" actions="/admin_absentees" class="form-body">
+                    <div class="form-group">
+                        <label for="login" class="col-md-2 col-xs-12">Login</label>
+                        <input type="text" name="login" id="login" class="col-md-2 col-xs-12"/>
+                        <label for="email" class="col-md-2 col-xs-12">Email address</label>
+                        <input type="email" name="email" id="email" class="col-md-2 col-xs-12" />
+                        <label for="ade_name" class="col-md-2 col-xs-12">ADE Name</label>
+                        <input type="text" name="ade_name" id="ade_name" class="col-md-2 col-xs-12" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <!-- Row for the accounts table -->
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="absentees_table" class="table">
+                        <tr>
+                            <th>Date</th>
+                            <th>Class</th>
+                            <th>Start hour</th>
+                            <th>End hour</th>
+                            <th>Teacher</th>
+                            <th>Student</th>
+                            <th>Student group</th>
+                            <th>Justified</th>
+                            <th></th>
+                        </tr>
+
+                        {% for abs in absentees%}
+                        <tr class="{{loop.cycle('dark', 'light')}}">
+                            <td>{{abs.class_date}}</td>
+                            <td>{{abs.class_title}}</td>
+                            <td>{{abs.start_hour}}</td>
+                            <td>{{abs.end_hour}}</td>
+                            <td>{{abs.teacher_name}}</td>
+                            <td>{{abs.student_name}}</td>
+                            <td>{{abs.student_group}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

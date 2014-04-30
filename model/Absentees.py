@@ -23,3 +23,8 @@ def get_absentees_for_class(class_title, teacher_name, class_date, start_hour, e
                          start_hour=start_hour, end_hour=end_hour)
     result = list(result)
     return result
+
+
+def get_all_absentees():
+    query = Absentees.all()
+    return query.fetch(limit=None)

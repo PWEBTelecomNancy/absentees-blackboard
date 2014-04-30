@@ -129,32 +129,19 @@ button
 }
 
 /***** CSS properties for members administration pages *****/
-
-#members_table
-{
-    width: 100%;
-    height: 100%;
-}
-
-#members_table td, #members_table th
+#members_table td,  #members_table th, #absentees_table td, #absentees_table th
 {
     text-align: center;
     vertical-align: middle;
     word-wrap: break-word;
 }
 
-#members_table th
+.table .dark
 {
-    font-size: 1.2em;
-    padding-bottom: 7px;
+    background-color: #EDEDED;
 }
 
-#members_table .dark
-{
-    background-color: #DCDCDC;
-}
-
-#members_table button
+.table button
 {
     margin-top: 5px;
     margin-bottom: 5px;
