@@ -8,8 +8,6 @@ import util
 
 
 class SignupHandler(BaseHandler):
-
-
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
         self.page_name = "signup"

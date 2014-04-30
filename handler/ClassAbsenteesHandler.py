@@ -17,7 +17,7 @@ class ClassAbsenteesHandler(BaseHandler):
         self.ade_communicator = ADECommunicator()
 
     def filter_teacher_class(self, teacher, time, date):
-        all_lessons = self.ade_communicator.get_lessons()
+        """all_lessons = self.ade_communicator.get_lessons()
 
         teacher_classes = list()
 
@@ -73,12 +73,12 @@ class ClassAbsenteesHandler(BaseHandler):
                     final_step = lesson
             # else if hours are not the same, compare hours
             elif lesson_start_time[0] < my_time[0] and my_time[0] < lesson_end_time[0]:
-                final_step = lesson
+                final_step = lesson"""
 
-        #return {"class_name": "TP PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
-        #        "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
+        return {"class_name": "CM RSA 2 2A IL-LE-TRS", "groups": ["2A"], "start_time": "08h00", "end_time": "10h00",
+                "teacher_name": "CHRISMENT ISABELLE", "room": "Amphi Nord"}
 
-        if final_step is None:
+        """if final_step is None:
             return None
         else:
             return {"class_name": final_step["subject"],
@@ -86,7 +86,7 @@ class ClassAbsenteesHandler(BaseHandler):
                     "start_time": final_step["startHour"],
                     "end_time": final_step["endHour"],
                     "teacher_name": final_step["instructor"],
-                    "room": final_step["classroom"]}
+                    "room": final_step["classroom"]}"""
 
     def get(self):
         # Test user connexion and privileges
@@ -111,7 +111,36 @@ class ClassAbsenteesHandler(BaseHandler):
 
                             students_list.extend(temp)
 
-                students_list.sort(key=lambda x: x['name'])
+                students_list.sort(key=lambda x: x['name']['name'])
+
+                temp = students_list
+                students_list = []
+                email_uniq = []
+                current_month = int(time.strftime("%m"))
+                re_2a = re.compile(r"^2A .*")
+                re_2ag = re.compile(r"^2A G.*")
+
+                for student in temp:
+                    #Diff groups if class is for 2A
+                    if re_2a.match(student['group']):
+                        #If we're on semester 2 => majors groups
+                        if current_month >= 1 and current_month <= 8:
+                            if student['name']['mail'] not in email_uniq and not re_2ag.match(student['group']):
+                                students_list.append(student)
+                                email_uniq.append(student['name']['mail'])
+
+                        #Else normal groups
+                        else:
+                            if student['name']['mail'] not in email_uniq and re_2ag.match(student['group']):
+                                students_list.append(student)
+                                email_uniq.append(student['name']['mail'])
+
+                    #Else we treat them normally
+                    else:
+                        if student['name']['mail'] not in email_uniq:
+                            students_list.append(student)
+                            email_uniq.append(student['name']['mail'])
+
 
                 # Check for already done absentees
                 present_absentees = get_absentees_for_class(class_to_display['class_name'],
