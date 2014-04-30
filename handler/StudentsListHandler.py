@@ -3,6 +3,7 @@ __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 from handler.BaseHandler import *
 from model.ADECommunicator import *
 
+
 class StudentsListHandler(BaseHandler):
     """
     Display a list of students.
