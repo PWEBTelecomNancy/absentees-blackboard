@@ -13,8 +13,7 @@ class MembersAdminHandler(BaseHandler):
 
     def get(self):
         if self.is_connected() and get_is_admin_from_id(self.request.cookies.get('user_id').split('|')[0]):
-            query = Accounts.all()
-            accounts = query.fetch(limit=None)
+            accounts = get_all_accounts()
             error_messages = []
             infos_messages = []
 
@@ -56,8 +55,7 @@ class MembersAdminHandler(BaseHandler):
                     error_messages.append("It seems you are using an invalid URL. No action will be done.")
 
                 time.sleep(1)
-                query = Accounts.all()
-                accounts = query.fetch(limit=None)
+                accounts = get_all_accounts()
                 self.render("administration_members.html", accounts=accounts, error_messages=error_messages,
                             infos_messages=infos_messages)
 
@@ -68,6 +66,23 @@ class MembersAdminHandler(BaseHandler):
 
             else:
                 self.render("administration_members.html", accounts=accounts)
+
+        else:
+            self.render("message.html", title="Access forbidden",
+                        text="It seems you're not an administrator nor a connected user")
+
+    def post(self):
+        if self.is_connected() and get_is_admin_from_id(self.request.cookies.get('user_id').split('|')[0]):
+            login = self.request.get('login')
+            email = self.request.get('email')
+            ade_name = self.request.get('ade_name')
+
+            print login
+            print email
+            print ade_name
+            accounts = get_accounts_corresponding(login, email, ade_name)
+
+            self.render("administration_members.html", accounts=accounts)
 
         else:
             self.render("message.html", title="Access forbidden",

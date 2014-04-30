@@ -75,15 +75,31 @@
                                         <li><a href="/admin_members?action=delete&user={{account.login}}">Delete</a></li>
 
                                         {% if account.is_admin %}
-                                        <li><a href="#">Del admin</a></li>
+                                        <li>
+                                            <a href="/admin_members?action=remove_admin&user={{account.login}}">
+                                                Del admin
+                                            </a>
+                                        </li>
                                         {% else %}
-                                        <li><a href="#">Add admin</a></li>
+                                        <li>
+                                            <a href="/admin_members?action=grant_admin&user={{account.login}}">
+                                                Add admin
+                                            </a>
+                                        </li>
                                         {% endif %}
 
                                         {% if account.is_teacher %}
-                                        <li><a href="#">Del teacher</a></li>
+                                        <li>
+                                            <a href="/admin_members?action=remove_teacher&user={{account.login}}">
+                                                Del teacher
+                                            </a>
+                                        </li>
                                         {% else %}
-                                        <li><a href="#">Add teacher</a></li>
+                                        <li>
+                                            <a href="/admin_members?action=grant_teacher&user={{account.login}}">
+                                                Add teacher
+                                            </a>
+                                        </li>
                                         {% endif %}
                                     </ul>
                                 </div>

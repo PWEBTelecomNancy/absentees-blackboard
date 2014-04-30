@@ -179,3 +179,16 @@ def remove_teacher_from_login(login):
 
     else:
         return False
+
+
+def get_all_accounts():
+    query = Accounts.all()
+    accounts = query.fetch(limit=None)
+    return accounts
+
+
+def get_accounts_corresponding(login, email, ade_name):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=':login*' AND email_address=':email*' "
+                         "AND name=':ade_name*'", login=login, email=email, ade_name=ade_name)
+    accounts = result.fetch(limit=None)
+    return accounts
