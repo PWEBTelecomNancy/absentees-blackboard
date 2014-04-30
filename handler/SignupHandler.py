@@ -4,12 +4,11 @@ import re
 
 from handler.BaseHandler import *
 from model.Accounts import *
+import util
 
 
 class SignupHandler(BaseHandler):
-    user_regexp = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
-    password_regexp = re.compile(r"^.{3,40}$")
-    email_regexp = re.compile(r"^[\S]+@(etu\.)?univ-lorraine\.fr$")
+
 
     def __init__(self, request=None, response=None):
         self.initialize(request, response)
@@ -28,19 +27,19 @@ class SignupHandler(BaseHandler):
         name = self.request.get('name').upper()
         error_messages = []
 
-        if not self.valid_username(username):
+        if not util.valid_username(username):
             error_messages.append("Please enter a username (more than 3 characters).")
 
         if used_username(username):
             error_messages.append("This username is already used")
 
-        if not self.valid_password(password):
+        if not util.valid_password(password):
             error_messages.append("Please enter a valid password (more than 3 characters)")
 
-        if not self.valid_email(email):
+        if not util.valid_email(email):
             error_messages.append("Please enter a valid email address")
 
-        if not self.valid_name(name):
+        if not util.valid_name(name):
             error_messages.append("Please enter your name in the following format: Lastname and Firstname")
 
         if len(error_messages) > 0:
@@ -60,22 +59,3 @@ class SignupHandler(BaseHandler):
             self.response.headers.add_header('Set-Cookie', "user_id=" + id_cookie_generation(account.key().id())
                                              + "; Path='/'")
             self.redirect('/')
-
-    def valid_username(self, username):
-        return self.user_regexp.match(username)
-
-    def valid_password(self, password):
-        return self.password_regexp.match(password)
-
-    def valid_email(self, email):
-        return self.email_regexp.match(email)
-
-    def valid_name(self, name):
-        check = True
-        if check is None:
-            check = False
-
-        if len(name.split(' ')) != 2:
-            check = False
-
-        return check

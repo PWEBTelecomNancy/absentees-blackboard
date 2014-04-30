@@ -2,6 +2,7 @@ __author__ = 'videl'
 
 from model.ADECommunicator import *
 import logging
+import re
 
 def get_lessons_of_groups(groups, all_lessons = ADECommunicator().get_lessons()):
     """
@@ -59,3 +60,38 @@ def get_extended_groups_of_a_user(groups):
             real_groups.append(group)
 
     return real_groups
+
+
+def valid_username(username):
+    """
+    Checks if a username is valid.
+    """
+    user_regexp = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+    return user_regexp.match(username)
+
+
+def valid_password(password):
+    """
+    Check if a password is valid.
+    """
+    password_regexp = re.compile(r"^.{3,40}$")
+    return password_regexp.match(password)
+
+
+def valid_email(email):
+    """
+    Check if an email is valid.
+    """
+    email_regexp = re.compile(r"^[\S]+@(etu\.)?univ-lorraine\.fr$")
+    return email_regexp.match(email)
+
+
+def valid_name(name):
+    check = True
+    if check is None:
+        check = False
+
+    if len(name.split(' ')) != 2:
+        check = False
+
+    return check
