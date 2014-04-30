@@ -108,3 +108,74 @@ def user_connexion(username, password):
 def password_hash(password):
     salt = salt_generation()
     return str(hashlib.sha256(password + salt).hexdigest()) + '|' + salt
+
+
+def delete_user_from_login(login):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+
+    if result.count() == 1:
+        Accounts.delete(result.fetch(1)[0])
+        return True
+
+    else:
+        return False
+
+
+def grant_admin_from_login(login):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+
+    if result.count() == 1:
+        account = result.fetch(1)[0]
+
+        account.is_admin = True
+        account.put()
+
+        return True
+
+    else:
+        return False
+
+
+def remove_admin_from_login(login):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+
+    if result.count() == 1:
+        account = result.fetch(1)[0]
+
+        account.is_admin = False
+        account.put()
+
+        return True
+
+    else:
+        return False
+
+
+def grant_teacher_from_login(login):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+
+    if result.count() == 1:
+        account = result.fetch(1)[0]
+
+        account.is_teacher = True
+        account.put()
+
+        return True
+
+    else:
+        return False
+
+
+def remove_teacher_from_login(login):
+    result = db.GqlQuery("SELECT * FROM Accounts WHERE login=:login", login=login)
+
+    if result.count() == 1:
+        account = result.fetch(1)[0]
+
+        account.is_teacher = False
+        account.put()
+
+        return True
+
+    else:
+        return False

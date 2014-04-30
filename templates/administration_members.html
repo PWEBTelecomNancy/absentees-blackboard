@@ -2,11 +2,33 @@
 
 {% block below_menubar %}
     <div class="container">
-        <h1 class="col-md-12">Members</h1>
+        <h1 class="col-md-12">Members administration</h1>
     </div>
 {% endblock %}
 
 {% block body %}
+    {% if error_messages %}
+    <div class="alert alert-danger">
+        <strong>Error</strong>
+        <ul>
+        {% for message in error_messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if infos_messages %}
+    <div class="alert alert-success">
+        <strong>Information</strong>
+        <ul>
+        {% for message in infos_messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
     <div class="container">
         <div class="col-md-1"></div>
 
@@ -42,7 +64,7 @@
                         <tr class="{{loop.cycle('dark', 'light')}}">
                             <td>{{account.login}}</td>
                             <td>{{account.email_address}}</td>
-                            <td>{{account.name}}</td>
+                            <td>{{account.name|title}}</td>
 
                             <!-- Dropdown menu when screen is too small -->
                             <td class="visible-xs visible-sm"></td>
@@ -50,7 +72,7 @@
                                 <div class="btn-group">
                                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Actions <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Delete</a></li>
+                                        <li><a href="/admin_members?action=delete&user={{account.login}}">Delete</a></li>
 
                                         {% if account.is_admin %}
                                         <li><a href="#">Del admin</a></li>
@@ -69,16 +91,36 @@
                             <td class="visible-xs visible-sm"></td>
 
                             <!-- Multiple buttons when screen is large enough -->
-                            <td class="visible-md visible-lg"><button type="button" class="btn btn-danger">Delete</button></td>
+                            <td class="visible-md visible-lg">
+                                <a href="/admin_members?action=delete&user={{account.login}}">
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </a>
+                            </td>
                             {% if account.is_admin %}
-                            <td class="visible-md visible-lg"><button class="btn btn-warning">Del as admin</button></td>
+                            <td class="visible-md visible-lg">
+                                <a href="/admin_members?action=remove_admin&user={{account.login}}">
+                                    <button class="btn btn-warning">Del as admin</button>
+                                </a>
+                            </td>
                             {% else %}
-                            <td class="visible-md visible-lg"><button class="btn btn-success">Add as admin</button></td>
+                            <td class="visible-md visible-lg">
+                                <a href="/admin_members?action=grant_admin&user={{account.login}}">
+                                    <button class="btn btn-success">Add as admin</button>
+                                </a>
+                            </td>
                             {% endif %}
                             {% if account.is_teacher %}
-                            <td class="visible-md visible-lg"><button class="btn btn-warning">Del as teacher</button></td>
+                            <td class="visible-md visible-lg">
+                                <a href="/admin_members?action=remove_teacher&user={{account.login}}">
+                                    <button class="btn btn-warning">Del as teacher</button>
+                                </a>
+                            </td>
                             {% else %}
-                            <td class="visible-md visible-lg"><button class="btn btn-success">Add as teacher</button></td>
+                            <td class="visible-md visible-lg">
+                                <a href="/admin_members?action=grant_teacher&user={{account.login}}">
+                                    <button class="btn btn-success">Add as teacher</button>
+                                </a>
+                            </td>
                             {% endif %}
                         </tr>
                         {% endfor %}
