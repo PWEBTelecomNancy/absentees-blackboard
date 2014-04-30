@@ -1,9 +1,11 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 import time
+import datetime
 
 from handler.BaseHandler import *
 from model.Accounts import *
+from model.Logs import *
 
 
 class MembersAdminHandler(BaseHandler):
@@ -20,34 +22,46 @@ class MembersAdminHandler(BaseHandler):
             if self.request.get('action') and self.request.get('user'):
                 action = self.request.get('action')
                 user = self.request.get('user')
+                now = datetime.datetime.now()
+                author = get_username_from_id(self.request.cookies.get('user_id').split('|')[0])
 
                 if action == "delete":
                     if delete_user_from_login(user):
                         infos_messages.append("User " + user + " has been deleted")
+                        Logs(date_time=now, category="members_deletion", author=author, description=author + " deleted"
+                             + " account " + user).put()
                     else:
                         error_messages.append("Error while deleting user " + user + ". Please try again")
 
                 elif action == "grant_admin":
                     if grant_admin_from_login(user):
                         infos_messages.append("Admin privileges have been granted to user " + user)
+                        Logs(date_time=now, category="members_deletion", author=author, description=author + " granted"
+                             + " admin privileges to " + user).put()
                     else:
                         error_messages.append("Error while granting admin privileges to user " + user)
 
                 elif action == "remove_admin":
                     if remove_admin_from_login(user):
                         infos_messages.append("Admin privileges have been removed from user " + user)
+                        Logs(date_time=now, category="members_deletion", author=author, description=author + " removed"
+                             + " admin privileges from " + user).put()
                     else:
                         error_messages.append("Error while removing admin privileges from user " + user)
 
                 elif action == "grant_teacher":
                     if grant_teacher_from_login(user):
                         infos_messages.append("Teacher privileges have been granted to user " + user)
+                        Logs(date_time=now, category="members_deletion", author=author, description=author + " granted"
+                             + " teacher privileges to " + user).put()
                     else:
                         error_messages.append("Error while granting teacher privileges to user " + user)
 
                 elif action == "remove_teacher":
                     if remove_teacher_from_login(user):
                         infos_messages.append("Teacher privileges have been removed from user " + user)
+                        Logs(date_time=now, category="members_deletion", author=author, description=author + " removed"
+                             + " teacher privileges from " + user).put()
                     else:
                         error_messages.append("Error while removing teacher privileges from user " + user)
 
