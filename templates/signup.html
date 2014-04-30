@@ -26,13 +26,20 @@
         <div class="col-md-8 col-xs-12 col-sm-12">
             <form method="post" id="signup-form" class="form-body">
                 <label for="login">Login:</label>
-                <input type="text" placeholder="Your login, it can be anything you want!" name="login" id="login" class="form-control" required value="{{username}}"/>
-                <label for="password">Password:</label>
-                <input type="password" id="password" class="form-control" name="password" required />
+                    <input type="text" placeholder="Your login, it can be anything you want!"
+                           name="login" id="login" class="form-control" required value="{{username}}"/>
+
+                <label for="password">Password: (40 characters max!)</label>
+                    <input type="password" id="password" class="form-control"
+                           name="password" required />
+
                 <label for="email">College email address:</label>
-                <input type="email" placeholder="hello.world1@etu.univ-lorraine.fr" name="email" id="email" class="form-control" value="{{email}}" />
+                    <input type="email" placeholder="hello.world1@etu.univ-lorraine.fr"
+                           name="email" id="email" class="form-control" value="{{email}}" />
                 <label for="name">Your name:</label>
-                <input type="text" placeholder="Lastname Firstname" name="name" id="name" class="form-control" value="{{ name }}" />
+
+                    <input type="text" placeholder="Lastname Firstname"
+                           name="name" id="name" class="form-control" value="{{ name }}" />
 
 
                 <button class="btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button">Sign up</button>

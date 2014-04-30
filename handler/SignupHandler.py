@@ -28,19 +28,19 @@ class SignupHandler(BaseHandler):
         error_messages = []
 
         if not util.valid_username(username):
-            error_messages.append("Please enter a username (more than 3 characters).")
+            error_messages.append("Please enter a valid username (more than 3 characters).")
 
         if used_username(username):
             error_messages.append("This username is already used")
 
         if not util.valid_password(password):
-            error_messages.append("Please enter a valid password (more than 3 characters)")
+            error_messages.append("Please enter a valid password (more than 3 characters, less than 40)")
 
         if not util.valid_email(email):
             error_messages.append("Please enter a valid email address")
 
         if not util.valid_name(name):
-            error_messages.append("Please enter your name in the following format: Lastname and Firstname")
+            error_messages.append("Please enter your name in the following format: \"lastname firstname\", like \"John Doe\".")
 
         if len(error_messages) > 0:
             self.render('signup.html',

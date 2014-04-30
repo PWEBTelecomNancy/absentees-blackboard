@@ -1,9 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block below_menubar %}
+            <div class="container">
+                <h1 class="col-md-12">Your profile <small>{{ user.name | title }}</small></h1>
+            </div>
+{% endblock %}
+
+{% block body %}
+    {% if error_messages %}
+    <div class="alert alert-danger">
+        <strong>Error while updating your profile.</strong>
+        <ul>
+        {% for message in error_messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% if updated %}
+    <div class="alert alert-success">
+        <p><strong>Well done! Your account has been updated!</strong></p>
+    </div>
+    {% endif %}
+
+    <div class="container">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 col-xs-12 col-sm-12">
+            <form method="post" id="signup-form" class="form-body">
+                <label for="login">Login:</label>
+                    <input type="text" placeholder="Your login" name="login" id="login" class="form-control" required value="{{ new_login }}"/>
+
+                <label for="email">College email address:</label>
+                    <input type="email" placeholder="hello.world1@etu.univ-lorraine.fr" name="email" id="email" class="form-control" value="{{ new_email_address }}" />
+
+                <label for="name">Your name:</label>
+                    <input type="text" placeholder="Lastname Firstname" name="name" id="name" class="form-control" value="{{ new_name|title }}" />
+
+                <div class="panel panel-default" style="margin-top: 10px;">
+                    <div class="panel-body">
+                        <label for="old_password">Please input your current password so we can confirm you are you:</label>
+                            <input type="password" id="old_password" class="form-control" name="old_password" required />
+
+                        <label for="password">New Password: (If you would like to change.)</label>
+                            <input type="password" id="password" class="form-control" name="password" />
+
+                        <label for="password_confirmation">New Password: (Confirmation.)</label>
+                            <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button">Edit your profile</button>
+            </form>
+         </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+{% endblock %}
