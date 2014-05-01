@@ -35,7 +35,6 @@ class ClassWeekHandler(BaseHandler):
         all_lessons = self.ade_communicator.get_lessons()
 
         if teacher is True:
-            logging.error("TEACHER MODE!")
             users_lessons = get_lessons_of_a_teacher(username, all_lessons)
         else:
             users_groups = get_extended_groups_of_a_user(
