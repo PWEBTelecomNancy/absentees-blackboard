@@ -31,44 +31,36 @@ class ClassWeekHandler(BaseHandler):
 
         return filtered_lessons
 
-    def get_lessons_of_week(self, str_date_to_look_for):
+    def get_lessons_of_week(self, username, str_date_to_look_for):
         all_lessons = self.ade_communicator.get_lessons()
+        users_groups = get_extended_groups_of_a_user(
+            get_groups_of_a_user(username, self.ade_communicator.get_students_groups()))
+        users_lessons = get_lessons_of_groups(users_groups, all_lessons)
+        date_to_look_for = datetime.strptime(str_date_to_look_for, "%d/%m/%Y")
 
-        if 'user_id' in self.request.cookies:
-            current_user = get_connected_user(self.request.cookies['user_id'])
+        # Let's filter the lessons that are this week
+        # 1) Get the date of the beginning of the week
 
-            if current_user is not None:
-                users_groups = get_groups_of_a_user(current_user.name, self.ade_communicator.get_students_groups())
-                users_groups = get_extended_groups_of_a_user(users_groups)
-                users_lessons = get_lessons_of_groups(users_groups, all_lessons)
-                date_to_look_for = datetime.strptime(str_date_to_look_for, "%d/%m/%Y")
+        # <<<<<< USE THIS TO SEE THE PREVIOUS WEEK'S LESSONS >>>>>> #
+        #start_week = date.today() - timedelta(days=date.today().weekday() + 7)
+        #end_week = date.today() + timedelta(days=(6 - date.today().weekday()) - 7)
+        # This is the correct version down there
+        start_week = date_to_look_for - timedelta(days=date_to_look_for.weekday())
+        end_week = date_to_look_for + timedelta(days=(6 - date_to_look_for.weekday()))
 
-                # Let's filter the lessons that are this week
-                # 1) Get the date of the beginning of the week
+        start_week_str = start_week.strftime("%d/%m/%Y")
+        end_week_str = end_week.strftime("%d/%m/%Y")
+        start_week_tuple = start_week_str.split('/')
+        end_week_tuple = end_week_str.split('/')
 
-                # <<<<<< USE THIS TO SEE THE PREVIOUS WEEK'S LESSONS >>>>>> #
-                #start_week = date.today() - timedelta(days=date.today().weekday() + 7)
-                #end_week = date.today() + timedelta(days=(6 - date.today().weekday()) - 7)
-                # This is the correct version down there
-                start_week = date_to_look_for - timedelta(days=date_to_look_for.weekday())
-                end_week = date_to_look_for + timedelta(days=(6 - date_to_look_for.weekday()))
+        start_week_tuple = (int(start_week_tuple[2]), int(start_week_tuple[1]), int(start_week_tuple[0]))
+        end_week_tuple = (int(end_week_tuple[2]), int(end_week_tuple[1]), int(end_week_tuple[0]))
 
-                start_week_str = start_week.strftime("%d/%m/%Y")
-                end_week_str = end_week.strftime("%d/%m/%Y")
-                start_week_tuple = start_week_str.split('/')
-                end_week_tuple = end_week_str.split('/')
+        return start_week, end_week, \
+               self.search_lessons(start_week_tuple, end_week_tuple, users_lessons), \
+               start_week - timedelta(weeks=1), \
+               start_week + timedelta(weeks=1)
 
-                start_week_tuple = (int(start_week_tuple[2]), int(start_week_tuple[1]), int(start_week_tuple[0]))
-                end_week_tuple = (int(end_week_tuple[2]), int(end_week_tuple[1]), int(end_week_tuple[0]))
-
-                return start_week, end_week, \
-                       self.search_lessons(start_week_tuple, end_week_tuple, users_lessons), \
-                       start_week - timedelta(weeks=1), \
-                       start_week + timedelta(weeks=1)
-            else:
-                return None
-        else:
-            return None
 
     def sort_lessons(self, lessons):
         sorted_list = dict()
@@ -86,19 +78,26 @@ class ClassWeekHandler(BaseHandler):
 
 
     def get(self):
-        arg_date = self.request.get('date', date.today().strftime("%d/%m/%Y"))
+        if 'user_id' in self.request.cookies:
+            current_user = get_connected_user(self.request.cookies['user_id'])
 
-        (start, end, my_lessons, previous_week, next_week) = self.get_lessons_of_week(arg_date)
+            if current_user is not None:
+                arg_date = self.request.get('date', date.today().strftime("%d/%m/%Y"))
 
-        sorted_lessons = self.sort_lessons(my_lessons)
+                (start, end, my_lessons, previous_week, next_week) = \
+                    self.get_lessons_of_week(current_user.name, arg_date)
 
-        if my_lessons is None:
+                sorted_lessons = self.sort_lessons(my_lessons)
+
+                self.render('class_week.html', days=sorted_lessons,
+                            first_day=start, last_day=end,
+                            previous_week=previous_week,
+                            next_week=next_week)
+
+            else:
+                # User is not logged in
+                self.write("Please login!")
+        else:
             # User is not logged in
             self.write("Please login!")
-        else:
-            self.render('class_week.html', days=sorted_lessons,
-                        first_day=start, last_day=end,
-                        previous_week=previous_week,
-                        next_week=next_week)
-
 
