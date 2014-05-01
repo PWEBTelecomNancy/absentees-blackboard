@@ -64,7 +64,7 @@
                     {% if day_selected[i].subject.split(' ',1)[0] == "TD" %}
                         {%set color_style ="btn-success"%}
                     {% endif %}
-                    {% if day_selected[i].subject.split(' ',1)[0] == "Exam"%}
+                    {% if day_selected[i].subject.split(' ',1)[0] == "Examen"%}
                         {% set color_style ="btn-danger"%}
                     {% endif %}
                     <a name="class_box" class="class_boxes2 btn {{color_style}}" style="height:{{box_size-5}}px; margin-top:{{where_to_place}}px" role="button">
@@ -72,9 +72,11 @@
                              {{day_selected[i].startHour}} to {{day_selected[i].endHour}}
                         </h5>
                         <hr style="margin:0px;padding:0px;">
-                        <h5 class="text-left">
+                        
+                        <h5 class="text-left" >
                             {{day_selected[i].subject}}
                         </h5>
+
                     </a>
                 {% endif %}
             {% endfor %}

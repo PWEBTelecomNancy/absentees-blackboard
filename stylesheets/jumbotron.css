@@ -121,6 +121,7 @@ button
 .class_boxes2
 {
 	width : 100%;
+	white-space: normal;
 }
 
 .class_boxes2:hover
