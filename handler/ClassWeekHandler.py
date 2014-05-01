@@ -31,7 +31,7 @@ class ClassWeekHandler(BaseHandler):
 
         return filtered_lessons
 
-    def get_lessons_of_week(self, strdate_to_look_for):
+    def get_lessons_of_week(self, str_date_to_look_for):
         all_lessons = self.ade_communicator.get_lessons()
 
         if 'user_id' in self.request.cookies:
@@ -41,7 +41,7 @@ class ClassWeekHandler(BaseHandler):
                 users_groups = get_groups_of_a_user(current_user.name, self.ade_communicator.get_students_groups())
                 users_groups = get_extended_groups_of_a_user(users_groups)
                 users_lessons = get_lessons_of_groups(users_groups, all_lessons)
-                date_to_look_for = datetime.strptime(strdate_to_look_for, "%d/%m/%Y")
+                date_to_look_for = datetime.strptime(str_date_to_look_for, "%d/%m/%Y")
 
                 # Let's filter the lessons that are this week
                 # 1) Get the date of the beginning of the week

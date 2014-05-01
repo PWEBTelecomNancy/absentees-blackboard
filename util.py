@@ -67,7 +67,6 @@ def get_extended_groups_of_a_user(groups):
         else:
             real_groups.append(group)
 
-    logging.error(real_groups)
     return real_groups
 
 
