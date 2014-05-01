@@ -29,7 +29,8 @@ def id_cookie_generation(id):
 def check_cookie(cookie_id):
     user_id = cookie_id.split('|')
 
-    if user_id[1] == str(hashlib.sha256(str(user_id[0] + cookie_secret)).hexdigest()):
+    if user_id[1] == str(hashlib.sha256(str(user_id[0] + cookie_secret)).hexdigest()) \
+            and get_username_from_id(user_id[0]) is not None:
         return True
     else:
         return False

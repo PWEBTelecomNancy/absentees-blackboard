@@ -27,7 +27,6 @@ class BaseHandler(webapp2.RequestHandler):
         else:
             return False
 
-
     @staticmethod
     def render_str(template, **params):
         t = jinja_env.get_template(template)
