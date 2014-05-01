@@ -9,7 +9,64 @@
 {% block body %}
     <div class="container">
         <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="logs" class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="header">Date</th>
+                            <th class="header">Author</th>
+                            <th class="header">Category</th>
+                            <th class="header">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in all_logs %}
+                            {% set row_class = "" %}
+                            {% if row.category == "absentees mark" %}
+                                {% set row_class = "warning" %}
+                            {% endif %}
 
+                            <tr class="{{ row_class }}">
+                                <td class="date">{{ row.date_time.strftime('%Y-%m-%d (at %H:%M)') }}</td>
+                                <td class="author">{{ row.author|title }}</td>
+                                <td class="category">{{ row.category|title }}</td>
+                                <td class="description">{{ row.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block more_js %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.0/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $("#logs").tablesorter({debug: true});
+        }
+        );
+    </script>
+{% endblock %}
+
+{% block more_css %}
+<style type="text/css">
+th.headerSortUp {
+    background-image: url(//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.0/css/images/black-asc.gif);
+    background-color: #005283;
+}
+th.headerSortDown {
+    background-image: url(//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.0/css/images/black-desc.gif);
+    background-color: #005283;
+}
+th.header {
+    background-image: url(//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.0/css/images/black-unsorted.gif);
+    cursor: pointer;
+    font-weight: bold;
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+</style>
 {% endblock %}
