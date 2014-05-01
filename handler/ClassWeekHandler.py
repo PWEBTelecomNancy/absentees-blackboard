@@ -31,7 +31,7 @@ class ClassWeekHandler(BaseHandler):
 
         return filtered_lessons
 
-    def get_lessons_of_week(self):
+    def get_lessons_of_week(self, strdate_to_look_for):
         all_lessons = self.ade_communicator.get_lessons()
 
         if 'user_id' in self.request.cookies:
@@ -40,6 +40,7 @@ class ClassWeekHandler(BaseHandler):
             if current_user is not None:
                 users_groups = get_extended_groups_of_a_user(current_user.name)
                 users_lessons = get_lessons_of_groups(users_groups, all_lessons)
+                date_to_look_for = datetime.strptime(strdate_to_look_for, "%d/%m/%Y")
 
                 # Let's filter the lessons that are this week
                 # 1) Get the date of the beginning of the week
@@ -48,18 +49,21 @@ class ClassWeekHandler(BaseHandler):
                 #start_week = date.today() - timedelta(days=date.today().weekday() + 7)
                 #end_week = date.today() + timedelta(days=(6 - date.today().weekday()) - 7)
                 # This is the correct version down there
-                start_week = date.today() - timedelta(days=date.today().weekday())
-                end_week = date.today() + timedelta(days=(6 - date.today().weekday()))
+                start_week = date_to_look_for - timedelta(days=date_to_look_for.weekday())
+                end_week = date_to_look_for + timedelta(days=(6 - date_to_look_for.weekday()))
 
-                start_week = start_week.strftime("%d/%m/%Y")
-                end_week = end_week.strftime("%d/%m/%Y")
-                start_week_tuple = start_week.split('/')
-                end_week_tuple = end_week.split('/')
+                start_week_str = start_week.strftime("%d/%m/%Y")
+                end_week_str = end_week.strftime("%d/%m/%Y")
+                start_week_tuple = start_week_str.split('/')
+                end_week_tuple = end_week_str.split('/')
 
                 start_week_tuple = (int(start_week_tuple[2]), int(start_week_tuple[1]), int(start_week_tuple[0]))
                 end_week_tuple = (int(end_week_tuple[2]), int(end_week_tuple[1]), int(end_week_tuple[0]))
 
-                return self.search_lessons(start_week_tuple, end_week_tuple, users_lessons)
+                return start_week, end_week, \
+                       self.search_lessons(start_week_tuple, end_week_tuple, users_lessons), \
+                       start_week - timedelta(weeks=1), \
+                       start_week + timedelta(weeks=1)
             else:
                 return None
         else:
@@ -81,7 +85,9 @@ class ClassWeekHandler(BaseHandler):
 
 
     def get(self):
-        my_lessons = self.get_lessons_of_week()
+        arg_date = self.request.get('date', date.today().strftime("%d/%m/%Y"))
+
+        (start, end, my_lessons, previous_week, next_week) = self.get_lessons_of_week(arg_date)
 
         sorted_lessons = self.sort_lessons(my_lessons)
 
@@ -89,12 +95,9 @@ class ClassWeekHandler(BaseHandler):
             # User is not logged in
             self.write("Please login!")
         else:
-            ClassWeekHandler.renderTemp(self, sorted_lessons)
-
-    def renderTemp(self, lessons):
-
-        start_week = date.today() - timedelta(days=date.today().weekday())
-        end_week = date.today() + timedelta(days=(6 - date.today().weekday()))
+            self.render('class_week.html', days=sorted_lessons,
+                        first_day=start, last_day=end,
+                        previous_week=previous_week,
+                        next_week=next_week)
 
 
-        self.render('class_week.html', days=lessons, first_day=start_week, last_day=end_week)

@@ -11,11 +11,29 @@
                         <h1>Weekly Schedule</h1>
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-md-10 col-xs-offset-2">
-                            <h2>From {{ first_day.strftime("%A %d %B") }} to {{ last_day.strftime("%A %d %B") }}</h2>
-                        </div>
+                <div class="row">
+                    <div class="col-md-10 col-xs-offset-2">
+                        <h2>From {{ first_day.strftime("%A %d %B") }} to {{ last_day.strftime("%A %d %B") }}</h2>
                     </div>
+                </div>
+
+                <div class="col-md-4 col-xs-6">
+                    <p>
+                        <a href="?date={{ previous_week.strftime("%d/%m/%Y") }}">
+                            <span class="glyphicon glyphicon-backward"></span> Previous week
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    {# Empty, only used for spacing. #}
+                 </div>
+
+                <div class="col-md-4 col-xs-6">
+                    <a href="?date={{ next_week.strftime("%d/%m/%Y") }}">
+                        <p class="pull-right">Next week <span class="glyphicon glyphicon-forward"></span></p>
+                    </a>
+                </div>
             </div>
         </div>
 {% endblock %}
@@ -57,13 +75,6 @@
                         <h5 class="text-left">
                             {{day_selected[i].subject}}
                         </h5>
-                        {%if box_size >125 %}
-                            {% for g in day_selected[i].group %}
-                                <h6 class="text-left">
-                                    {{g}}
-                                </h6>
-                            {% endfor %}
-                        {% endif %}
                     </a>
                 {% endif %}
             {% endfor %}
