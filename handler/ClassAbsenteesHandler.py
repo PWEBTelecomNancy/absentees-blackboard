@@ -78,6 +78,9 @@ class ClassAbsenteesHandler(BaseHandler):
         #return {"class_name": "CM RSA 2 2A IL-LE-TRS", "groups": ["2A"], "start_time": "08h00", "end_time": "10h00",
         #        "teacher_name": "CHRISMENT ISABELLE", "room": "Amphi Nord"}
 
+        #return {"class_name": "TD PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
+        #        "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
+
         if final_step is None:
             return None
         else:
