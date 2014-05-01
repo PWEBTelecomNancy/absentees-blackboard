@@ -14,3 +14,9 @@ class LogsHandler(BaseHandler):
 
 
         self.render("administration_logs.html", all_logs=all_logs)
+
+    def post(self):
+        all_logs = Logs.query().order(-Logs.date_time).fetch()
+
+
+        self.write("To be coded.")

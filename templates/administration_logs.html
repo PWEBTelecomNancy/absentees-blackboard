@@ -9,6 +9,26 @@
 {% block body %}
     <div class="container">
         <div class="col-md-12">
+
+            <!-- Row for the search form -->
+            <div class="row" id="search_member">
+                <form method="post" actions="/logs" class="form-body">
+                    <div class="form-group">
+                        <label for="date" class="col-md-2 col-xs-12">Date</label>
+                            <input type="text" name="date" id="date" class="col-md-2 col-xs-12"/>
+                        <label for="author" class="col-md-2 col-xs-12">Author</label>
+                            <input type="text" name="author" id="author" class="col-md-2 col-xs-12" />
+                        <label for="category" class="col-md-2 col-xs-12">Category</label>
+                            <input type="text" name="category" id="category" class="col-md-2 col-xs-12" />
+                        <label for="desc" class="col-md-2 col-xs-12">Description</label>
+                            <input type="text" name="desc" id="desc" class="col-md-2 col-xs-12" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
             <div class="table-responsive">
                 <table id="logs" class="table table-condensed">
                     <thead>
