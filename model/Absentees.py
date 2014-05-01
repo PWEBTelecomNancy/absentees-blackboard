@@ -13,7 +13,7 @@ class Absentees(db.Model):
     end_hour = db.StringProperty(required=True)
     class_date = db.StringProperty(required=True)
     justification_bool = db.BooleanProperty(required=True)
-    justification_text = db.StringProperty
+    justification_text = db.StringProperty(required=True)
 
 
 def get_absentees_for_class(class_title, teacher_name, class_date, start_hour, end_hour):
@@ -59,3 +59,7 @@ def get_absentees_from_criteria(date, class_title, student_name):
 
     result = query.fetch(limit=None)
     return result
+
+
+def get_absentee_from_id(abs_id):
+    return Absentees.get_by_id(int(abs_id))

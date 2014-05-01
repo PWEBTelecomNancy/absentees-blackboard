@@ -199,3 +199,13 @@ button
         padding-bottom: 10px;
     }
 }
+
+dt
+{
+    margin-top: 7px;
+}
+
+dd
+{
+    margin-bottom: 7px;
+}

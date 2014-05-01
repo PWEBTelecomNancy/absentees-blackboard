@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }} > Administration > Absentees > Absentee consultation {% endblock %}
+
+{% block below_menubar %}
+    <div class="container">
+        <h1 class="col-md-12">Absentees justifications</h1>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <form method="post" action="/show_absentee?id={{absentee.key().id()}}" class="form-body">
+                <div class="form-group col-md-12">
+                    <dl>
+                        <dt>Class title</dt>
+                        <dd>{{absentee.class_title}}</dd>
+                        <dt>Class date</dt>
+                        <dd>{{absentee.class_date}}</dd>
+                        <dt>Hour</dt>
+                        <dd>{{absentee.start_hour}} - {{absentee.end_hour}}</dd>
+                        <dt>Teacher</dt>
+                        <dd>{{absentee.teacher_name}}</dd>
+                        <dt>Student</dt>
+                        <dd>{{absentee.student_name}} ({{absentee.student_email}}) - {{absentee.student_group}}</dd>
+                    </dl>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="justified">Justified</label>
+                    {% if absentee.justification_bool %}
+                    <input type="checkbox" name="justified" id="justified" checked />
+                    {% else %}
+                    <input type="checkbox" name="justified" id="justified" />
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="justification">Justification</label><br />
+                    {% if absentee.justification_text and absentee.justification_text != "" %}
+                    <input type="text" id="justification" name="justification" value="{{absentee.justification_text}}" />
+                    {% else %}
+                    <input type="text" id="justification" name="justification" />
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-12">
+                    <a href="/admin_absentees"><button type="button" class="btn btn-default">Back</button></a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

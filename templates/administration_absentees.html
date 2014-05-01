@@ -13,7 +13,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- Row for the search form -->
             <div class="row" id="search_member">
-                <form method="post" actions="/admin_absentees" class="form-body">
+                <form method="post" action="/admin_absentees" class="form-body">
                     <div class="form-group">
                         <label for="date" class="col-md-2 col-xs-12">Date</label>
                         <input type="date" name="date" id="date" class="col-md-2 col-xs-12"/>
@@ -48,7 +48,7 @@
                             <th></th>
                         </tr>
 
-                        {% for abs in absentees%}
+                        {% for abs in absentees %}
                         <tr class="{{loop.cycle('dark', 'light')}}">
                             <td>{{abs.class_date}}</td>
                             <td>{{abs.class_title}}</td>
@@ -58,7 +58,13 @@
                             <td>{{abs.student_name}}</td>
                             <td>{{abs.student_group}}</td>
                             <td>{{abs.justification_bool}}</td>
-                            <td><button type="button" class="btn btn-default">Consult</button></td>
+                            <td>
+                                <a href="/show_absentee?id={{abs.key().id()}}">
+                                    <button type="button" class="btn btn-default">
+                                        Consult
+                                    </button>
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </table>

@@ -12,7 +12,6 @@ class AbsenteesAdminHandler(BaseHandler):
     def get(self):
         if self.is_connected() and get_is_admin_from_id(self.request.cookies.get('user_id').split('|')[0]):
             absentees = get_all_absentees()
-
             self.render("administration_absentees.html", absentees=absentees)
 
         else:

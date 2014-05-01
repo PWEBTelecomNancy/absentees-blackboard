@@ -246,7 +246,7 @@ class ClassAbsenteesHandler(BaseHandler):
                                              teacher_name=class_to_display['teacher_name'],
                                              start_hour=class_to_display['start_time'],
                                              end_hour=class_to_display['end_time'],
-                                             class_date=class_date, justification_bool=False)
+                                             class_date=class_date, justification_bool=False, justification_text="/")
                         absentee.put()
 
                         Logs(date_time=datetime.datetime.now(), category="absentees mark", author=teacher_name,

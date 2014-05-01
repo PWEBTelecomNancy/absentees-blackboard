@@ -13,6 +13,7 @@ from handler.LogsHandler import *
 from handler.ParametersHandler import *
 from handler.AbsenteesMonitorHandler import *
 from handler.ProfileHandler import *
+from handler.ShowAbsenteeHandler import *
 
 app = webapp2.WSGIApplication([
                                   ('/', HomeHandler),
@@ -26,6 +27,7 @@ app = webapp2.WSGIApplication([
                                   ('/admin', AdministrationHandler),
                                   ('/admin_members', MembersAdminHandler),
                                   ('/admin_absentees', AbsenteesAdminHandler),
+                                  ('/show_absentee', ShowAbsenteeHandler),
                                   ('/logs', LogsHandler),
                                   ('/parameters', ParametersHandler),
                                   ('/absentees_monitor', AbsenteesMonitorHandler),
