@@ -47,18 +47,28 @@ def get_groups_of_a_user(username, all_groups = ADECommunicator().get_students_g
 def get_extended_groups_of_a_user(groups):
     """
     Gets the list of the groups the user is really into.
-    Someone in the "2A IL 2" group is also in the "2A IL" group.
+    Someone in the "2A IL 2" group is also in the "2A IL" group, and in 2A.
     """
     user_groups = get_groups_of_a_user(groups)
     real_groups = list()
     for group in user_groups:
+        real_groups.append(group)
+        
+        # Add the main class, "1A", "2A", "3A"..
+        group_to_add = group.split(' ')[0]
+        if not real_groups.__contains__(group_to_add):
+            real_groups.append(group_to_add)
+
         if len(group.split(' ')) == 3:
-            real_groups.append(group[:-2])
+            group_to_add = group[:-2]
+            real_groups.append(group_to_add)
         elif len(group.split(' ')) == 2:
-            real_groups.append(group[:-1])
+            group_to_add = group[:-1]
+            real_groups.append(group_to_add)
         else:
             real_groups.append(group)
 
+    logging.error(real_groups)
     return real_groups
 
 
