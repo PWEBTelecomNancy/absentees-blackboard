@@ -63,3 +63,13 @@ def get_absentees_from_criteria(date, class_title, student_name):
 
 def get_absentee_from_id(abs_id):
     return Absentees.get_by_id(int(abs_id))
+
+
+def get_absentees_from_class_title(class_title):
+    query = db.GqlQuery("SELECT * FROM Absentees WHERE class_title=:class_title", class_title=class_title)
+    return query.fetch(limit=None)
+
+
+def get_absentees_from_group_name(group_name):
+    query = db.GqlQuery("SELECT * FROM Absentees WHERE student_group=:group_name", group_name=group_name)
+    return query.fetch(limit=None)

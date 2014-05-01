@@ -1,6 +1,10 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
+import re
+
 from handler.BaseHandler import *
+from model.Absentees import *
+from model.ADECommunicator import *
 
 
 class AbsenteesMonitorHandler(BaseHandler):
@@ -19,10 +23,22 @@ class AbsenteesMonitorHandler(BaseHandler):
     def post(self):
         if self.is_connected():
             if self.request.get('class_title'):
-                self.response.out.write("Class name")
+                absentees = get_absentees_from_class_title(self.request.get('class_title'))
+                self.render("absentees_monitor_results.html", absentees=absentees,
+                            search_object=self.request.get('class_title'))
 
             else:
-                self.response.out.write("Group name")
+                group_re = re.compile(self.request.get('group_name'))
+                absentees = []
+                communicator = ADECommunicator()
+                student_groups = communicator.get_students_groups()
+
+                for group in student_groups:
+                    if group_re.match(group):
+                        absentees.extend(get_absentees_from_group_name(group))
+
+                self.render("absentees_monitor_results.html", search_object=self.request.get('group_name'),
+                            absentees=absentees)
 
         else:
             self.render("message.html", title="Access forbidden",
