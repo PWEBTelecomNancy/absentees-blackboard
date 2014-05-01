@@ -59,8 +59,7 @@ class ProfileHandler(BaseHandler):
             if key_to_check is not None:
                 if key_to_check == self.current_user.key().id():
                     # We have the right user
-                    logging.error("Bon mdp")
-
+                    pass
                 else:
                     error_messages.append("An unexpected error occurred. Please try again.")
             else:
@@ -73,7 +72,7 @@ class ProfileHandler(BaseHandler):
                             user=self.current_user,
                             new_login=username,
                             new_email_address=email,
-                            new_name=self.current_user.name)
+                            new_name=name)
 
             else:
                 # No error! Update time
