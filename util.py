@@ -4,7 +4,7 @@ from model.ADECommunicator import *
 import logging
 import re
 
-def get_lessons_of_groups(groups, all_lessons = ADECommunicator().get_lessons()):
+def get_lessons_of_groups(groups, all_lessons):
     """
     Get the lessons that a list of groups have.
     """
@@ -24,7 +24,7 @@ def get_lessons_of_groups(groups, all_lessons = ADECommunicator().get_lessons())
 
     return users_lessons
 
-def get_groups_of_a_user(username, all_groups = ADECommunicator().get_students_groups()):
+def get_groups_of_a_user(username, all_groups):
     """
     Get the groups of one user.
 
@@ -49,11 +49,10 @@ def get_extended_groups_of_a_user(groups):
     Gets the list of the groups the user is really into.
     Someone in the "2A IL 2" group is also in the "2A IL" group, and in 2A.
     """
-    user_groups = get_groups_of_a_user(groups)
     real_groups = list()
-    for group in user_groups:
+    for group in groups:
         real_groups.append(group)
-        
+
         # Add the main class, "1A", "2A", "3A"..
         group_to_add = group.split(' ')[0]
         if not real_groups.__contains__(group_to_add):

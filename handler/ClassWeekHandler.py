@@ -38,7 +38,8 @@ class ClassWeekHandler(BaseHandler):
             current_user = get_connected_user(self.request.cookies['user_id'])
 
             if current_user is not None:
-                users_groups = get_extended_groups_of_a_user(current_user.name)
+                users_groups = get_groups_of_a_user(current_user.name, self.ade_communicator.get_students_groups())
+                users_groups = get_extended_groups_of_a_user(users_groups)
                 users_lessons = get_lessons_of_groups(users_groups, all_lessons)
                 date_to_look_for = datetime.strptime(strdate_to_look_for, "%d/%m/%Y")
 

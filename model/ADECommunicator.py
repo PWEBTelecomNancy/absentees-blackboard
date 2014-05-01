@@ -19,6 +19,8 @@ class ADECommunicator():
 
     def get_students_groups(self):
         groups = memcache.get("group_list")
+        #raise Exception("I know python!")
+
 
         if groups is None:
             logging.error("CACHE MISS ADECommunicator get_students_groups()")
