@@ -8,12 +8,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>My agenda this week :</h1>
+                        <h1>Weekly Schedule</h1>
                     </div>
                 </div>
                     <div class="row">
                         <div class="col-md-10 col-xs-offset-2">
-                            <h2>From {{first_day}} to {{last_day}}</h2>
+                            <h2>From {{ first_day.strftime("%A %d %B") }} to {{ last_day.strftime("%A %d %B") }}</h2>
                         </div>
                     </div>
             </div>
