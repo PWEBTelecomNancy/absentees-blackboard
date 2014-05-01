@@ -28,3 +28,34 @@ def get_absentees_for_class(class_title, teacher_name, class_date, start_hour, e
 def get_all_absentees():
     query = Absentees.all()
     return query.fetch(limit=None)
+
+
+def get_absentees_from_criteria(date, class_title, student_name):
+    if date != "" and class_title == "" and student_name == "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_date=:date", date=date)
+
+    elif date == "" and class_title != "" and student_name == "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_title=:class_title", class_title=class_title)
+
+    elif date == "" and class_title == "" and student_name != "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE student_name=:student_name", student_name=student_name)
+
+    elif date != "" and class_title != "" and student_name == "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_date=:date AND class_title=:class_title", date=date,
+                            class_title=class_title)
+
+    elif date == "" and class_title != "" and student_name != "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_title=:class_title AND student_name=:student_name",
+                            class_title=class_title, student_name=student_name)
+
+    elif date != "" and class_title == "" and student_name != "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_date=:date AND student_name=:student_name", date=date,
+                            student_name=student_name)
+
+    elif date != "" and class_title != "" and student_name != "":
+        query = db.GqlQuery("SELECT * FROM Absentees WHERE class_date=:date AND class_title=:class_title "
+                            "AND student_name=:student_name", date=date, class_title=class_title,
+                            student_name=student_name)
+
+    result = query.fetch(limit=None)
+    return result

@@ -9,28 +9,6 @@
 {% endblock %}
 
 {% block body %}
-    {% if error_messages %}
-    <div class="alert alert-danger">
-        <strong>Error</strong>
-        <ul>
-        {% for message in error_messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-    {% if infos_messages %}
-    <div class="alert alert-success">
-        <strong>Information</strong>
-        <ul>
-        {% for message in infos_messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- Row for the search form -->
