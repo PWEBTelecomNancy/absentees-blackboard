@@ -8,8 +8,6 @@ def get_lessons_of_groups(groups, all_lessons):
     """
     Get the lessons that a list of groups have.
     """
-    ade = ADECommunicator()
-
     users_lessons = dict()
     # Filter all the lessons of one user
     for lesson in all_lessons:
@@ -23,6 +21,25 @@ def get_lessons_of_groups(groups, all_lessons):
                     users_lessons[lesson].append(one_class)
 
     return users_lessons
+
+def get_lessons_of_a_teacher(username, all_lessons):
+    """
+    Get the lessons that a teacher has.
+    """
+    users_lessons = dict()
+    # Filter all the lessons of one user
+    for lesson in all_lessons:
+        #logging.error(lesson)
+        #logging.error(all_lessons[lesson])
+        for one_class in all_lessons[lesson]:
+            if 'instructor' in one_class:
+                if username == one_class['instructor']:
+                    if lesson not in users_lessons.keys():
+                        users_lessons[lesson] = list()
+                    users_lessons[lesson].append(one_class)
+
+    return users_lessons
+
 
 def get_groups_of_a_user(username, all_groups):
     """

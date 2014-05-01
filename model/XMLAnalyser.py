@@ -39,7 +39,6 @@ class XMLAnalyser():
 
     def get_xml(self, url):
         page = urllib2.urlopen(url)
-        logging.error(url)
         content = page.read()
 
         return minidom.parseString(content)
