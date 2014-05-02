@@ -19,7 +19,7 @@ class LogsHandler(BaseHandler):
                         text="It seems you're not an administrator nor a connected user.")
 
         else:
-            all_logs = Logs.query().order(-Logs.date_time).fetch()
+            all_logs = get_all_logs()
 
             self.render("administration_logs.html", all_logs=all_logs)
 
@@ -30,6 +30,6 @@ class LogsHandler(BaseHandler):
                         text="It seems you're not an administrator nor a connected user.")
 
         else:
-            all_logs = Logs.query().order(-Logs.date_time).fetch()
+            all_logs = get_all_logs()
 
             self.write("To be coded.")

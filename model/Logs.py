@@ -8,3 +8,6 @@ class Logs(ndb.Model):
     category = ndb.StringProperty(required=True)
     author = ndb.StringProperty(required=True)
     description = ndb.StringProperty(required=True)
+
+def get_all_logs():
+    return Logs.query().order(-Logs.date_time).fetch()
