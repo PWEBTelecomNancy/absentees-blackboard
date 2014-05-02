@@ -13,51 +13,70 @@
         <div class="col-md-12">
 
             <div class="table-responsive">
-                <table id="logs" class="table table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="header">Date</th>
-                            <th class="header">Author</th>
-                            <th class="header">Category</th>
-                            <th class="header">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {# Row for the search form #}
-                        <div class="row" id="search_member">
-                            <form method="post" actions="/logs" class="form-inline">
-                                    <tr>
-                                        <td>
-                                            <input type="text" name="date" id="date" class="col-md-12 col-xs-12" />
-                                        </td>
-                                        <td>
-                                            <input type="text" name="author" id="author" class="col-md-12 col-xs-12" />
-                                        </td>
-                                        <td>
-                                            <input type="text" name="category" id="category" class="col-md-12 col-xs-12" />
-                                        </td>
-                                        <td>
-                                            <input type="text" name="desc" id="desc" class="col-md-12 col-xs-12" />
-                                        </td>
-                                    </tr>
-                            </form>
-                        </div>
 
-                        {% for row in all_logs %}
-                            {% set row_class = "" %}
-                            {% if row.category == "absentees mark" %}
-                                {% set row_class = "warning" %}
-                            {% endif %}
+                <form method="post" actions="/logs" class="form-inline">
+                    <button class="btn btn-primary col-sm-2 col-xs-2 top-marge-button">Search</button>
 
-                            <tr class="{{ row_class }}">
-                                <td class="date">{{ row.date_time.strftime('%Y-%m-%d (at %H:%M)') }}</td>
-                                <td class="author">{{ row.author|title }}</td>
-                                <td class="category">{{ row.category|title }}</td>
-                                <td class="description">{{ row.description }}</td>
+                    <table id="logs" class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="header">Date</th>
+                                <th class="header">Author</th>
+                                <th class="header">Category</th>
+                                <th class="header">Description</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {# Row for the search form #}
+                            <div class="row" id="search_member">
+                                <tr>
+                                    <td>
+                                        <input type="text" name="date" id="date"
+                                               class="col-md-12 col-xs-12 hasDatePicker"
+                                               placeholder="DD/MM/YYYY" maxlength="10" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="author" id="author"
+                                               class="col-md-12 col-xs-12"
+                                               value="{{ search_author }}" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="category" id="category"
+                                               class="col-md-12 col-xs-12"
+                                               value="{{ search_category }}" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="desc" id="desc"
+                                               class="col-md-12 col-xs-12"
+                                               value="{{ search_desc }}" />
+                                    </td>
+                                </tr>
+                            </div>
+
+                            {% if all_logs %}
+                                {% for row in all_logs %}
+                                    {% set row_class = "" %}
+                                    {% if row.category == "absentees mark" %}
+                                        {% set row_class = "warning" %}
+                                    {% endif %}
+
+                                    <tr class="{{ row_class }}">
+                                        <td class="date">{{ row.date_time.strftime('%d/%m/%Y (at %H:%M)') }}</td>
+                                        <td class="author">{{ row.author|title }}</td>
+                                        <td class="category">{{ row.category|title }}</td>
+                                        <td class="description">{{ row.description }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr class="warning">
+                                <td colspan="4" style="text-align: center">
+                                    No Data
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
@@ -65,10 +84,12 @@
 
 {% block more_js %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.0/jquery.tablesorter.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function()
         {
             $("#logs").tablesorter({debug: true});
+            $( "#date" ).datepicker({ dateFormat: "dd/mm/yy" });
         }
         );
     </script>
@@ -92,4 +113,5 @@ th.header {
 	background-position: center right;
 }
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
