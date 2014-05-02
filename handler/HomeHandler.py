@@ -1,7 +1,6 @@
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 from handler.BaseHandler import *
-import logging
 
 
 class HomeHandler(BaseHandler):

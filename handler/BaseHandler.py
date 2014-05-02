@@ -6,6 +6,7 @@ import webapp2
 import jinja2
 
 from model.Accounts import *
+from frtz import *
 
 
 template_dir = os.path.join(os.path.dirname(__file__), '../templates')
@@ -14,6 +15,8 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), aut
 
 class BaseHandler(webapp2.RequestHandler):
     page_name = "home"
+    time_details = datetime.datetime.now()
+    time_details = datetime.datetime.replace(time_details, tzinfo=frtz())
 
     def is_connected(self):
         if self.request.cookies.get('user_id'):
