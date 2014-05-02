@@ -45,8 +45,8 @@ class ClassTodayHandler(BaseHandler):
         #classes[3]=class4_example
         #classes[4]=class5_example
 
-        hour = time.strftime("%H:%M")
-        day = time.strftime("%A %d %B %Y")
+        hour = self.date_details.strftime("%H:%M")
+        day = self.date_details.strftime("%A %d %B %Y")
 
         class_parameters = {'classes':classes,'day':day,'hour':hour}
 

@@ -41,7 +41,7 @@ class ClassWeekHandler(BaseHandler):
                 get_groups_of_a_user(username, self.ade_communicator.get_students_groups()))
             users_lessons = get_lessons_of_groups(users_groups, all_lessons)
 
-        date_to_look_for = datetime.strptime(str_date_to_look_for, "%d/%m/%Y")
+        date_to_look_for = self.date_details.strptime(str_date_to_look_for, "%d/%m/%Y")
 
         # Let's filter the lessons that are this week
         # 1) Get the date of the beginning/end of the week
@@ -69,7 +69,7 @@ class ClassWeekHandler(BaseHandler):
             sorted_list[x] = list()
 
         for lesson in lessons:
-            lesson_date = datetime.strptime(lesson['date'], "%d/%m/%Y")
+            lesson_date = self.date_details.strptime(lesson['date'], "%d/%m/%Y")
             sorted_list[lesson_date.weekday()].append(lesson)
 
         for weekday in sorted_list:
@@ -82,7 +82,7 @@ class ClassWeekHandler(BaseHandler):
             current_user = get_connected_user(self.request.cookies['user_id'])
 
             if current_user is not None:
-                arg_date = self.request.get('date', date.today().strftime("%d/%m/%Y"))
+                arg_date = self.request.get('date', self.date_details.strftime("%d/%m/%Y"))
 
                 teacher = get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0])
                 (start, end, my_lessons, previous_week, next_week) = \

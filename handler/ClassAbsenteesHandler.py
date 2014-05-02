@@ -1,6 +1,5 @@
 import time
 import re
-import datetime
 
 from handler.BaseHandler import *
 from model.ADECommunicator import *
@@ -95,9 +94,9 @@ class ClassAbsenteesHandler(BaseHandler):
         # Test user connexion and privileges
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             # First, get the class the teacher should have right now
-            class_date = time.strftime("%d/%m/%Y")
+            class_date = self.date_details.strftime("%d/%m/%Y")
             teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0]).name
-            class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
+            class_to_display = self.filter_teacher_class(teacher_name, self.date_details.strftime("%H:%M"), class_date)
 
             # If there's a class
             if class_to_display is not None:
@@ -171,9 +170,9 @@ class ClassAbsenteesHandler(BaseHandler):
         # Test user connexion and privileges
         if self.is_connected() and get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0]):
             #First, get the class the teacher should have right now
-            class_date = time.strftime("%d/%m/%Y")
+            class_date = self.date_details.strftime("%d/%m/%Y")
             teacher_name = get_account_from_id(self.request.cookies.get('user_id').split('|')[0]).name
-            class_to_display = self.filter_teacher_class(teacher_name, time.strftime("%H:%M"), class_date)
+            class_to_display = self.filter_teacher_class(teacher_name, self.date_details.strftime("%H:%M"), class_date)
 
             # If there's a class
             if class_to_display is not None:

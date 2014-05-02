@@ -15,8 +15,8 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), aut
 
 class BaseHandler(webapp2.RequestHandler):
     page_name = "home"
-    time_details = datetime.datetime.now()
-    time_details = datetime.datetime.replace(time_details, tzinfo=frtz())
+    date_details = datetime.datetime.now(frtz())
+    date_details = date_details.replace(tzinfo=frtz())
 
     def is_connected(self):
         if self.request.cookies.get('user_id'):
