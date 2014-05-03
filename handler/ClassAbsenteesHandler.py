@@ -226,7 +226,7 @@ class ClassAbsenteesHandler(BaseHandler):
                                                             class_to_display['end_time'])
 
                 if len(present_absentees) != 0:
-                    Logs(date_time=datetime.datetime.now(), category="absentees mark", author=teacher_name,
+                    Logs(date_time=self.date_details.now(), category="absentees mark", author=teacher_name,
                          description=teacher_name + " deleted all absentees for class "
                          + class_to_display['class_name'] + " (" + class_date + " from "
                          + class_to_display['start_time'] + " to " + class_to_display['end_time'] + ")").put()
