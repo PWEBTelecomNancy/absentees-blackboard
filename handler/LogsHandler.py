@@ -39,21 +39,19 @@ class LogsHandler(BaseHandler):
             category_req = self.request.get('category', None)
             desc_req = self.request.get('desc', None)
 
-            date = None
-            if date_req is not None and date_req != "":
-                try:
-                    date_tab = date_req.split('/')
-                    date = datetime.datetime(date_req[2], date_req[1], date_req[0])
-
-                except Exception:
-                    date = self.date_details
-                    date_req = ""
-
             all_logs = get_all_logs()
             filtered_logs = None
 
-            if date:
+            if date_req:
                 logging.error("date search")
+                filtered_logs = all_logs
+
+                new_list = list()
+                for log in filtered_logs:
+                    logging.error(log.author)
+                    if date_req in log.date_time.strftime('%d/%m/%Y'):
+                        new_list.append(log)
+                filtered_logs = new_list
 
             if author_req:
                 logging.error("Author search")
