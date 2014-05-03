@@ -52,24 +52,6 @@
                         <p class="student_group">{{student.group}}</p>
                     </li>
                 {% endfor %}
-
-                <script language="javascript">
-                    function change(str) {
-                        var link = document.getElementById(str + "|button");
-                        var checkbox = document.getElementById(str + "|box")
-                        var hisclass = link.className;
-
-                        if (hisclass == "anim student btn btn-danger") {
-                            link.className = 'anim student btn';
-                            checkbox.checked = false;
-                        }
-
-                        else {
-                            link.className = 'anim student btn btn-danger';
-                            checkbox.checked = true;
-                        }
-                    }
-                </script>
             </ul>
         </div>
 
@@ -78,4 +60,24 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block more_js %}
+    <script language="javascript">
+        function change(str) {
+            var link = document.getElementById(str + "|button");
+            var checkbox = document.getElementById(str + "|box")
+            var hisclass = link.className;
+
+            if (hisclass == "anim student btn btn-danger") {
+                link.className = 'anim student btn';
+                checkbox.checked = false;
+            }
+
+            else {
+                link.className = 'anim student btn btn-danger';
+                checkbox.checked = true;
+            }
+        }
+    </script>
 {% endblock %}
