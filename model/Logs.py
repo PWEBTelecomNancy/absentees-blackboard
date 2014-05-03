@@ -10,4 +10,4 @@ class Logs(ndb.Model):
     description = ndb.StringProperty(required=True)
 
 def get_all_logs():
-    return Logs.query().order(-Logs.date_time).fetch()
+    return list(Logs.query().order(-Logs.date_time).fetch())

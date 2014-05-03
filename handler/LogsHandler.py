@@ -49,31 +49,50 @@ class LogsHandler(BaseHandler):
                     date = self.date_details
                     date_req = ""
 
-            all_logs = None
+            all_logs = get_all_logs()
+            filtered_logs = None
 
-            if date_req and author_req and category_req and desc_req:
-                logging.error("Full search")
-                all_logs = Logs().query(Logs.date_time == date,
-                                        Logs.author == author_req,
-                                        Logs.category == category_req,
-                                        Logs.description == desc_req)\
-                    .order(-Logs.date_time).fetch()
-            elif date:
+            if date:
                 logging.error("date search")
-                all_logs = Logs().query(Logs.date_time == date).order(-Logs.date_time).fetch()
-            elif author_req:
-                logging.error("Author search")
-                all_logs = Logs().query(Logs.author == author_req).order(-Logs.date_time).fetch()
-            elif category_req:
-                logging.error("cat search")
-                logging.error(category_req)
-                all_logs = Logs().query(Logs.category == category_req).order(-Logs.date_time).fetch()
-            elif desc_req:
-                logging.error("desc search")
-                all_logs = Logs().query(Logs.description == desc_req).order(-Logs.date_time).fetch()
-            else:
-                all_logs = get_all_logs()
 
-            self.render("administration_logs.html", all_logs=all_logs,
+            if author_req:
+                logging.error("Author search")
+
+                if filtered_logs is None:
+                    filtered_logs = all_logs
+
+                new_list = list()
+                for log in filtered_logs:
+                    logging.error(log.author)
+                    if author_req.upper() in log.author.upper():
+                        new_list.append(log)
+                filtered_logs = new_list
+
+            if category_req:
+                logging.error("cat search")
+
+                if filtered_logs is None:
+                    filtered_logs = all_logs
+
+                new_list = list()
+                for log in filtered_logs:
+                    if category_req.upper() in log.category.upper():
+                        new_list.append(log)
+                filtered_logs = new_list
+
+            if desc_req:
+                logging.error("desc search")
+
+                if filtered_logs is None:
+                    filtered_logs = all_logs
+
+                new_list = list()
+                for log in filtered_logs:
+                    if desc_req in log.description:
+                        new_list.append(log)
+                filtered_logs = new_list
+
+
+            self.render("administration_logs.html", all_logs=new_list,
                        search_date=date_req, search_author=author_req,
                        search_category=category_req, search_desc=desc_req)
