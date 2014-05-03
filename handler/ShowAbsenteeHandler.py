@@ -67,7 +67,7 @@ class ShowAbsenteeHandler(BaseHandler):
                 ).put()
 
                 #Redirect to correct page
-                self.redirect('/show_absentee?id=' + self.request.get('id'))
+                self.redirect('/administration/show_absentee/?id=' + self.request.get('id'))
 
             else:
                 self.render("message.html", title="Invalid URL", text="It seems you're using an invalid URL")

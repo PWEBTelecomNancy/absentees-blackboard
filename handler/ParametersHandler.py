@@ -36,4 +36,4 @@ class ParametersHandler(BaseHandler):
             Parameters(name=name, value=value).put()
 
         time.sleep(1)
-        self.redirect('/parameters')
+        self.redirect('/administration/parameters')

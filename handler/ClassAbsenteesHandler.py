@@ -255,10 +255,10 @@ class ClassAbsenteesHandler(BaseHandler):
 
                 # Useful to avoid bug while writing and querying
                 self.date_details.sleep(1)
-                self.redirect('/class_absentees')
+                self.redirect('/students/absentees/')
             # Else, congrats, the teacher doesn't have to do anything
             else:
-                self.redirect('/class_absentees')
+                self.redirect('/students/absentees/')
 
         else:
             self.render("message.html", title="Access fobidden",
