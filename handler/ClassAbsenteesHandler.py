@@ -1,6 +1,5 @@
-import time
 import re
-
+import time
 from handler.BaseHandler import *
 from model.ADECommunicator import *
 from model.Absentees import *
@@ -11,11 +10,12 @@ class ClassAbsenteesHandler(BaseHandler):
     ade_communicator = None
 
     def __init__(self, request=None, response=None):
+        super(ClassAbsenteesHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "class_absentees"
         self.ade_communicator = ADECommunicator()
 
-    def filter_teacher_class(self, teacher, time, date):
+    def filter_teacher_class(self, teacher, current_time, date):
         all_lessons = self.ade_communicator.get_lessons()
 
         teacher_classes = list()
@@ -51,7 +51,7 @@ class ClassAbsenteesHandler(BaseHandler):
 
         final_step = None
         # Filter by time
-        my_time = time.split(':')
+        my_time = current_time.split(':')
         my_time[0] = int(my_time[0])
         my_time[1] = int(my_time[1])
 
@@ -71,14 +71,14 @@ class ClassAbsenteesHandler(BaseHandler):
                 if my_time[1] <= lesson_end_time[1]:
                     final_step = lesson
             # else if hours are not the same, compare hours
-            elif lesson_start_time[0] < my_time[0] and my_time[0] < lesson_end_time[0]:
+            elif lesson_start_time[0] < my_time[0] < lesson_end_time[0]:
                 final_step = lesson
 
         #return {"class_name": "CM RSA 2 2A IL-LE-TRS", "groups": ["2A"], "start_time": "08h00", "end_time": "10h00",
         #        "teacher_name": "CHRISMENT ISABELLE", "room": "Amphi Nord"}
 
-        return {"class_name": "TD PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
-                "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
+        #return {"class_name": "TD PGWEB 2A IL", "groups": ["2A IL"], "start_time": "10h00", "end_time": "12h00",
+        #        "teacher_name": "CHAROY FRANCOIS", "room": "S2.42"}
 
         if final_step is None:
             return None
@@ -118,7 +118,7 @@ class ClassAbsenteesHandler(BaseHandler):
                 temp = students_list
                 students_list = []
                 email_uniq = []
-                current_month = int(time.strftime("%m"))
+                current_month = int(self.date_details.strftime("%m"))
                 re_2a = re.compile(r"^2A .*")
                 re_2ag = re.compile(r"^2A G.*")
 
@@ -126,7 +126,7 @@ class ClassAbsenteesHandler(BaseHandler):
                     #Diff groups if class is for 2A
                     if re_2a.match(student['group']):
                         #If we're on semester 2 => majors groups
-                        if current_month >= 1 and current_month <= 8:
+                        if 1 <= current_month <= 8:
                             if student['name']['mail'] not in email_uniq and not re_2ag.match(student['group']):
                                 students_list.append(student)
                                 email_uniq.append(student['name']['mail'])
@@ -142,7 +142,6 @@ class ClassAbsenteesHandler(BaseHandler):
                         if student['name']['mail'] not in email_uniq:
                             students_list.append(student)
                             email_uniq.append(student['name']['mail'])
-
 
                 # Check for already done absentees
                 present_absentees = get_absentees_for_class(class_to_display['class_name'],
@@ -194,7 +193,7 @@ class ClassAbsenteesHandler(BaseHandler):
                 temp = students_list
                 students_list = []
                 email_uniq = []
-                current_month = int(time.strftime("%m"))
+                current_month = int(self.date_details.strftime("%m"))
                 re_2a = re.compile(r"^2A .*")
                 re_2ag = re.compile(r"^2A G.*")
 
@@ -202,7 +201,7 @@ class ClassAbsenteesHandler(BaseHandler):
                     #Diff groups if class is for 2A
                     if re_2a.match(student['group']):
                         #If we're on semester 2 => majors groups
-                        if current_month >= 1 and current_month <= 8:
+                        if 1 <= current_month <= 8:
                             if student['name']['mail'] not in email_uniq and not re_2ag.match(student['group']):
                                 students_list.append(student)
                                 email_uniq.append(student['name']['mail'])
@@ -255,7 +254,7 @@ class ClassAbsenteesHandler(BaseHandler):
                              + ")").put()
 
                 # Useful to avoid bug while writing and querying
-                time.sleep(1)
+                self.date_details.sleep(1)
                 self.redirect('/class_absentees')
             # Else, congrats, the teacher doesn't have to do anything
             else:

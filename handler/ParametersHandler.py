@@ -7,6 +7,7 @@ import time
 
 class ParametersHandler(BaseHandler):
     def __init__(self, response=None, request=None):
+        super(ParametersHandler, self).__init__()
         self.initialize(response, request)
         self.page_name = "administration"
 

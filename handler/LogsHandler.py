@@ -1,5 +1,3 @@
-import logging
-
 __author__ = 'Mael Beuget, Pierre Monnin & Thibaut Smith'
 
 from handler.BaseHandler import *
@@ -8,14 +6,13 @@ from model.Logs import *
 
 class LogsHandler(BaseHandler):
     def __init__(self, response=None, request=None):
+        super(LogsHandler, self).__init__()
         self.initialize(response, request)
         self.page_name = "administration"
 
     def get(self):
         # If the user isn't connected nor isn't administrator => error message
-        if not (self.is_connected() and
-                    get_is_admin_from_id(
-                            self.request.cookies.get('user_id').split('|')[0])):
+        if not (self.is_connected() and get_is_admin_from_id(self.request.cookies.get('user_id').split('|')[0])):
             self.error(404)
             self.render("message.html", title="Access forbidden",
                         text="It seems you're not an administrator nor a connected user.")
@@ -43,32 +40,25 @@ class LogsHandler(BaseHandler):
             filtered_logs = None
 
             if date_req:
-                logging.error("date search")
                 filtered_logs = all_logs
 
                 new_list = list()
                 for log in filtered_logs:
-                    logging.error(log.author)
                     if date_req in log.date_time.strftime('%d/%m/%Y'):
                         new_list.append(log)
                 filtered_logs = new_list
 
             if author_req:
-                logging.error("Author search")
-
                 if filtered_logs is None:
                     filtered_logs = all_logs
 
                 new_list = list()
                 for log in filtered_logs:
-                    logging.error(log.author)
                     if author_req.upper() in log.author.upper():
                         new_list.append(log)
                 filtered_logs = new_list
 
             if category_req:
-                logging.error("cat search")
-
                 if filtered_logs is None:
                     filtered_logs = all_logs
 
@@ -79,8 +69,6 @@ class LogsHandler(BaseHandler):
                 filtered_logs = new_list
 
             if desc_req:
-                logging.error("desc search")
-
                 if filtered_logs is None:
                     filtered_logs = all_logs
 
@@ -89,7 +77,6 @@ class LogsHandler(BaseHandler):
                     if desc_req.upper() in log.description.upper():
                         new_list.append(log)
                 filtered_logs = new_list
-
 
             if filtered_logs is None:
                 filtered_logs = all_logs

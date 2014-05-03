@@ -4,6 +4,7 @@ from model.ADECommunicator import *
 import logging
 import re
 
+
 def get_lessons_of_groups(groups, all_lessons):
     """
     Get the lessons that a list of groups have.
@@ -21,6 +22,7 @@ def get_lessons_of_groups(groups, all_lessons):
                     users_lessons[lesson].append(one_class)
 
     return users_lessons
+
 
 def get_lessons_of_a_teacher(username, all_lessons):
     """
@@ -60,6 +62,7 @@ def get_groups_of_a_user(username, all_groups):
                 users_groups.append(group)
 
     return users_groups
+
 
 def get_extended_groups_of_a_user(groups):
     """

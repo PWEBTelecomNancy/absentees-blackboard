@@ -5,6 +5,7 @@ from handler.BaseHandler import *
 
 class LogoutHandler(BaseHandler):
     def __init__(self, request=None, response=None):
+        super(LogoutHandler, self).__init__()
         self.initialize(request, response)
 
     def get(self):

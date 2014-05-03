@@ -1,7 +1,6 @@
 from handler.HomeHandler import *
 from handler.StudentsListHandler import *
 from handler.ClassAbsenteesHandler import *
-from handler.ClassTodayHandler import *
 from handler.LoginHandler import *
 from handler.SignupHandler import *
 from handler.LogoutHandler import *

@@ -10,6 +10,7 @@ from model.Logs import *
 
 class MembersAdminHandler(BaseHandler):
     def __init__(self, request=None, response=None):
+        super(MembersAdminHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "administration"
 

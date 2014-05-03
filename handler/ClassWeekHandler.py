@@ -10,6 +10,7 @@ class ClassWeekHandler(BaseHandler):
     ade_communicator = None
 
     def __init__(self, request=None, response=None):
+        super(ClassWeekHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "class_week"
         self.ade_communicator = ADECommunicator()
@@ -31,7 +32,7 @@ class ClassWeekHandler(BaseHandler):
 
         return filtered_lessons
 
-    def get_lessons_of_week(self, username, str_date_to_look_for, teacher = False):
+    def get_lessons_of_week(self, username, str_date_to_look_for, teacher=False):
         all_lessons = self.ade_communicator.get_lessons()
 
         if teacher is True:
@@ -61,7 +62,6 @@ class ClassWeekHandler(BaseHandler):
                self.search_lessons(start_week_tuple, end_week_tuple, users_lessons), \
                start_week - timedelta(weeks=1), \
                start_week + timedelta(weeks=1)
-
 
     def sort_lessons(self, lessons):
         sorted_list = dict()

@@ -12,6 +12,7 @@ class StudentsListHandler(BaseHandler):
     ade_communicator = None
 
     def __init__(self, request=None, response=None):
+        super(StudentsListHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "students_list"
         self.ade_communicator = ADECommunicator()

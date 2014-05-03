@@ -9,5 +9,6 @@ class Logs(ndb.Model):
     author = ndb.StringProperty(required=True)
     description = ndb.StringProperty(required=True)
 
+
 def get_all_logs():
     return list(Logs.query().order(-Logs.date_time).fetch())

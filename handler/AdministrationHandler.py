@@ -5,6 +5,7 @@ from handler.BaseHandler import *
 
 class AdministrationHandler(BaseHandler):
     def __init__(self, request=None, response=None):
+        super(AdministrationHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "administration"
 

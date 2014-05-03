@@ -9,6 +9,7 @@ from model.ADECommunicator import *
 
 class AbsenteesMonitorHandler(BaseHandler):
     def __init__(self, request=None, response=None):
+        super(AbsenteesMonitorHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "absentees_monitor"
 

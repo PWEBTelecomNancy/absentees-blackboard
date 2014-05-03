@@ -7,6 +7,7 @@ from model.Logs import *
 
 class ShowAbsenteeHandler(BaseHandler):
     def __init__(self, request=None, response=None):
+        super(ShowAbsenteeHandler, self).__init__()
         self.initialize(request, response)
         self.page_name = "administration"
 
@@ -54,7 +55,7 @@ class ShowAbsenteeHandler(BaseHandler):
                                                'lesson': absentee.class_title,
                                                'hour_start': absentee.start_hour,
                                                'hour_end': absentee.end_hour
-                }
+                                              }
 
                 # I don't know why, the date won't accept the same way
                 log_sentence = log_sentence + " on the " + absentee.class_date + ".)"

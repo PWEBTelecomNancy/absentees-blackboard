@@ -5,10 +5,13 @@ import codecs
 
 
 class XMLAnalyser():
+    def __init__(self):
+        pass
+
     url = "https://adeweb.univ-lorraine.fr/jsp/webapi?"
     request = ""
     session_id = ""
-    projectId = "9"
+    project_id = "9"
     projectSet = False
 
     def get_session_id(self):
@@ -20,13 +23,13 @@ class XMLAnalyser():
         return session_id
 
     def get_project_id(self):
-        queryUrl = self.craft_url({"function": "getProjects", "sessionId": self.session_id, "detail": 2})
-        xmlString = self.get_xml(queryUrl)
+        queryurl = self.craft_url({"function": "getProjects", "sessionId": self.session_id, "detail": 2})
+        xmlString = self.get_xml(queryurl)
         pass
 
     def set_project_id(self):
-        queryUrl = self.craft_url({"function": "setProject", "sessionId": self.session_id, "projectId": self.projectId})
-        self.get_xml(queryUrl)
+        queryurl = self.craft_url({"function": "setProject", "sessionId": self.session_id, "projectId": self.project_id})
+        self.get_xml(queryurl)
         self.projectSet = True
 
     def craft_url(self, parameters):
@@ -47,8 +50,8 @@ class XMLAnalyser():
         if self.session_id is "":
             self.session_id = self.get_session_id()
 
-        if self.projectId is "":
-            self.projectId = self.get_project_id()
+        if self.project_id is "":
+            self.project_id = self.get_project_id()
 
         if not self.projectSet:
             self.set_project_id()
@@ -69,17 +72,16 @@ class XMLAnalyser():
 
         for x in range(0, resources.length):
             item = resources[x]
-            if item.getAttribute("category") == "category5": # category5 <- most students
+            if item.getAttribute("category") == "category5":  # category5 <- most students
                 groups = item.getElementsByTagName("memberships")
                 groups = groups[0].childNodes
-
 
                 # print groups.toprettyxml()
                 for y in range(0, groups.length):
                     group = groups[y]
 
                     if group.nodeName == "membership":
-                        if group.getAttribute("name") not in clubs_list :
+                        if group.getAttribute("name") not in clubs_list:
                             clubs_list[group.getAttribute("name")] = list()
 
                         # Build user info
@@ -103,7 +105,7 @@ class XMLAnalyser():
 
         #print "folders a une taille de %d." % folders.length
 
-        fetchedLessons = dict()
+        fetched_lessons = dict()
 
         for folder in folders:
             # In one folder, there are things such as
@@ -111,11 +113,10 @@ class XMLAnalyser():
             # Colorations 3A
             # Gestion de masses de donnees 2A IAMD-SIE
             for activity in folder.getElementsByTagName("activity"):
-                name = activity.getAttribute("name")
+                # name = activity.getAttribute("name")
                 # Possible names are: (without the group details)
                 # TD TEC 1A apprentissage
                 # TD TEC 2A
-                #print name
 
                 events = activity.getElementsByTagName("event")
 
@@ -123,10 +124,8 @@ class XMLAnalyser():
                 # 		   them, but would be nice to know more about those.
                 if len(events) > 0:
                     lesson_name = events[0].getAttribute("name")
-                    # print "---> %s" % lesson_name
 
-
-                    fetchedLessons[lesson_name] = list();
+                    fetched_lessons[lesson_name] = list()
 
                     for x in range(0, events.length):
 
@@ -136,7 +135,6 @@ class XMLAnalyser():
                         data["date"] = events[x].getAttribute("date")
                         data['subject'] = lesson_name
                         data['trainee'] = list()
-
 
                         # Parse event details, such as teacher, students, room
                         event_details = events[x].getElementsByTagName("eventParticipant")
@@ -155,14 +153,14 @@ class XMLAnalyser():
                                 #print "type equals instructor"
                                 data['instructor'] = ev_name
 
-                        #fetchedLessons['lesson_name'] = data;
+                        #fetched_lessons['lesson_name'] = data;
                         #print lesson_name
                         #print data
 
                         # Save data into a list into a dict that has a key like
                         # "lesson_name". Though, be careful not to overwrite!
-                        fetchedLessons[lesson_name].append(data)
+                        fetched_lessons[lesson_name].append(data)
 
         # You may see an example of what it looks like here:
         # https://github.com/PWEBTelecomNancy/abstentees-blackboard/wiki/XMLAnalyser.py#get_lessons
-        return fetchedLessons
+        return fetched_lessons

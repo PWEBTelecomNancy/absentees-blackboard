@@ -19,7 +19,7 @@
 
                 <div class="col-md-4 col-xs-6">
                     <p>
-                        <a href="?date={{ previous_week.strftime("%d/%m/%Y") }}">
+                        <a href='?date={{ previous_week.strftime("%d/%m/%Y") }}'>
                             <span class="glyphicon glyphicon-backward"></span> Previous week
                         </a>
                     </p>
@@ -30,7 +30,7 @@
                  </div>
 
                 <div class="col-md-4 col-xs-6">
-                    <a href="?date={{ next_week.strftime("%d/%m/%Y") }}">
+                    <a href='?date={{ next_week.strftime("%d/%m/%Y") }}'>
                         <p class="pull-right">Next week <span class="glyphicon glyphicon-forward"></span></p>
                     </a>
                 </div>
@@ -71,7 +71,7 @@
                         <h5 class="text-left">
                              {{day_selected[i].startHour}} to {{day_selected[i].endHour}}
                         </h5>
-                        <hr style="margin:0px;padding:0px;">
+                        <hr style="margin:0;padding:0;">
                         
                         <h5 class="text-left" >
                             {{day_selected[i].subject}}
@@ -88,11 +88,12 @@
 {% block more_js %}
      {#
      <script type="text/javascript">
-        var allMargin = new Array();
+        var allMargin = [];
 
         window.onload=function(){
             var class_boxes = document.getElementsByName("class_box");
-            for(var i=0, len=class_boxes.length;i < len; i++){
+            var i;
+            for(i=0, len=class_boxes.length;i < len; i++){
                 allMargin[i] = class_boxes[i].style.marginTop;
                 }
             if (document.body)
@@ -100,7 +101,7 @@
             else
                 { var win_width = (window.innerWidth); }
             if(win_width<975){
-                for(var i=0, len=class_boxes.length;i < len; i++){
+                for(i=0, len=class_boxes.length;i < len; i++){
                     class_boxes[i].style.marginTop = 5 +'px';
                     }
                 }

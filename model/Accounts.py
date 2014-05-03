@@ -19,11 +19,12 @@ class Accounts(db.Model):
 
 
 def salt_generation():
+    # noinspection PyUnusedLocal,PyUnusedLocal
     return ''.join(random.choice(string.letters) for i in range(5))
 
 
-def id_cookie_generation(id):
-    return str(id) + "|" + str(hashlib.sha256(str(id) + cookie_secret).hexdigest())
+def id_cookie_generation(my_id):
+    return str(my_id) + "|" + str(hashlib.sha256(str(my_id) + cookie_secret).hexdigest())
 
 
 def check_cookie(cookie_id):

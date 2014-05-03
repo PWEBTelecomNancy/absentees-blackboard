@@ -5,6 +5,7 @@ from model.Accounts import *
 import logging
 import util
 
+
 class ProfileHandler(BaseHandler):
     current_user = None
 
@@ -68,7 +69,7 @@ class ProfileHandler(BaseHandler):
             if len(error_messages) > 0:
                 # Errors have been found
                 self.render('profile.html',
-                            error_messages = error_messages,
+                            error_messages=error_messages,
                             user=self.current_user,
                             new_login=username,
                             new_email_address=email,

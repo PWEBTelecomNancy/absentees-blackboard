@@ -81,42 +81,7 @@ button
 
 /***** CSS properties for class_today page *****/
 
-.hours_boxes
-{
-    width: 100%;
-}
-
-.hours_boxes:hover, .hours_boxes:active, .hours_boxes:focus
-{
-  cursor:auto;
-  outline: 0;
-}
-
-.class_boxes
-{
-    margin-top:15px;
-    width:100%;
-}
-
-.class_boxes:hover
-{
-    text-shadow: 1px 1px 0px #808080;
-}
-
 /***** CSS properties for class_week page *****/
-
-.day_button
-{
-    font-size:17px;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-}
-
-.day_button:hover
-{
-    text-shadow: 1px 1px 0px #808080;
-}
 
 .class_boxes2
 {
@@ -135,11 +100,6 @@ button
     text-align: center;
     vertical-align: middle;
     word-wrap: break-word;
-}
-
-.table .dark
-{
-    background-color: #EDEDED;
 }
 
 .table button
@@ -185,7 +145,7 @@ button
     .navbar-nav
     {
         float: none!important;
-        margin: 7.5px -15px;
+        margin: 7px -15px;
     }
 
     .navbar-nav>li
