@@ -83,43 +83,46 @@
         </div>
     {% endfor %}
     <div class="row"></div>
-         <script type="text/javascript">
-            <!--
-            var allMargin = new Array();
+{% endblock %}
 
-            window.onload=function(){
-                var class_boxes = document.getElementsByName("class_box");
+{% block more_js %}
+     {#
+     <script type="text/javascript">
+        var allMargin = new Array();
+
+        window.onload=function(){
+            var class_boxes = document.getElementsByName("class_box");
+            for(var i=0, len=class_boxes.length;i < len; i++){
+                allMargin[i] = class_boxes[i].style.marginTop;
+                }
+            if (document.body)
+                { var win_width = (document.body.clientWidth);}
+            else
+                { var win_width = (window.innerWidth); }
+            if(win_width<975){
                 for(var i=0, len=class_boxes.length;i < len; i++){
-                    allMargin[i] = class_boxes[i].style.marginTop;
+                    class_boxes[i].style.marginTop = 5 +'px';
                     }
-                if (document.body)
-                    { var win_width = (document.body.clientWidth);}
-                else
-                    { var win_width = (window.innerWidth); }
-                if(win_width<975){
-                    for(var i=0, len=class_boxes.length;i < len; i++){
-                        class_boxes[i].style.marginTop = 5 +'px';
-                        }
-                    }
-            };
+                }
+        };
 
-            window.onresize = function(event) {
-                if (document.body)
-                    { var win_width = (document.body.clientWidth); }
-                else
-                    {  var win_width = (window.innerWidth);  }
-                var class_boxes = document.getElementsByName("class_box");
-                if(win_width>975){
-                    for(var i=0, len=class_boxes.length;i < len; i++){
-                       class_boxes[i].style.marginTop = allMargin[i];
-                        }
+        window.onresize = function(event) {
+            if (document.body)
+                { var win_width = (document.body.clientWidth); }
+            else
+                {  var win_width = (window.innerWidth);  }
+            var class_boxes = document.getElementsByName("class_box");
+            if(win_width>975){
+                for(var i=0, len=class_boxes.length;i < len; i++){
+                   class_boxes[i].style.marginTop = allMargin[i];
                     }
-                else{
-                    for(var i=0, len=class_boxes.length;i < len; i++){
-                        class_boxes[i].style.marginTop = 5 +'px';
-                        }
+                }
+            else{
+                for(var i=0, len=class_boxes.length;i < len; i++){
+                    class_boxes[i].style.marginTop = 5 +'px';
                     }
-            };
-            -->
-        </script>
+                }
+        };
+    </script>
+    #}
 {% endblock %}
