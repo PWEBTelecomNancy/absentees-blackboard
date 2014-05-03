@@ -11,7 +11,7 @@
 {% block body %}
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <form method="post" action="/show_absentee?id={{absentee.key().id()}}" class="form-body">
+            <form method="post" action="/administration/show_absentee/?id={{absentee.key().id()}}" class="form-body">
                 <div class="form-group col-md-12">
                     <dl>
                         <dt>Class title</dt>
@@ -45,7 +45,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group col-md-12">
-                    <a href="/admin_absentees"><button type="button" class="btn btn-default">Back</button></a>
+                    <a href="/administration/absentees/"><button type="button" class="btn btn-default">Back</button></a>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>

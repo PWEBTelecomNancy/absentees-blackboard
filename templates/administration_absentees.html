@@ -13,7 +13,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- Row for the search form -->
             <div class="row" id="search_member">
-                <form method="post" action="/admin_absentees" class="form-body">
+                <form method="post" action="/administration/absentees/" class="form-body">
                     <div class="form-group">
                         <label for="date" class="col-md-2 col-xs-12">Date</label>
                         <input type="date" name="date" id="date" class="col-md-2 col-xs-12"/>
@@ -59,7 +59,7 @@
                             <td>{{abs.student_group}}</td>
                             <td>{{abs.justification_bool}}</td>
                             <td>
-                                <a href="/show_absentee?id={{abs.key().id()}}">
+                                <a href="/administration/show_absentee/?id={{abs.key().id()}}">
                                     <button type="button" class="btn btn-default">
                                         Consult
                                     </button>
