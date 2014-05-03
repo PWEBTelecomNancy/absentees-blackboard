@@ -88,11 +88,14 @@ class LogsHandler(BaseHandler):
 
                 new_list = list()
                 for log in filtered_logs:
-                    if desc_req in log.description:
+                    if desc_req.upper() in log.description.upper():
                         new_list.append(log)
                 filtered_logs = new_list
 
 
-            self.render("administration_logs.html", all_logs=new_list,
+            if filtered_logs is None:
+                filtered_logs = all_logs
+
+            self.render("administration_logs.html", all_logs=filtered_logs,
                        search_date=date_req, search_author=author_req,
                        search_category=category_req, search_desc=desc_req)
