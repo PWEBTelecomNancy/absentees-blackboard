@@ -1,7 +1,7 @@
 from xml.dom import minidom
 import urllib2
 import logging
-import codecs
+from Parameters import *
 
 
 class XMLAnalyser():
@@ -11,7 +11,7 @@ class XMLAnalyser():
     url = "https://adeweb.univ-lorraine.fr/jsp/webapi?"
     request = ""
     session_id = ""
-    project_id = "9"
+    project_id = ""
     projectSet = False
 
     def get_session_id(self):
@@ -25,18 +25,30 @@ class XMLAnalyser():
     def get_project_id(self):
         queryurl = self.craft_url({"function": "getProjects", "sessionId": self.session_id, "detail": 2})
         xmlString = self.get_xml(queryurl)
-        pass
+        resources = xmlString.getElementsByTagName("project")
+
+        project_name = get_parameter('ADE Project')
+
+        for resource in resources:
+            info = {'id': resource.getAttribute('id'), 'name': resource.getAttribute('name').encode('utf-8')}
+            #logging.error(info['name'])
+            #logging.error(project_name['value'])
+            if info['name'] == project_name['value']:
+                #print "Project ID found: " + info['id']
+                return info['id']
+
+        raise Exception("No project ID found.")
 
     def set_project_id(self):
-        queryurl = self.craft_url({"function": "setProject", "sessionId": self.session_id, "projectId": self.project_id})
-        self.get_xml(queryurl)
+        query_url = self.craft_url({"function": "setProject", "sessionId": self.session_id, "projectId": self.project_id})
+        self.get_xml(query_url)
         self.projectSet = True
 
     def craft_url(self, parameters):
         request = self.url
 
         for i in parameters:
-            request = request + "&" + i + "=" + parameters[i]
+            request = request + "&" + i + "=" + str(parameters[i])
 
         return request
 

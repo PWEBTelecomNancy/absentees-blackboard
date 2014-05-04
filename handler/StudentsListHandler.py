@@ -22,7 +22,12 @@ class StudentsListHandler(BaseHandler):
 
     def post(self):
         group_to_find = self.request.get("group_name")
-        groups = self.ade_communicator.get_students_groups()
+        groups = None
+        try:
+            groups = self.ade_communicator.get_students_groups()
+        except NoSuchParameterException as e:
+            self.render("parameter_error.html", parameter=e.get_key())
+            return None
 
         to_display = dict()
         for key in groups:
