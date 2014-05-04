@@ -23,8 +23,8 @@ def get_parameter(key):
     try:
         value = Parameters.query(Parameters.name == key).fetch(1)[0].value
 
-        logging.error(key)
-        logging.error(value)
+        #logging.error(key)
+        #logging.error(value)
 
         if value is not None:
             return {'key': key, 'value': value.encode('utf-8')}
