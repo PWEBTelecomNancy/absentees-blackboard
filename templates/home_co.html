@@ -25,18 +25,40 @@
                         {%endif%}
                         {% if absenteesU|length != 0 or absenteesJ|length != 0%}
                             <form action="" method="post">
-                                   <button name="show_abs" class="btn btn-primary" value="upvote">See them &raquo;</button>
+                                   <button name="show_abs" class="btn btn-primary" value="upvote">Details &raquo;</button>
                             <form>
                         {%endif%}
                     {%endif%}
                     </div>
                     <div class="col-xs-12 col-md-6">
                         {% if lesson == None %}
-                         <p>It seems you have nothing to do right now</p>
+                         <h4>Your current lesson is :</h4>
+                        <button type="button" class="btn btn-default btn-lg" disabled="disabled">It seems you have nothing to do right now</button>
                         {%else%}
-                          <p>Your current lesson is :</p>
-                          <br>
-                          <p>{{ lesson['subject'] }}</p>
+                          <h4>Your current lesson is :</h4>
+                        {% set color_style ="btn-info" %}
+                    {% if lesson.subject.split(' ',1)[0] == "TP" %}
+                        {%set color_style ="btn-primary"%}
+                    {% endif %}
+                    {% if lesson.subject.split(' ',1)[0] == "CM" %}
+                        {%set color_style ="btn-warning"%}
+                    {% endif %}
+                    {% if lesson.subject.split(' ',1)[0] == "TD" %}
+                        {%set color_style ="btn-success"%}
+                    {% endif %}
+                    {% if lesson.subject.split(' ',1)[0] == "Examen"%}
+                        {% set color_style ="btn-danger"%}
+                    {% endif %}
+                          <a name="class_box" class="class_boxes2 btn {{color_style}}" style="height:100%; " role="button">
+                        <h5 class="text-left">
+                             {{lesson.startHour}} to {{lesson.endHour}}
+                        </h5>
+                        <hr style="margin:0;padding:0;">
+
+                        <h5 class="text-left" >
+                            {{lesson.subject}}
+                        </h5>
+                    </a>
                         {%endif%}
                     </div>
                 </div>

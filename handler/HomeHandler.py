@@ -23,7 +23,7 @@ class HomeHandler(BaseHandler):
                 current_date = self.date_details.strftime("%d/%m/%Y")
                 current_hour = self.date_details.strftime("%H:%M")
 
-                #example :
+                #example (IL):
                 #current_date = "14/04/2014"
                 #current_hour = "09:30"
 
@@ -48,6 +48,15 @@ class HomeHandler(BaseHandler):
                 absentees_j=dict()
                 absentees_u=dict()
                 absentees = get_absentees_from_student_name(current_user.name)
+               #Example :
+               #absentee = Absentees(student_name=current_user.name, student_email="mail",
+               #                            student_group="2A",
+               #                           class_title="CM ...",
+               #                           teacher_name="prof ..",
+               #                            start_hour="8:00",
+               #                             end_hour="10:00",
+               #                            class_date="15/04/2014", justification_bool=True, justification_text="was sleeping ...")
+               # absentee.put()
                 for a in absentees:
                     if a.justification_bool:
                         absentees_j[len(absentees_j)]=a
@@ -56,15 +65,6 @@ class HomeHandler(BaseHandler):
                 teacher_bool = get_is_teacher_from_id(self.request.cookies.get('user_id').split('|')[0])
                 current_lesson=self.get_current_lesson()
 
-                #Example :
-                #absentee = Absentees(student_name=current_user.name, student_email="mail",
-                #                             student_group="2A",
-                #                            class_title="CM ...",
-                #                            teacher_name="prof ..",
-                #                            start_hour="8:00",
-                #                             end_hour="10:00",
-                #                            class_date="15/04/2014", justification_bool=True, justification_text="was sleeping ...")
-                #absentee.put()
                 self.render('home_co.html',absenteesJ=absentees_j,absenteesU=absentees_u, lesson = current_lesson,name=current_user.name,isteacher=teacher_bool)
 
             else:
