@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% block below_menubar %}
+        {# Main jumbotron (big-ass banner with text in it) #}
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome!</h1>
+                <p>{{name}}</p>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                    {% if isteacher %}
+                        <p>You are a teacher</p>
+                    {% else%}
+                        {% if absenteesU|length == 0%}
+                                <p>Congratulation, you have no unjustified absentees !</p>
+                            {%else%}
+                                <p>You have {{absenteesU|length}} unjustified absentees.</p>
+                            {%endif%}
+                        <br>
+                        {% if absenteesJ|length == 0%}
+                            <p>You have no justified absentees !</p>
+                        {%else%}
+                            <p>You have {{absenteesJ|length}} justified absentees.</p>
+                        {%endif%}
+                        {% if absenteesU|length != 0 or absenteesJ|length != 0%}
+                            <form action="" method="post">
+                                   <button name="show_abs" class="btn btn-primary" value="upvote">See them &raquo;</button>
+                            <form>
+                        {%endif%}
+                    {%endif%}
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        {% if lesson == None %}
+                         <p>It seems you have nothing to do right now</p>
+                        {%else%}
+                          <p>Your current lesson is :</p>
+                          <br>
+                          <p>{{ lesson['subject'] }}</p>
+                        {%endif%}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+{% endblock %}
+
+{% block body %}
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>School statistics <small>General attendance</small></h2>
+                    <ul>
+                        <li>
+                            Every day:
+                        </li>
+                        <li>
+                            Every month:
+                        </li>
+                        <li>
+                            Every year:
+                        </li>
+                    </ul>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Is there a backdoor?</h2>
+                    <p>This is secret information!</p>
+                </div>
+                <div class="col-md-4">
+                    <h2>TELECOM Nancy</h2>
+                    <p>
+                        TELECOM Nancy is a french engineering school, specialized in IT. You can find more about
+                        it by clicking on the button below.
+                    </p>
+                    <p><a class="btn btn-default" href="http://www.telecomnancy.eu" role="button">View details &raquo;</a></p>
+                </div>
+            </div>
+{% endblock %}
