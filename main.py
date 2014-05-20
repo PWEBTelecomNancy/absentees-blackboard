@@ -30,6 +30,6 @@ app = webapp2.WSGIApplication([
                                   ('/administration/logs/?', LogsHandler),
                                   ('/administration/parameters/?', ParametersHandler),
                                   ('/students/absentees/monitor/?', AbsenteesMonitorHandler),
-                                  ('/profile', ProfileHandler)
-                                  ('/flush', FlushHandler)
+                                  ('/profile', ProfileHandler),
+                                  ('/preload', FlushHandler)
                               ], debug=True)

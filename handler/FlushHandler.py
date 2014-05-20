@@ -7,5 +7,5 @@ class FlushHandler(BaseHandler):
     ade = ADECommunicator()
 
     def get(self):
-        self.ade.reload_lessons()
+        self.ade.pre_load()
         self.write("Refreshed lessons.")
