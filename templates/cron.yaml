@@ -1,0 +1,4 @@
+cron:
+- description: hourly cache check
+  url: /preload
+  schedule: every 1 hours
