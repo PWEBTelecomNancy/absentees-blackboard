@@ -9,6 +9,12 @@
 {% endblock %}
 
 {% block body %}
+    {% if infos_messages %}
+    <div class="alert alert-success">
+        <strong>{{infos_messages}}</strong>
+    </div>
+    {% endif %}
+
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <form method="post" action="/administration/show_absentee/?id={{absentee.key().id()}}" class="form-body">
