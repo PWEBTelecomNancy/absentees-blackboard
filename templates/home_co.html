@@ -6,7 +6,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h1>Welcome!</h1>
-                <p>{{name}}</p>
+                <p>{{ name|title }}</p>
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                     {% if isteacher %}
@@ -70,26 +70,11 @@
 
 {% block body %}
             <div class="row">
-                <div class="col-md-4">
-                    <h2>School statistics <small>General attendance</small></h2>
-                    <ul>
-                        <li>
-                            Every day:
-                        </li>
-                        <li>
-                            Every month:
-                        </li>
-                        <li>
-                            Every year:
-                        </li>
-                    </ul>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h2>Is there a backdoor?</h2>
                     <p>This is secret information!</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h2>TELECOM Nancy</h2>
                     <p>
                         TELECOM Nancy is a french engineering school, specialized in IT. You can find more about
