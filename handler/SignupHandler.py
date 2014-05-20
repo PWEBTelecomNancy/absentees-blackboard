@@ -23,7 +23,7 @@ class SignupHandler(BaseHandler):
         username = self.request.get('login')
         password = self.request.get('password')
         email = self.request.get('email')
-        name = self.request.get('name').upper()
+        name = self.request.get('name')
         error_messages = []
 
         if not util.valid_username(username):

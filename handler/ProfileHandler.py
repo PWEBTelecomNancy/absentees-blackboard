@@ -28,7 +28,7 @@ class ProfileHandler(BaseHandler):
             username = self.request.get('login')
             old_password = self.request.get('old_password')
             email = self.request.get('email')
-            name = self.request.get('name').upper()
+            name = self.request.get('name')
             password = self.request.get('password')
             password_confirmation = self.request.get('password_confirmation')
 

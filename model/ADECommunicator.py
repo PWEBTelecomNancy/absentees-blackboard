@@ -11,7 +11,7 @@ class ADECommunicator():
     Create new methods to manage ADE data in the cache.
     """
     parser = None
-    default_cache_long_prune = 604800
+    default_cache_long_prune = 604800000
     default_cache_short_prune = default_cache_long_prune / 2
 
     def __init__(self):

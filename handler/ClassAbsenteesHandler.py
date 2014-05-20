@@ -254,7 +254,7 @@ class ClassAbsenteesHandler(BaseHandler):
                              + ")").put()
 
                 # Useful to avoid bug while writing and querying
-                self.date_details.sleep(1)
+                time.sleep(1)
                 self.redirect('/students/absentees/')
             # Else, congrats, the teacher doesn't have to do anything
             else:
