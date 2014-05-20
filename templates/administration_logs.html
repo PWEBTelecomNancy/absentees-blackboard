@@ -59,6 +59,12 @@
                                     {% set row_class = "" %}
                                     {% if row.category == "absentees mark" %}
                                         {% set row_class = "warning" %}
+                                    {% elif row.category == "absentee control" %}
+                                        {% set row_class = "info" %}
+                                    {% elif row.category == "members_deletion" %}
+                                        {% set row_class = "danger" %}
+                                    {% elif row.category == "members_privileges" %}
+                                        {% set row_class = "success" %}
                                     {% endif %}
 
                                     <tr class="{{ row_class }}">
