@@ -42,3 +42,19 @@ class ADECommunicator():
     def preload(self):
         self.get_students_groups()
         self.get_lessons()
+
+    def reload_groups(self):
+
+        logging.error("CACHE MISS ADECommunicator get_students_groups()")
+
+        groups = self.parser.get_members()
+
+        memcache.set("group_list", groups, time=self.default_cache_long_prune)
+
+    def reload_lessons(self):
+
+        logging.error("CACHE MISS ADECommunicator get_lessons()")
+
+        all_lessons = self.parser.get_lessons()
+
+        memcache.set("lessons_list", all_lessons, time=self.default_cache_short_prune)
