@@ -16,7 +16,12 @@ class ShowAbsenteeHandler(BaseHandler):
             if self.request.get('id') and self.request.get('id') != "":
                 absentee = get_absentee_from_id(self.request.get('id'))
 
-                self.render("administration_absentee_show.html", absentee=absentee)
+                if self.request.cookies.get('message') and self.request.cookies.get('message') != "":
+                    self.render("administration_absentee_show.html", absentee=absentee,
+                                infos_messages=self.request.cookies.get('message'))
+                    self.response.headers.add_header('Set-Cookie', "message=; Path='/'")
+                else:
+                    self.render("administration_absentee_show.html", absentee=absentee)
 
             else:
                 self.render("message.html", title="Invalid URL", text="It seems you're using an invalid URL")
@@ -67,6 +72,7 @@ class ShowAbsenteeHandler(BaseHandler):
                 ).put()
 
                 #Redirect to correct page
+                self.response.headers.add_header('Set-Cookie', "message=Saved; Path = '/'")
                 self.redirect('/administration/show_absentee/?id=' + self.request.get('id'))
 
             else:
